@@ -162,6 +162,7 @@ body.lang-ru div.ru,body.lang-ru p.ru,body.lang-ru .ru-block,body.lang-ru h1 .ru
 .headline{font-family:'Playfair Display',Georgia,serif;font-weight:900;font-size:clamp(3rem,7.2vw,6rem);line-height:1.02;letter-spacing:-0.025em;color:var(--text-bright);max-width:11ch;opacity:0;transform:translateY(10px);animation:fadeUp 800ms 200ms ease-out forwards;text-wrap:pretty}
 .headline .em{font-style:italic;font-weight:400;color:var(--text-bright)}
 .subtitle{margin-top:1.5rem;font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(1.02rem,1.45vw,1.2rem);line-height:1.55;color:var(--text-secondary);max-width:36ch;opacity:0;transform:translateY(8px);animation:fadeUp 800ms 400ms ease-out forwards}
+.subtitle.hero-scale{margin-top:1.1rem;font-style:italic;color:var(--periwinkle-bright);max-width:42ch;animation:fadeUp 800ms 600ms ease-out forwards}
 .cta-row{margin-top:2.2rem;display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;opacity:0;transform:translateY(8px);animation:fadeUp 800ms 600ms ease-out forwards}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:0.55rem;padding:0.85rem 1.5rem;border-radius:10px;font:500 0.92rem 'Inter',sans-serif;letter-spacing:0.01em;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:all 220ms ease-out;min-height:44px}
 .btn-primary{background:var(--granat-red);color:var(--text-bright);border-color:var(--granat-red)}
@@ -213,6 +214,18 @@ body.lang-ru div.ru,body.lang-ru p.ru,body.lang-ru .ru-block,body.lang-ru h1 .ru
 #answer .ans-rule.in{opacity:1;transform:scaleY(1)}
 #answer .ans-body{font:300 clamp(1.05rem,1.5vw,1.2rem) 'Inter',sans-serif;line-height:1.65;color:var(--text-secondary);max-width:46ch;margin:2rem auto 0;text-wrap:pretty;opacity:0;transform:translateY(8px);transition:opacity 700ms 900ms ease-out,transform 700ms 900ms ease-out}
 #answer .ans-body.in{opacity:1;transform:translateY(0)}
+#answer .ans-pairs{list-style:none;margin:2.6rem auto 0;padding:0;max-width:980px;display:flex;flex-direction:column;gap:1.2rem;opacity:0;transform:translateY(8px);transition:opacity 700ms 900ms ease-out,transform 700ms 900ms ease-out}
+#answer .ans-pairs.in{opacity:1;transform:translateY(0)}
+#answer .ans-pair{display:grid;grid-template-columns:1fr 24px 1fr;align-items:center;gap:1.2rem;padding:1.1rem 0;border-top:1px solid var(--periwinkle-soft)}
+#answer .ans-pair:last-child{border-bottom:1px solid var(--periwinkle-soft)}
+#answer .ans-neg{font:300 clamp(1rem,1.4vw,1.18rem) 'Inter',sans-serif;color:var(--text-muted);text-align:right;letter-spacing:0.01em}
+#answer .ans-pos{font:400 italic clamp(1.05rem,1.5vw,1.24rem) 'Playfair Display',Georgia,serif;color:var(--text-bright);text-align:left;line-height:1.4}
+#answer .ans-link{height:1px;background:var(--periwinkle-soft);width:100%;justify-self:stretch}
+@media(max-width:720px){
+  #answer .ans-pair{grid-template-columns:1fr;gap:0.4rem;text-align:center}
+  #answer .ans-neg,#answer .ans-pos{text-align:center}
+  #answer .ans-link{display:none}
+}
 
 /* === SECTION 4: TEAM === */
 #team{padding:5rem 2rem}
@@ -258,6 +271,8 @@ body.lang-ru div.ru,body.lang-ru p.ru,body.lang-ru .ru-block,body.lang-ru h1 .ru
 #philosophy .closing,#economy .closing,#cta .closing,#roadmap .closing{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(1.3rem,2.4vw,2rem);line-height:1.35;letter-spacing:-0.01em;color:var(--text-primary);max-width:900px;margin:0 auto;text-align:center;text-wrap:pretty;opacity:0;transform:translateY(8px);transition:opacity 700ms ease-out,transform 700ms ease-out}
 #philosophy .closing.in,#economy .closing.in,#cta .closing.in,#roadmap .closing.in{opacity:1;transform:translateY(0)}
 #economy .closing .em-peri{font-weight:700;font-style:italic}
+#economy .econ-future{margin:2.6rem auto 2.4rem;max-width:62ch;padding:1rem 1.2rem;border-left:2px solid var(--periwinkle);font:300 0.96rem/1.55 'Inter',sans-serif;color:var(--text-secondary);text-align:left}
+#economy .econ-future-tag{display:inline-block;font:600 0.66rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;color:var(--periwinkle);margin-right:0.6rem}
 
 /* === SECTION 6: ARCHITECTURE === */
 #architecture{padding:5rem 2rem}
@@ -281,7 +296,11 @@ body.lang-ru div.ru,body.lang-ru p.ru,body.lang-ru .ru-block,body.lang-ru h1 .ru
 /* === SECTION 7: HOW IT WORKS === */
 #how-it-works{padding:5rem 2rem}
 .hiw-inner{max-width:1100px;margin:0 auto}
-#how-it-works .s-title{max-width:18ch;margin-bottom:3.4rem}
+#how-it-works .s-title{max-width:18ch;margin-bottom:1.4rem}
+#how-it-works .hiw-triad{font:600 0.78rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;color:var(--periwinkle);text-align:left;margin:0 0 3.4rem;line-height:1.6}
+#how-it-works .hiw-karaoke{margin:3rem auto 0;max-width:60ch;font:300 1rem/1.55 'Inter',sans-serif;color:var(--text-secondary);text-align:center;border-top:1px solid var(--periwinkle-soft);padding-top:1.6rem}
+#how-it-works .hiw-karaoke .hiw-tag{display:inline-block;font:600 0.66rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;color:var(--periwinkle);background:var(--periwinkle-soft);padding:0.32rem 0.7rem;border-radius:999px;margin-right:0.6rem;vertical-align:middle}
+#how-it-works .hiw-karaoke strong{color:var(--text-bright);font-weight:500}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
 .step{position:relative;background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:14px;padding:1.9rem 1.7rem 1.7rem;display:flex;flex-direction:column;gap:0.85rem;transition:border-color 220ms ease-out;opacity:0;transform:translateY(14px)}
 .step.in{opacity:1;transform:translateY(0);transition:opacity 600ms ease-out,transform 600ms ease-out}
@@ -365,7 +384,21 @@ body.lang-ru div.ru,body.lang-ru p.ru,body.lang-ru .ru-block,body.lang-ru h1 .ru
 /* === SECTION 8: ROADMAP === */
 #roadmap{padding:5rem 2rem}
 #roadmap .r-inner{max-width:1100px;margin:0 auto}
-#roadmap .s-title{margin-bottom:3.5rem;max-width:22ch}
+#roadmap .s-title{margin-bottom:2.5rem;max-width:22ch}
+#roadmap .r-sub{font:600 0.78rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;color:var(--periwinkle);margin:2rem 0 1.4rem}
+#roadmap .r-sub-eco{margin-top:3.6rem}
+#roadmap .path-now{list-style:none;padding:0;margin:0 0 2.6rem;display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+#roadmap .path-now li{display:flex;flex-direction:column;gap:0.4rem;padding:1.1rem 1.2rem;border:1px solid var(--periwinkle-soft);border-radius:6px;background:rgba(143,163,232,0.04)}
+#roadmap .path-now .path-when{font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;color:var(--periwinkle)}
+#roadmap .path-now .path-what{font:300 0.98rem/1.55 'Inter',sans-serif;color:var(--text-secondary)}
+#roadmap .eco-pillars{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(5,1fr);gap:0.8rem}
+#roadmap .eco-pillar{display:flex;flex-direction:column;gap:0.5rem;padding:1.2rem 1rem;border-top:1px solid var(--periwinkle-soft);border-bottom:1px solid var(--periwinkle-soft);text-align:left}
+#roadmap .eco-num{font:600 0.7rem 'JetBrains Mono',monospace;letter-spacing:0.18em;color:var(--periwinkle)}
+#roadmap .eco-name{font:500 1rem 'Playfair Display',Georgia,serif;color:var(--text-bright);letter-spacing:0.01em}
+@media(max-width:720px){
+  #roadmap .path-now{grid-template-columns:1fr}
+  #roadmap .eco-pillars{grid-template-columns:repeat(2,1fr)}
+}
 .timeline{position:relative;padding-left:0;margin-bottom:4.5rem;max-width:880px;list-style:none}
 .timeline::before{content:"";position:absolute;left:5.5rem;top:1.2rem;bottom:1.2rem;width:1px;background:var(--border-medium)}
 .mile{position:relative;display:grid;grid-template-columns:6.5rem 1fr;gap:2rem;padding:1.4rem 0 2rem;align-items:start;opacity:0;transform:translateY(12px)}
@@ -396,6 +429,21 @@ body.lang-ru div.ru,body.lang-ru p.ru,body.lang-ru .ru-block,body.lang-ru h1 .ru
 .pair .after{color:var(--periwinkle);text-align:left;transition-delay:350ms}
 .pair .arr{font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(1.5rem,3vw,2.2rem);color:var(--periwinkle);line-height:1;display:inline-block;transform:scale(0);transform-origin:center;transition:transform 240ms cubic-bezier(.34,1.56,.64,1) 200ms;user-select:none}
 .pair.in .arr{transform:scale(1)}
+.worlds-collapsible{margin:4rem auto 0;max-width:1100px;border-top:1px solid var(--periwinkle-soft);border-bottom:1px solid var(--periwinkle-soft)}
+.worlds-summary{display:flex;align-items:baseline;gap:1.4rem;padding:1.6rem 0.4rem;cursor:pointer;list-style:none;outline:none}
+.worlds-summary::-webkit-details-marker{display:none}
+.worlds-summary:focus-visible{outline:2px solid var(--periwinkle);outline-offset:4px;border-radius:2px}
+.worlds-eyebrow{font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.28em;text-transform:uppercase;color:var(--periwinkle)}
+.worlds-headline{flex:1;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:500;font-size:clamp(1.15rem,2vw,1.6rem);color:var(--text-bright);line-height:1.3}
+.worlds-toggle{font:200 1.6rem 'Inter',sans-serif;color:var(--periwinkle);transition:transform 240ms ease-out}
+details[open] .worlds-toggle{transform:rotate(45deg)}
+.worlds-body{padding:0.4rem 0.4rem 2.4rem}
+.worlds-frame{font:300 italic clamp(1rem,1.4vw,1.18rem) 'Playfair Display',Georgia,serif;color:var(--text-secondary);max-width:62ch;margin:0 0 2.2rem;line-height:1.5}
+.worlds-grid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.world-card{padding:1.2rem 1.1rem;border:1px solid var(--periwinkle-soft);border-radius:6px;background:rgba(143,163,232,0.04);display:flex;flex-direction:column;gap:0.55rem}
+.world-card .w-num{font:600 0.7rem 'JetBrains Mono',monospace;letter-spacing:0.2em;color:var(--periwinkle)}
+.world-card .w-name{margin:0;font:500 1.05rem 'Playfair Display',Georgia,serif;color:var(--text-bright);letter-spacing:0.005em}
+.world-card .w-tag{margin:0;font:300 0.92rem/1.5 'Inter',sans-serif;color:var(--text-secondary);text-wrap:pretty}
 
 /* === SECTION 10: ECONOMY === */
 #economy{padding:5rem 2rem}
@@ -590,11 +638,11 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
     <li><a href="#philosophy"><span class="idx-num">05</span><span class="idx-name"><span class="en">Philosophy</span><span class="ru">Философия</span></span></a></li>
     <li><a href="#architecture"><span class="idx-num">06</span><span class="idx-name"><span class="en">Architecture of eternity</span><span class="ru">Архитектура вечности</span></span></a></li>
     <li><a href="#how-it-works"><span class="idx-num">07</span><span class="idx-name"><span class="en">How it works</span><span class="ru">Как это работает</span></span></a></li>
-    <li><a href="#roadmap"><span class="idx-num">08</span><span class="idx-name"><span class="en">Roadmap</span><span class="ru">Дорожная карта</span></span></a></li>
+    <li><a href="#roadmap"><span class="idx-num">08</span><span class="idx-name"><span class="en">Roadmap &amp; ecosystem</span><span class="ru">Дорожная карта и экосистема</span></span></a></li>
     <li><a href="#social"><span class="idx-num">09</span><span class="idx-name"><span class="en">Social transformation</span><span class="ru">Социальная трансформация</span></span></a></li>
     <li><a href="#economy"><span class="idx-num">10</span><span class="idx-name"><span class="en">Economy of the gift</span><span class="ru">Экономика дара</span></span></a></li>
     <li><a href="#invitation"><span class="idx-num">11</span><span class="idx-name"><span class="en">Invitation</span><span class="ru">Приглашение</span></span></a></li>
-    <li><a href="#cta"><span class="idx-num">12</span><span class="idx-name"><span class="en">Time to choose a role</span><span class="ru">Время выбирать роль</span></span></a></li>
+    <li><a href="#cta"><span class="idx-num">12</span><span class="idx-name"><span class="en">Here the conversation begins</span><span class="ru">Здесь начинается разговор</span></span></a></li>
   </ol>
 </div>
 
@@ -612,8 +660,8 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
       <div class="sigil-line">
         <span class="hairline"></span>
         <span class="label">
-          <span class="en">a participatory monument · est. 2026</span>
-          <span class="ru">соучаствующий памятник · с 2026</span>
+          <span class="en">01 — title</span>
+          <span class="ru">01 — заглавие</span>
         </span>
       </div>
       <h1 id="heroTitle" class="headline">
@@ -621,8 +669,12 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
         <span class="ru">голос<br/><span class="em">человечества</span></span>
       </h1>
       <p class="subtitle">
-        <span class="en">The first digital artifact, created by all of humanity — one voice at a time, across eight years and seven thousand cities.</span>
-        <span class="ru">Первый цифровой артефакт, созданный всем человечеством — по одному голосу за раз, через восемь лет и семь тысяч городов.</span>
+        <span class="en">The first digital artifact, created by all of humanity.</span>
+        <span class="ru">Первый цифровой артефакт, созданный всем человечеством.</span>
+      </p>
+      <p class="subtitle hero-scale">
+        <span class="en">We have already gathered a million voices. Now our goal is a billion — and beyond.</span>
+        <span class="ru">Мы уже собрали миллион голосов. Теперь наша цель — миллиард и больше.</span>
       </p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#how-it-works">
@@ -632,11 +684,6 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
         <a class="btn btn-ghost" href="#cta">
           <span class="en">connect</span><span class="ru">связаться</span>
         </a>
-      </div>
-      <div class="hero-meta" aria-hidden="true">
-        <span><span class="en">vol. 01 · 2026—2034</span><span class="ru">вып. 01 · 2026—2034</span></span>
-        <span class="dot"></span>
-        <span><span class="en">8 years · 7000 cities · 1 song</span><span class="ru">8 лет · 7000 городов · 1 песня</span></span>
       </div>
     </div>
   </div>
@@ -696,14 +743,45 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
       <span><span class="en">03 — the answer</span><span class="ru">03 — ответ</span></span>
     </div>
     <h2 id="ansTitle" class="ans-headline">
-      <span class="en">A single song, sung by <span class="em-peri">all of us</span> — and by no one alone.</span>
-      <span class="ru">Одна песня, спетая <span class="em-peri">всеми нами</span> — и никем в одиночку.</span>
+      <span class="en">We are giving humanity what it has never had: <span class="em-peri">a single voice.</span></span>
+      <span class="ru">Мы даём человечеству то, чего у него никогда не было: <span class="em-peri">единый голос.</span></span>
     </h2>
     <div class="ans-rule" aria-hidden="true"></div>
-    <p class="ans-body">
-      <span class="en">Granat is the first work of art whose author is humanity itself. Each voice is a note. Each note has a name. Together they form an artifact that outlasts every empire that recorded it.</span>
-      <span class="ru">Granat — первое произведение, автор которого — само человечество. Каждый голос — нота. У каждой ноты есть имя. Вместе они складываются в артефакт, переживающий любую империю, его записавшую.</span>
-    </p>
+    <ul class="ans-pairs" aria-label="not / but">
+      <li class="ans-pair">
+        <span class="ans-neg">
+          <span class="en">This is not a song.</span>
+          <span class="ru">Это не песня.</span>
+        </span>
+        <span class="ans-link" aria-hidden="true"></span>
+        <span class="ans-pos">
+          <span class="en">It is a sounding monument of our civilisation.</span>
+          <span class="ru">Это звучащий памятник нашей цивилизации.</span>
+        </span>
+      </li>
+      <li class="ans-pair">
+        <span class="ans-neg">
+          <span class="en">This is not a project.</span>
+          <span class="ru">Это не проект.</span>
+        </span>
+        <span class="ans-link" aria-hidden="true"></span>
+        <span class="ans-pos">
+          <span class="en">It is a leap of consciousness.</span>
+          <span class="ru">Это эволюционный скачок сознания.</span>
+        </span>
+      </li>
+      <li class="ans-pair">
+        <span class="ans-neg">
+          <span class="en">This is not art.</span>
+          <span class="ru">Это не искусство.</span>
+        </span>
+        <span class="ans-link" aria-hidden="true"></span>
+        <span class="ans-pos">
+          <span class="en">It is an act of collective self-knowing.</span>
+          <span class="ru">Это акт коллективного самопознания.</span>
+        </span>
+      </li>
+    </ul>
   </div>
 </section>
 
@@ -717,24 +795,20 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
       <span><span class="en">04 — team</span><span class="ru">04 — команда</span></span>
     </div>
     <h2 id="tTitle" class="s-title">
-      <span class="en">Team</span><span class="ru">Команда</span>
+      <span class="en">People who have proven that the impossible is possible</span><span class="ru">Люди, доказавшие, что невозможное — возможно</span>
     </h2>
-    <p class="subline">
-      <span class="en">People who have proven that the impossible is possible.</span>
-      <span class="ru">Люди, доказавшие, что невозможное возможно.</span>
-    </p>
     <div class="members">
       <article class="member" data-i="1" aria-labelledby="m1Name">
         <div class="head">
           <div class="avatar" aria-hidden="true">Я</div>
           <h3 id="m1Name" class="name">
-            <span class="en">Yaroslav Malyi</span><span class="ru">Ярослав Малый</span>
+            <span class="en">Yaroslav</span><span class="ru">Ярослав</span>
           </h3>
         </div>
         <ul class="creds">
           <li><span class="en">Creator of the Olympic anthem performed by a million-voice choir</span><span class="ru">Создатель олимпийского гимна с миллионным хором</span></li>
-          <li><span class="en">Artist of <em>Machete</em> and <em>Tokio</em></span><span class="ru">Артист «Мачете» и «Токио»</span></li>
-          <li><span class="en">Producer of 42 international festivals</span><span class="ru">Продюсер 42 международных фестивалей</span></li>
+          <li><span class="en">Producer of 42 international festivals — from London 2012 to Sochi 2014</span><span class="ru">Продюсер 42 международных фестивалей от Олимпиады в Лондоне 2012 до Сочи 2014</span></li>
+          <li><span class="en">Visionary who turns dreams into reality</span><span class="ru">Визионер, превращающий мечты в реальность</span></li>
         </ul>
       </article>
       <article class="member" data-i="2" aria-labelledby="m2Name">
@@ -745,8 +819,8 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
           </h3>
         </div>
         <ul class="creds">
-          <li><span class="en">Strategist and General Manager of the project</span><span class="ru">Стратег и генеральный менеджер проекта</span></li>
-          <li><span class="en">Track record of turning ambition into results at the intersection of people, businesses, and ideas</span><span class="ru">Опыт превращения амбиции в результат на стыке людей, бизнесов и идей</span></li>
+          <li><span class="en">Strategist who turns ambition into results</span><span class="ru">Стратег, превращающий амбиции в результат</span></li>
+          <li><span class="en">General Manager of the project</span><span class="ru">Генеральный менеджер проекта</span></li>
         </ul>
       </article>
     </div>
@@ -915,17 +989,18 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
       </article>
       <article class="pillar" data-i="2" aria-labelledby="p2Name">
         <div class="icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
-            <polygon points="24,6 36,13 36,27 24,34 12,27 12,13"/>
-            <polygon points="24,16 30,19.5 30,26.5 24,30 18,26.5 18,19.5" fill="currentColor" fill-opacity="0.18"/>
-            <line x1="24" y1="34" x2="24" y2="42"/><line x1="14" y1="40" x2="34" y2="40"/>
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="24" cy="20" r="6"/>
+            <path d="M14 38 c0 -6 4.5 -10 10 -10 s10 4 10 10"/>
+            <circle cx="24" cy="20" r="2.4" fill="currentColor"/>
+            <path d="M30 14 l4 -3 M30 26 l4 3 M18 14 l-4 -3 M18 26 l-4 3" stroke-dasharray="1 2.5"/>
           </svg>
         </div>
         <span class="ord">02</span>
-        <h3 id="p2Name" class="pname"><span class="en">Blockchain Registry</span><span class="ru">Блокчейн-реестр</span></h3>
+        <h3 id="p2Name" class="pname"><span class="en">Voice Passport</span><span class="ru">Голосовой паспорт</span></h3>
         <p class="pbody">
-          <span class="en">An eternal registry where the name of every creator is inscribed.</span>
-          <span class="ru">Вечный реестр, где вписывается имя каждого творца.</span>
+          <span class="en">Verifiable identity layer — every voice has a name, every name has a fingerprint. A standalone licensable IP, ready to plug in across partner worlds.</span>
+          <span class="ru">Верифицируемый слой личности — у каждого голоса есть имя, у каждого имени — отпечаток. Самостоятельная лицензируемая технология, готовая встраиваться в миры партнёров.</span>
         </p>
       </article>
       <article class="pillar" data-i="3" aria-labelledby="p3Name">
@@ -941,15 +1016,15 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
         <span class="ord">03</span>
         <h3 id="p3Name" class="pname"><span class="en">Distributed Archive</span><span class="ru">Распределённое хранилище</span></h3>
         <p class="pbody">
-          <span class="en">A modern Library of Alexandria for civilization's digital heritage.</span>
-          <span class="ru">Современная Александрийская библиотека для цифрового наследия цивилизации.</span>
+          <span class="en">A modern Library of Alexandria for civilization's digital heritage. Each contribution is inscribed, named, kept.</span>
+          <span class="ru">Современная Александрийская библиотека для цифрового наследия цивилизации. Каждый вклад вписан, назван и сохранён.</span>
         </p>
       </article>
     </div>
     <aside class="frame" id="frame" aria-label="strategic frame">
       <p class="ftext">
-        <span class="en">Granat is <span class="em-peri">a core plus floating plug-ins</span>. The core is voice technology. Plug-ins are what we add together with partners for their world: voice verification, ceremonies, festivals, educational programs.</span>
-        <span class="ru">Granat — это <span class="em-peri">ядро плюс плавающие плагины</span>. Ядро — голосовая технология. Плагины — то, что мы вместе с партнёрами добавляем под их мир: верификация по голосу, церемонии, фестивали, образовательные программы.</span>
+        <span class="en">Granat is <span class="em-peri">a core plus floating plug-ins</span>. The core is voice technology. We provide the platform; partners build features on top — for their worlds, their audiences, their formats. Voice Passport is one such layer; multi-device passport-merging, ceremonies, festivals, and educational programmes are others.</span>
+        <span class="ru">Granat — это <span class="em-peri">ядро плюс плавающие плагины</span>. Ядро — голосовая технология. Мы даём платформу — партнёры добавляют свои функции под свой мир, свою аудиторию, свои форматы. Голосовой паспорт — один такой слой; объединение паспортов между устройствами, церемонии, фестивали и образовательные программы — другие.</span>
       </p>
     </aside>
   </div>
@@ -967,21 +1042,25 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
     <h2 id="hiwTitle" class="s-title">
       <span class="en">Three steps to eternity</span><span class="ru">Три шага к вечности</span>
     </h2>
+    <p class="hiw-triad">
+      <span class="en">Continents — microphones · humanity — choir · the future — unity</span>
+      <span class="ru">Континенты — микрофоны · человечество — хор · будущее — единство</span>
+    </p>
     <div class="steps">
       <article class="step" data-step="1">
         <div class="num">01</div>
         <h3 class="step-title"><span class="en">Record</span><span class="ru">Запись</span></h3>
-        <p class="step-body"><span class="en">5 minutes through the GRANAT app.</span><span class="ru">5 минут через приложение GRANAT.</span></p>
+        <p class="step-body"><span class="en">A few minutes — sing along with the choir from any device, in your own language.</span><span class="ru">Несколько минут — спойте вместе с хором с любого устройства, на своём языке.</span></p>
       </article>
       <article class="step" data-step="2">
         <div class="num">02</div>
         <h3 class="step-title"><span class="en">Transformation</span><span class="ru">Преображение</span></h3>
-        <p class="step-body"><span class="en">AI finds the perfect place for your voice in the symphony.</span><span class="ru">AI находит идеальное место для вашего голоса в симфонии.</span></p>
+        <p class="step-body"><span class="en">AI finds the perfect place for your voice in the symphony of humanity.</span><span class="ru">AI находит идеальное место для вашего голоса в симфонии человечества.</span></p>
       </article>
       <article class="step" data-step="3">
         <div class="num">03</div>
         <h3 class="step-title"><span class="en">Eternity</span><span class="ru">Вечность</span></h3>
-        <p class="step-body"><span class="en">A digital certificate — proof of your place in history.</span><span class="ru">Цифровой сертификат — доказательство вашего места в истории.</span></p>
+        <p class="step-body"><span class="en">A digital certificate as a voice passport — proof of your place in history.</span><span class="ru">Цифровой сертификат как паспорт голоса — доказательство вашего места в истории.</span></p>
       </article>
     </div>
     <div class="cta-wrap">
@@ -994,6 +1073,11 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
         <span class="ru">~30 секунд · использует ваш микрофон</span>
       </span>
     </div>
+    <p class="hiw-karaoke">
+      <span class="hiw-tag"><span class="en">Introducing soon</span><span class="ru">Скоро</span></span>
+      <span class="en"><strong>Karaoke mode</strong> — sing in <strong>English, Russian, Spanish, Mandarin, Hindi</strong>. Five languages, one choir.</span>
+      <span class="ru"><strong>Караоке-режим</strong> — пойте на <strong>английском, русском, испанском, китайском, хинди</strong>. Пять языков, один хор.</span>
+    </p>
   </div>
 </section>
 
@@ -1085,11 +1169,25 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
   <div class="r-inner">
     <div class="s-label" data-reveal="self">
       <span class="hairline" aria-hidden="true"></span>
-      <span><span class="en">08 — roadmap</span><span class="ru">08 — дорожная карта</span></span>
+      <span><span class="en">08 — roadmap &amp; ecosystem</span><span class="ru">08 — дорожная карта и экосистема</span></span>
     </div>
     <h2 id="rTitle" class="s-title">
       <span class="en">Civilization roadmap</span><span class="ru">Дорожная карта цивилизации</span>
     </h2>
+
+    <h3 class="r-sub"><span class="en">Near-term — what is happening now</span><span class="ru">Ближний горизонт — что происходит сейчас</span></h3>
+    <ul class="path-now" aria-label="near-term path">
+      <li>
+        <span class="path-when"><span class="en">Now · May 2026</span><span class="ru">Сейчас · Май 2026</span></span>
+        <span class="path-what"><span class="en"><strong>granat.world is live. The pipeline works. The team is building.</strong></span><span class="ru"><strong>granat.world живёт. Пайплайн работает. Команда строит.</strong></span></span>
+      </li>
+      <li>
+        <span class="path-when"><span class="en">By July 2026</span><span class="ru">К июлю 2026</span></span>
+        <span class="path-what"><span class="en">The first full song in production quality — and we are ready to launch with whichever partner stands with us.</span><span class="ru">Первая полная песня в production-качестве — и мы готовы запускать с тем партнёром, кто рядом.</span></span>
+      </li>
+    </ul>
+
+    <h3 class="r-sub"><span class="en">Year by year — 2026 to 2029</span><span class="ru">Год за годом — 2026—2029</span></h3>
     <ol class="timeline">
       <li class="mile" data-i="1">
         <time class="year" datetime="2026">2026</time>
@@ -1128,6 +1226,15 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
       <span class="en">We create not a product but a <span class="em-peri">legacy</span>. Not a company but an <span class="em-peri">institution</span>. Not a brand but a <span class="em-peri">legend</span>.</span>
       <span class="ru">Мы создаём не продукт, а <span class="em-peri">наследие</span>. Не компанию, а <span class="em-peri">институцию</span>. Не бренд, а <span class="em-peri">легенду</span>.</span>
     </p>
+
+    <h3 class="r-sub r-sub-eco"><span class="en">Ecosystem — five pillars</span><span class="ru">Экосистема — пять опор</span></h3>
+    <ul class="eco-pillars" aria-label="ecosystem pillars">
+      <li class="eco-pillar"><span class="eco-num">01</span><span class="eco-name"><span class="en">Application</span><span class="ru">Приложение</span></span></li>
+      <li class="eco-pillar"><span class="eco-num">02</span><span class="eco-name"><span class="en">Community</span><span class="ru">Сообщество</span></span></li>
+      <li class="eco-pillar"><span class="eco-num">03</span><span class="eco-name"><span class="en">Festivals</span><span class="ru">Фестивали</span></span></li>
+      <li class="eco-pillar"><span class="eco-num">04</span><span class="eco-name"><span class="en">Charity</span><span class="ru">Благотворительность</span></span></li>
+      <li class="eco-pillar"><span class="eco-num">05</span><span class="eco-name"><span class="en">Voice archive</span><span class="ru">Архив голосов</span></span></li>
+    </ul>
   </div>
 </section>
 
@@ -1177,6 +1284,60 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
         <dd class="after"><span class="en">Legacy</span><span class="ru">Наследие</span></dd>
       </div>
     </dl>
+
+    <details class="worlds-collapsible" id="sevenWorlds">
+      <summary class="worlds-summary">
+        <span class="worlds-eyebrow"><span class="en">Seven Worlds</span><span class="ru">Семь миров</span></span>
+        <span class="worlds-headline">
+          <span class="en">Where Granat already lives</span>
+          <span class="ru">Где Granat уже живёт</span>
+        </span>
+        <span class="worlds-toggle" aria-hidden="true">+</span>
+      </summary>
+      <div class="worlds-body">
+        <p class="worlds-frame">
+          <span class="en">Not seven products. Seven forms of co-authorship people already want to step into. Each world is an entry point.</span>
+          <span class="ru">Не семь продуктов. Семь форм соавторства, в которые человек уже хочет войти. Каждый мир — точка входа.</span>
+        </p>
+        <ol class="worlds-grid">
+          <li class="world-card">
+            <span class="w-num">01</span>
+            <h4 class="w-name"><span class="en">Family &amp; Generation</span><span class="ru">Семья и поколение</span></h4>
+            <p class="w-tag"><span class="en">A wedding where everyone sounds. A grandmother's voice carried 25 years forward. A song born in 2027 heard at age 18.</span><span class="ru">Свадьба, на которой звучат все. Голос бабушки, перенесённый на 25 лет вперёд. Песня поколения, услышанная в 18.</span></p>
+          </li>
+          <li class="world-card">
+            <span class="w-num">02</span>
+            <h4 class="w-name"><span class="en">Schools &amp; Earth</span><span class="ru">Школа и Земля</span></h4>
+            <p class="w-tag"><span class="en">Hundreds of millions of children sing one song on Earth Day. The graduating class adds its choir every year.</span><span class="ru">Сотни миллионов детей поют одну песню в День Земли. Выпускной хор пополняется каждый год.</span></p>
+          </li>
+          <li class="world-card">
+            <span class="w-num">03</span>
+            <h4 class="w-name"><span class="en">Stadium &amp; Stage</span><span class="ru">Стадион и сцена</span></h4>
+            <p class="w-tag"><span class="en">The World Cup anthem sung by every fan across every stadium. The Olympic anthem in the IOC archive forever. The concert encore credited to five million names.</span><span class="ru">Гимн ЧМ, спетый каждым фанатом со всех стадионов. Олимпийский гимн в архиве МОК навсегда. Финальный припев — на пять миллионов имён.</span></p>
+          </li>
+          <li class="world-card">
+            <span class="w-num">04</span>
+            <h4 class="w-name"><span class="en">Sacred &amp; Belonging</span><span class="ru">Священное и принадлежность</span></h4>
+            <p class="w-tag"><span class="en">A multi-faith chorus at dawn. A diaspora hearing itself as one. A sacred place that sings with everyone who has ever stood in it.</span><span class="ru">Многоконфессиональный хор на рассвете. Диаспора, слышащая себя как одно целое. Священное место, поющее всеми, кто в нём был.</span></p>
+          </li>
+          <li class="world-card">
+            <span class="w-num">05</span>
+            <h4 class="w-name"><span class="en">Civic &amp; Collective Will</span><span class="ru">Гражданское</span></h4>
+            <p class="w-tag"><span class="en">A protest anthem as the new petition. A nation's anniversary sung by every living citizen. The next signal beyond Earth — all of us.</span><span class="ru">Гимн протеста — новая петиция. Юбилей страны, спетый каждым живым гражданином. Следующий сигнал за пределы Земли — это все мы.</span></p>
+          </li>
+          <li class="world-card">
+            <span class="w-num">06</span>
+            <h4 class="w-name"><span class="en">Industry &amp; Culture</span><span class="ru">Индустрия и культура</span></h4>
+            <p class="w-tag"><span class="en">Disney. A corporate anthem of 220,000 voices. The new Eurovision. A museum's audience sounding inside the work.</span><span class="ru">Disney. Корпоративный гимн на 220 000 голосов. Новый Eurovision. Аудитория музея, звучащая внутри произведения.</span></p>
+          </li>
+          <li class="world-card">
+            <span class="w-num">07</span>
+            <h4 class="w-name"><span class="en">Memory &amp; Legacy</span><span class="ru">Память и наследие</span></h4>
+            <p class="w-tag"><span class="en">Voice against forgetting. A coronation that becomes participation. An archive that remains for the next century.</span><span class="ru">Голос против забвения. Коронация как участие. Архив, который остаётся следующему столетию.</span></p>
+          </li>
+        </ol>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -1204,8 +1365,8 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
       </article>
       <article class="mech" data-i="2" aria-labelledby="mech2">
         <span class="roman" aria-hidden="true">II</span>
-        <h3 id="mech2" class="mname"><span class="en">Digital Certificates of Participation</span><span class="ru">Цифровые сертификаты участия</span></h3>
-        <p class="mcap"><span class="en">Digital relics.</span><span class="ru">Цифровые реликвии.</span></p>
+        <h3 id="mech2" class="mname"><span class="en">Digital certificate as voice passport</span><span class="ru">Цифровой сертификат как паспорт голоса</span></h3>
+        <p class="mcap"><span class="en">Digital relics — proof of participation, identity layer.</span><span class="ru">Цифровые реликвии — доказательство участия, слой идентичности.</span></p>
       </article>
       <article class="mech" data-i="3" aria-labelledby="mech3">
         <span class="roman" aria-hidden="true">III</span>
@@ -1218,6 +1379,11 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
         <p class="mcap"><span class="en">Energy for the development of legacy.</span><span class="ru">Энергия для развития наследия.</span></p>
       </article>
     </div>
+    <p class="econ-future">
+      <span class="econ-future-tag"><span class="en">Future growth</span><span class="ru">Будущий рост</span></span>
+      <span class="en">Multi-device passport-merging — one voice identity across phones, studios, partner apps. A growth layer, not the primary primitive.</span>
+      <span class="ru">Объединение паспортов между устройствами — единая идентичность голоса между телефоном, студией и приложениями партнёров. Слой роста, не основной примитив.</span>
+    </p>
     <p class="closing">
       <span class="en">This is not a startup. <span class="em-peri">It is a foundation of eternal values.</span></span>
       <span class="ru">Это не стартап. <span class="em-peri">Это фонд вечных ценностей.</span></span>
@@ -1270,7 +1436,7 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
       <span><span class="en">12 — call to action</span><span class="ru">12 — призыв</span></span>
     </div>
     <h2 id="cTitle" class="s-title">
-      <span class="en">Time to choose a role</span><span class="ru">Время выбирать роль</span>
+      <span class="en">Here the conversation begins</span><span class="ru">Здесь начинается разговор</span>
     </h2>
     <div class="roles">
       <a class="role" data-i="1" href="#how-it-works" aria-label="Participant — Record your voice">
@@ -1285,7 +1451,7 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
         <span class="rcta"><span class="en">Record your voice</span><span class="ru">Запишите свой голос</span></span>
         <span class="arr" aria-hidden="true">→</span>
       </a>
-      <a class="role" data-i="2" href="mailto:partners@granat.world?subject=Guardian%20—%20Support%20the%20project" aria-label="Guardian — Support the project">
+      <a class="role" data-i="2" href="mailto:hello@granat.world?subject=Guardian%20—%20Support%20the%20project" aria-label="Guardian — Support the project">
         <span class="icon" aria-hidden="true">
           <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
             <path d="M8 26 Q14 30 22 30 Q30 30 36 26"/>
@@ -1299,7 +1465,7 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
         <span class="rcta"><span class="en">Support the project</span><span class="ru">Поддержите проект</span></span>
         <span class="arr" aria-hidden="true">→</span>
       </a>
-      <a class="role" data-i="3" href="mailto:team@granat.world?subject=Architect%20—%20Join%20the%20team%20of%20creators" aria-label="Architect — Join the team of creators">
+      <a class="role" data-i="3" href="mailto:hello@granat.world?subject=Architect%20—%20Join%20the%20team%20of%20creators" aria-label="Architect — Join the team of creators">
         <span class="icon" aria-hidden="true">
           <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
             <line x1="22" y1="8" x2="13" y2="34"/>
@@ -1315,8 +1481,8 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
       </a>
     </div>
     <p class="closing">
-      <span class="en">GRANAT is a reality <span class="em-peri">that is chosen to be created</span>.</span>
-      <span class="ru">GRANAT — это реальность, <span class="em-peri">которую выбирают творить</span>.</span>
+      <span class="en">GRANAT is not a project to believe in. <span class="em-peri">It is a reality chosen to be created.</span></span>
+      <span class="ru">GRANAT — это не проект, в который верят. <span class="em-peri">Это реальность, которую выбирают творить.</span></span>
     </p>
   </div>
 </section>
@@ -1461,7 +1627,7 @@ footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
 /* === ANSWER reveal === */
 (function(){
   var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var nodes=document.querySelectorAll('#answer .ans-headline, #answer .ans-rule, #answer .ans-body');
+  var nodes=document.querySelectorAll('#answer .ans-headline, #answer .ans-rule, #answer .ans-body, #answer .ans-pairs');
   if(reduced){nodes.forEach(function(n){n.classList.add('in')});return}
   var io=new IntersectionObserver(function(entries){
     entries.forEach(function(e){
