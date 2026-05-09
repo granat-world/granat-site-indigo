@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GRANAT — social transformation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Inter:wght@300;400;500;600;700&display=swap&subset=cyrillic,latin" rel="stylesheet" />
+<style>
+:root{
+  --bg-deep:#0F0820;
+  --bg-primary:#1A1043;
+  --bg-elevated:#241B4F;
+  --bg-surface:#2D2358;
+  --granat-red:#C5403F;
+  --granat-red-bright:#D04848;
+  --periwinkle:#8FA3E8;
+  --periwinkle-bright:#A8B7F0;
+  --periwinkle-soft:rgba(143,163,232,0.22);
+  --mint:#7BD8A0;
+  --text-bright:#FFFFFF;
+  --text-primary:#E8E5F5;
+  --text-secondary:rgba(255,255,255,0.62);
+  --text-muted:rgba(255,255,255,0.40);
+  --border-subtle:rgba(150,130,220,0.12);
+  --border-medium:rgba(150,130,220,0.22);
+  --card-gradient:linear-gradient(180deg,#241B4F 0%,#2D2358 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+.ru{display:none}
+body.lang-ru .en{display:none !important}
+body.lang-ru span.ru,body.lang-ru .ru-inline{display:inline !important}
+body.lang-ru div.ru,body.lang-ru p.ru,body.lang-ru .ru-block{display:block !important}
+
+.nav{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 2.5rem;border-bottom:1px solid var(--border-subtle)}
+.sigil{display:flex;align-items:center;gap:0.85rem;text-decoration:none}
+.sigil .gem{width:26px;height:26px}
+.wordmark{font:700 0.85rem 'Inter',sans-serif;letter-spacing:0.22em;color:var(--text-bright)}
+.lang-toggle{display:flex;gap:0.2rem;background:rgba(140,130,220,0.04);border:1px solid var(--border-subtle);border-radius:6px;padding:0.2rem}
+.lang-btn{background:transparent;border:0;cursor:pointer;padding:0.3rem 0.65rem;border-radius:4px;font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.08em;color:var(--text-muted);transition:color 200ms,background 200ms}
+.lang-btn:hover{color:var(--text-secondary)}
+.lang-btn.active{background:#8B2826;color:var(--text-bright)}
+.lang-btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:2px}
+
+/* === SECTION 9: SOCIAL TRANSFORMATION === */
+#social{background:var(--bg-primary);padding:6rem 2rem}
+#social .s-inner{max-width:1100px;margin:0 auto}
+
+#social .label{
+  display:flex;align-items:center;gap:0.85rem;
+  font:600 0.78rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--periwinkle);margin-bottom:1.2rem;
+  opacity:0;transition:opacity 600ms ease-out;
+}
+#social .label.in{opacity:1}
+#social .label .hairline{width:32px;height:1px;background:var(--periwinkle)}
+
+#social .title{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(2.1rem,4.4vw,3.2rem);line-height:1.1;letter-spacing:-0.015em;
+  color:var(--text-bright);margin-bottom:2.4rem;
+  opacity:0;transform:translateY(8px);
+  transition:opacity 700ms ease-out, transform 700ms ease-out;
+}
+#social .title.in{opacity:1;transform:translateY(0)}
+
+#social .lead{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(1.35rem,2.4vw,1.85rem);line-height:1.35;letter-spacing:-0.01em;
+  color:var(--text-primary);max-width:62ch;margin-bottom:0.4rem;text-wrap:pretty;
+  opacity:0;transform:translateY(8px);
+  transition:opacity 700ms ease-out, transform 700ms ease-out;
+}
+#social .lead.in{opacity:1;transform:translateY(0)}
+
+#social .verdict{
+  font-family:'Playfair Display',Georgia,serif;font-weight:900;font-style:italic;
+  font-size:clamp(1.7rem,3.6vw,2.6rem);line-height:1.15;letter-spacing:-0.015em;
+  color:var(--granat-red);margin-bottom:5rem;
+  opacity:0;transform:translateY(8px);
+  transition:opacity 800ms ease-out, transform 800ms ease-out;
+}
+#social .verdict.in{opacity:1;transform:translateY(0)}
+
+/* === TRANSFORMATION PAIRS === */
+.pairs{
+  max-width:900px;margin:0 auto 4rem;
+  border-top:1px solid var(--border-subtle);
+}
+.pair{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:2rem;
+  padding:2.1rem 0.5rem;
+  border-bottom:1px solid var(--border-subtle);
+}
+.pair .num{
+  position:absolute;
+  font:400 0.72rem 'Inter',sans-serif;letter-spacing:0.22em;
+  color:var(--text-muted);
+}
+.pair{position:relative}
+.pair .num{top:0.9rem;left:0.5rem;font-variant-numeric:tabular-nums}
+
+.pair .before,.pair .after{
+  font:600 clamp(1.05rem,2vw,1.45rem) 'Inter',sans-serif;
+  letter-spacing:0.18em;text-transform:uppercase;
+  line-height:1.2;
+  text-wrap:balance;
+  opacity:0;transform:translateY(6px);
+  transition:opacity 600ms ease-out, transform 600ms ease-out;
+}
+.pair.in .before,.pair.in .after{opacity:1;transform:translateY(0)}
+.pair .before{color:var(--granat-red);text-align:right;transition-delay:50ms}
+.pair .after{color:var(--periwinkle);text-align:left;transition-delay:350ms}
+
+.pair .arrow{
+  font-family:'Inter',sans-serif;font-weight:300;
+  font-size:clamp(1.6rem,3vw,2.2rem);
+  color:var(--periwinkle);
+  line-height:1;
+  display:inline-block;
+  transform:scale(0);transform-origin:center;
+  transition:transform 240ms cubic-bezier(.34,1.56,.64,1) 200ms;
+  user-select:none;
+}
+.pair.in .arrow{transform:scale(1)}
+
+@media (max-width:680px){
+  #social{padding:3rem 1.25rem}
+  .pair{grid-template-columns:1fr;gap:0.4rem;padding:1.6rem 0.5rem;text-align:center}
+  .pair .num{position:static;margin-bottom:0.4rem;display:block;text-align:left}
+  .pair .before,.pair .after{text-align:center}
+  .pair .arrow{transform:rotate(90deg) scale(0);margin:0.2rem 0}
+  .pair.in .arrow{transform:rotate(90deg) scale(1)}
+}
+
+@media (prefers-reduced-motion: reduce){
+  #social .label,#social .title,#social .lead,#social .verdict,
+  .pair .before,.pair .after,.pair .arrow{
+    opacity:1 !important;transform:none !important;transition:none !important;
+  }
+  @media (max-width:680px){.pair .arrow{transform:rotate(90deg) !important}}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="primary">
+  <a class="sigil" href="#">
+    <svg class="gem" viewBox="0 0 32 32" aria-hidden="true">
+      <defs>
+        <radialGradient id="gemGlow9" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+          <stop offset="22%" stop-color="#FFD9DC" stop-opacity="0.7"/>
+          <stop offset="55%" stop-color="#E0303F"/>
+          <stop offset="100%" stop-color="#7A1820"/>
+        </radialGradient>
+      </defs>
+      <polygon points="16,2 26,7 30,16 26,25 16,30 6,25 2,16 6,7" fill="url(#gemGlow9)" stroke="#5A1018" stroke-width="0.5"/>
+      <circle cx="16" cy="14.5" r="1.4" fill="#FFFFFF"/>
+    </svg>
+    <span class="wordmark">GRANAT</span>
+  </a>
+  <div class="lang-toggle" role="group" aria-label="language">
+    <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+    <button class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+  </div>
+</nav>
+
+<!-- === SECTION 9: SOCIAL TRANSFORMATION === -->
+<section id="social" tabindex="-1" aria-labelledby="sTitle">
+  <div class="s-inner">
+
+    <div class="label">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">09 — social transformation</span><span class="ru">09 — социальная трансформация</span></span>
+    </div>
+
+    <h2 id="sTitle" class="title">
+      <span class="en">Social transformation</span>
+      <span class="ru">Социальная трансформация</span>
+    </h2>
+
+    <p class="lead">
+      <span class="en">Granat heals the main illness of our time —</span>
+      <span class="ru">Granat лечит главную болезнь современности —</span>
+    </p>
+
+    <p class="verdict" aria-live="polite">
+      <span class="en">collective loneliness.</span>
+      <span class="ru">коллективное одиночество.</span>
+    </p>
+
+    <!-- === TRANSFORMATION PAIRS === -->
+    <dl class="pairs" aria-label="four transformations" id="pairs">
+
+      <div class="pair" data-i="1">
+        <span class="num">01</span>
+        <dt class="before">
+          <span class="en">Disconnection</span>
+          <span class="ru">Разобщённость</span>
+        </dt>
+        <span class="arrow" aria-hidden="true">→</span>
+        <dd class="after">
+          <span class="en">Unity</span>
+          <span class="ru">Единство</span>
+        </dd>
+      </div>
+
+      <div class="pair" data-i="2">
+        <span class="num">02</span>
+        <dt class="before">
+          <span class="en">Statistics</span>
+          <span class="ru">Статистика</span>
+        </dt>
+        <span class="arrow" aria-hidden="true">→</span>
+        <dd class="after">
+          <span class="en">Story</span>
+          <span class="ru">История</span>
+        </dd>
+      </div>
+
+      <div class="pair" data-i="3">
+        <span class="num">03</span>
+        <dt class="before">
+          <span class="en">Observer</span>
+          <span class="ru">Наблюдатель</span>
+        </dt>
+        <span class="arrow" aria-hidden="true">→</span>
+        <dd class="after">
+          <span class="en">Creator</span>
+          <span class="ru">Творец</span>
+        </dd>
+      </div>
+
+      <div class="pair" data-i="4">
+        <span class="num">04</span>
+        <dt class="before">
+          <span class="en">Contemporaries</span>
+          <span class="ru">Современники</span>
+        </dt>
+        <span class="arrow" aria-hidden="true">→</span>
+        <dd class="after">
+          <span class="en">Legacy</span>
+          <span class="ru">Наследие</span>
+        </dd>
+      </div>
+
+    </dl>
+
+  </div>
+</section>
+
+<script>
+/* === LANG TOGGLE === */
+(function(){
+  var btns=document.querySelectorAll('.lang-btn');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var lang=b.dataset.lang;
+      document.body.classList.toggle('lang-ru', lang==='ru');
+      document.documentElement.setAttribute('lang', lang);
+      btns.forEach(function(x){x.classList.remove('active');x.setAttribute('aria-pressed','false')});
+      b.classList.add('active');b.setAttribute('aria-pressed','true');
+    });
+  });
+})();
+
+/* === REVEAL: header chain + stagger pairs === */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var label=document.querySelector('#social .label');
+  var title=document.querySelector('#social .title');
+  var lead=document.querySelector('#social .lead');
+  var verdict=document.querySelector('#social .verdict');
+  var pairs=document.querySelectorAll('.pair');
+
+  if(reduced){
+    [label,title,lead,verdict].forEach(function(n){n&&n.classList.add('in')});
+    pairs.forEach(function(p){p.classList.add('in')});
+    return;
+  }
+
+  var headerSeen=false;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      if(e.target===title && !headerSeen){
+        headerSeen=true;
+        label.classList.add('in');
+        title.classList.add('in');
+        setTimeout(function(){lead.classList.add('in')},150);
+        setTimeout(function(){verdict.classList.add('in')},500);
+        io.unobserve(title);
+      } else if(e.target.classList.contains('pair')){
+        var i=parseInt(e.target.getAttribute('data-i'),10)||1;
+        setTimeout(function(){e.target.classList.add('in')},(i-1)*180);
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.2});
+  io.observe(title);
+  pairs.forEach(function(p){io.observe(p)});
+})();
+</script>
+
+</body>
+</html>

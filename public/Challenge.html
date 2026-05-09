@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GRANAT — the challenge of our time</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap&subset=cyrillic,latin" rel="stylesheet" />
+<style>
+:root{
+  --bg-deep:#0F0820;
+  --bg-primary:#1A1043;
+  --bg-elevated:#241B4F;
+  --granat-red:#C5403F;
+  --granat-red-bright:#D04848;
+  --granat-red-glow:rgba(197,64,63,0.18);
+  --periwinkle:#8FA3E8;
+  --periwinkle-bright:#A8B7F0;
+  --periwinkle-soft:rgba(143,163,232,0.22);
+  --text-bright:#FFFFFF;
+  --text-primary:#E8E5F5;
+  --text-secondary:rgba(255,255,255,0.62);
+  --text-muted:rgba(255,255,255,0.40);
+  --border-subtle:rgba(150,130,220,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+.ru{display:none}
+body.lang-ru .en{display:none !important}
+body.lang-ru span.ru,body.lang-ru .ru-inline{display:inline !important}
+body.lang-ru div.ru,body.lang-ru p.ru,body.lang-ru .ru-block{display:block !important}
+
+.nav{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 2.5rem;border-bottom:1px solid var(--border-subtle)}
+.sigil{display:flex;align-items:center;gap:0.85rem;text-decoration:none}
+.sigil .gem{width:26px;height:26px}
+.wordmark{font:700 0.85rem 'Inter',sans-serif;letter-spacing:0.22em;color:var(--text-bright)}
+.lang-toggle{display:flex;gap:0.2rem;background:rgba(140,130,220,0.04);border:1px solid var(--border-subtle);border-radius:6px;padding:0.2rem}
+.lang-btn{background:transparent;border:0;cursor:pointer;padding:0.3rem 0.65rem;border-radius:4px;font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.08em;color:var(--text-muted);transition:color 200ms,background 200ms}
+.lang-btn:hover{color:var(--text-secondary)}
+.lang-btn.active{background:#8B2826;color:var(--text-bright)}
+.lang-btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:2px}
+
+/* === SECTION 2: CHALLENGE === */
+#challenge{
+  background:var(--bg-primary);
+  padding:6rem 2rem;
+}
+#challenge .ch-inner{max-width:1100px;margin:0 auto}
+
+#challenge .label{
+  display:flex;align-items:center;gap:0.85rem;
+  font:600 0.78rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--periwinkle);
+  margin-bottom:1.4rem;
+  opacity:0;transition:opacity 600ms ease-out;
+}
+#challenge .label .hairline{width:32px;height:1px;background:var(--periwinkle)}
+#challenge .label.in{opacity:1}
+
+#challenge .hook{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(2.1rem,4.4vw,3.4rem);
+  line-height:1.1;letter-spacing:-0.015em;
+  color:var(--text-bright);
+  max-width:18ch;
+  margin-bottom:4.5rem;
+  opacity:0;transform:translateY(8px);
+  transition:opacity 700ms 200ms ease-out, transform 700ms 200ms ease-out;
+}
+#challenge .hook.in{opacity:1;transform:translateY(0)}
+
+#challenge .divider{
+  width:100%;height:1px;background:var(--border-subtle);
+  margin-bottom:4rem;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:4rem;
+  align-items:start;
+  margin-bottom:5rem;
+}
+.stat{
+  display:flex;flex-direction:column;gap:0.85rem;
+  position:relative;
+}
+.stat .num{
+  font-family:'JetBrains Mono',monospace;font-weight:400;
+  font-size:clamp(4rem,9vw,7rem);
+  line-height:1;letter-spacing:-0.01em;
+  color:var(--text-bright);
+  font-variant-numeric:tabular-nums;
+  display:inline-block;
+}
+.stat[data-wound="true"] .num{color:var(--granat-red)}
+.stat[data-wound="true"] .wound-line{
+  display:block;width:50%;height:1px;
+  background:var(--granat-red);
+  margin-top:0.5rem;
+  opacity:0;transform:scaleX(0);transform-origin:left;
+  transition:opacity 600ms ease-out 1500ms, transform 900ms ease-out 1500ms;
+}
+.stats.in .stat[data-wound="true"] .wound-line{opacity:1;transform:scaleX(1)}
+
+.stat .suffix{
+  font:300 1.05rem 'Inter',sans-serif;line-height:1.4;
+  color:var(--text-secondary);
+  margin-top:0.25rem;
+}
+.stat .lbl{
+  font:400 0.92rem 'Inter',sans-serif;line-height:1.4;
+  color:var(--text-muted);
+}
+
+#challenge .tail{
+  font-family:'Playfair Display',Georgia,serif;font-weight:400;font-style:italic;
+  font-size:clamp(1.2rem,1.8vw,1.45rem);
+  line-height:1.5;letter-spacing:-0.005em;
+  color:var(--text-primary);
+  max-width:720px;
+  margin:0 auto;
+  text-align:center;
+  text-wrap:pretty;
+  opacity:0;transform:translateY(8px);
+  transition:opacity 700ms ease-out, transform 700ms ease-out;
+}
+#challenge .tail.in{opacity:1;transform:translateY(0)}
+#challenge .tail .em-peri{color:var(--periwinkle);transition:color 200ms ease-out}
+#challenge .tail .em-peri:hover{color:var(--periwinkle-bright)}
+
+@media (max-width:880px){
+  #challenge{padding:3.5rem 1.4rem}
+  #challenge .hook{margin-bottom:3rem}
+  #challenge .divider{margin-bottom:2.6rem}
+  .stats{grid-template-columns:1fr;gap:3rem;margin-bottom:3.6rem}
+  .stat .num{font-size:clamp(3.4rem,14vw,5rem)}
+}
+
+@media (prefers-reduced-motion: reduce){
+  #challenge .label,#challenge .hook,#challenge .tail,
+  .stats.in .stat[data-wound="true"] .wound-line,
+  .stats .stat[data-wound="true"] .wound-line{
+    opacity:1 !important;transform:none !important;transition:none !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="primary">
+  <a class="sigil" href="#">
+    <svg class="gem" viewBox="0 0 32 32" aria-hidden="true">
+      <defs>
+        <radialGradient id="gemGlow4" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+          <stop offset="22%" stop-color="#FFD9DC" stop-opacity="0.7"/>
+          <stop offset="55%" stop-color="#E0303F"/>
+          <stop offset="100%" stop-color="#7A1820"/>
+        </radialGradient>
+      </defs>
+      <polygon points="16,2 26,7 30,16 26,25 16,30 6,25 2,16 6,7" fill="url(#gemGlow4)" stroke="#5A1018" stroke-width="0.5"/>
+      <circle cx="16" cy="14.5" r="1.4" fill="#FFFFFF"/>
+    </svg>
+    <span class="wordmark">GRANAT</span>
+  </a>
+  <div class="lang-toggle" role="group" aria-label="language">
+    <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+    <button class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+  </div>
+</nav>
+
+<!-- === SECTION 2: CHALLENGE === -->
+<section id="challenge" tabindex="-1" aria-labelledby="chHook">
+  <div class="ch-inner">
+
+    <div class="label">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">02 — the challenge of our time</span><span class="ru">02 — вызов нашего времени</span></span>
+    </div>
+
+    <h2 id="chHook" class="hook">
+      <span class="en">we have created a technological paradise yet live in a spiritual desert</span>
+      <span class="ru">мы создали технологический рай, но живём в духовной пустыне</span>
+    </h2>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="stats" id="stats">
+
+      <figure class="stat" role="figure"
+              aria-label="8 billion people">
+        <span class="num" data-target="8" data-duration="1200">0</span>
+        <span class="suffix"><span class="en">billion</span><span class="ru">миллиардов</span></span>
+        <figcaption class="lbl"><span class="en">people</span><span class="ru">человек</span></figcaption>
+      </figure>
+
+      <figure class="stat" role="figure"
+              aria-label="7000 languages">
+        <span class="num" data-target="7000" data-duration="1500">0</span>
+        <span class="suffix">&nbsp;</span>
+        <figcaption class="lbl"><span class="en">languages</span><span class="ru">языков</span></figcaption>
+      </figure>
+
+      <figure class="stat" data-wound="true" role="figure"
+              aria-label="zero shared voices">
+        <span class="num" data-static="true">0</span>
+        <span class="wound-line" aria-hidden="true"></span>
+        <span class="suffix">&nbsp;</span>
+        <figcaption class="lbl"><span class="en">shared voices</span><span class="ru">общих голосов</span></figcaption>
+      </figure>
+
+    </div>
+
+    <p class="tail">
+      <span class="en">History will judge us not by our technologies, but by what we did with <span class="em-peri">the human soul</span>.</span>
+      <span class="ru">История будет судить нас не по нашим технологиям, а по тому, что мы сделали с <span class="em-peri">человеческой душой</span>.</span>
+    </p>
+
+  </div>
+</section>
+
+<script>
+/* === LANG TOGGLE === */
+(function(){
+  var btns=document.querySelectorAll('.lang-btn');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var lang=b.dataset.lang;
+      document.body.classList.toggle('lang-ru', lang==='ru');
+      document.documentElement.setAttribute('lang', lang);
+      btns.forEach(function(x){x.classList.remove('active');x.setAttribute('aria-pressed','false')});
+      b.classList.add('active');b.setAttribute('aria-pressed','true');
+    });
+  });
+})();
+
+/* === REVEAL + COUNT-UP === */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function format(n){
+    // 7000 → "7,000" with thin spaces matching mono register
+    return Math.round(n).toLocaleString('en-US').replace(/,/g,'\u202F');
+  }
+
+  function countUp(el){
+    var target=parseInt(el.getAttribute('data-target'),10);
+    var dur=parseInt(el.getAttribute('data-duration'),10)||1200;
+    if(reduced){ el.textContent=format(target); return; }
+    var start=performance.now();
+    function tick(now){
+      var t=Math.min(1,(now-start)/dur);
+      // ease-out cubic
+      var e=1-Math.pow(1-t,3);
+      el.textContent=format(target*e);
+      if(t<1) requestAnimationFrame(tick);
+      else el.textContent=format(target);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function reveal(){
+    document.querySelector('#challenge .label').classList.add('in');
+    document.querySelector('#challenge .hook').classList.add('in');
+    var stats=document.getElementById('stats');
+    stats.classList.add('in');
+    document.querySelectorAll('#stats .num[data-target]').forEach(countUp);
+    setTimeout(function(){
+      document.querySelector('#challenge .tail').classList.add('in');
+    }, 1700);
+  }
+
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ reveal(); io.disconnect(); }
+    });
+  },{threshold:0.2});
+  io.observe(document.getElementById('challenge'));
+})();
+</script>
+
+</body>
+</html>

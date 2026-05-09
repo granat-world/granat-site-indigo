@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GRANAT — project philosophy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap&subset=cyrillic,latin" rel="stylesheet" />
+<style>
+:root{
+  --bg-deep:#0F0820;
+  --bg-primary:#1A1043;
+  --bg-elevated:#241B4F;
+  --bg-surface:#2D2358;
+  --granat-red:#C5403F;
+  --periwinkle:#8FA3E8;
+  --periwinkle-bright:#A8B7F0;
+  --periwinkle-soft:rgba(143,163,232,0.22);
+  --text-bright:#FFFFFF;
+  --text-primary:#E8E5F5;
+  --text-secondary:rgba(255,255,255,0.62);
+  --text-muted:rgba(255,255,255,0.40);
+  --border-subtle:rgba(150,130,220,0.12);
+  --border-medium:rgba(150,130,220,0.22);
+  --card-gradient:linear-gradient(180deg,#241B4F 0%,#2D2358 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+.ru{display:none}
+body.lang-ru .en{display:none !important}
+body.lang-ru span.ru,body.lang-ru .ru-inline{display:inline !important}
+body.lang-ru div.ru,body.lang-ru p.ru,body.lang-ru .ru-block{display:block !important}
+
+.nav{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 2.5rem;border-bottom:1px solid var(--border-subtle)}
+.sigil{display:flex;align-items:center;gap:0.85rem;text-decoration:none}
+.sigil .gem{width:26px;height:26px}
+.wordmark{font:700 0.85rem 'Inter',sans-serif;letter-spacing:0.22em;color:var(--text-bright)}
+.lang-toggle{display:flex;gap:0.2rem;background:rgba(140,130,220,0.04);border:1px solid var(--border-subtle);border-radius:6px;padding:0.2rem}
+.lang-btn{background:transparent;border:0;cursor:pointer;padding:0.3rem 0.65rem;border-radius:4px;font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.08em;color:var(--text-muted);transition:color 200ms,background 200ms}
+.lang-btn:hover{color:var(--text-secondary)}
+.lang-btn.active{background:#8B2826;color:var(--text-bright)}
+.lang-btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:2px}
+
+/* === SECTION 5: PHILOSOPHY === */
+#philosophy{background:var(--bg-primary);padding:6rem 2rem}
+#philosophy .ph-inner{max-width:1180px;margin:0 auto}
+
+#philosophy .label{
+  display:flex;align-items:center;gap:0.85rem;
+  font:600 0.78rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--periwinkle);margin-bottom:1.2rem;
+}
+#philosophy .label .hairline{width:32px;height:1px;background:var(--periwinkle)}
+
+#philosophy .title{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(2.1rem,4.4vw,3.2rem);line-height:1.1;letter-spacing:-0.015em;
+  color:var(--text-bright);margin-bottom:2rem;
+}
+
+#philosophy .lead{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(1.35rem,2.2vw,1.75rem);line-height:1.35;letter-spacing:-0.01em;
+  color:var(--text-primary);max-width:60ch;margin-bottom:4rem;text-wrap:pretty;
+}
+#philosophy .lead .em-peri{color:var(--periwinkle);font-style:italic;font-weight:400}
+
+/* === TRIPTYCH CARDS === */
+.triptych{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;
+  margin-bottom:5rem;
+}
+.tcard{
+  background:var(--card-gradient);
+  border:1px solid var(--border-subtle);
+  border-radius:14px;
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:border-color 220ms ease-out, transform 220ms ease-out;
+  opacity:0;transform:translateY(14px);
+}
+.tcard.in{opacity:1;transform:translateY(0);transition:opacity 700ms ease-out, transform 700ms ease-out}
+.tcard:hover,.tcard:focus-within{border-color:var(--border-medium)}
+.tcard:focus-visible{outline:2px solid var(--periwinkle);outline-offset:3px}
+
+.tcard .img{
+  position:relative;aspect-ratio:5/4;width:100%;
+  overflow:hidden;
+  background:linear-gradient(180deg,#1A1043 0%, #241B4F 100%);
+  border-bottom:1px solid var(--border-subtle);
+}
+.tcard .img svg{
+  position:absolute;inset:0;width:100%;height:100%;
+  will-change:transform;
+  transition:transform 200ms ease-out;
+}
+
+.tcard .body{padding:1.6rem 1.75rem 1.75rem;display:flex;flex-direction:column;gap:0.8rem}
+.tcard .clabel{
+  font:600 0.72rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--periwinkle);
+  display:flex;align-items:center;gap:0.45rem;flex-wrap:wrap;
+}
+.tcard .clabel .arrow{color:var(--periwinkle);font-weight:400;font-size:1em}
+.tcard .ctext{
+  font:300 1.02rem 'Inter',sans-serif;line-height:1.6;color:var(--text-primary);text-wrap:pretty;
+}
+
+#philosophy .closing{
+  font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
+  font-size:clamp(1.4rem,2.4vw,2rem);line-height:1.3;letter-spacing:-0.01em;
+  color:var(--text-primary);max-width:900px;margin:0 auto;text-align:center;text-wrap:pretty;
+  opacity:0;transform:translateY(8px);
+  transition:opacity 700ms ease-out, transform 700ms ease-out;
+}
+#philosophy .closing.in{opacity:1;transform:translateY(0)}
+#philosophy .closing .em-peri{color:var(--periwinkle);transition:color 200ms ease-out}
+#philosophy .closing .em-peri:hover{color:var(--periwinkle-bright)}
+
+@media (max-width:1024px){
+  .triptych{grid-template-columns:repeat(2,1fr)}
+  .tcard:nth-child(3){grid-column:1/-1}
+}
+@media (max-width:680px){
+  #philosophy{padding:3rem 1.25rem}
+  .triptych{grid-template-columns:1fr;gap:1rem;margin-bottom:3rem}
+  .tcard:nth-child(3){grid-column:auto}
+  #philosophy .lead{margin-bottom:2.4rem}
+}
+@media (prefers-reduced-motion: reduce){
+  .tcard,#philosophy .closing{opacity:1 !important;transform:none !important;transition:none !important}
+  .tcard .img svg{transition:none !important}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="primary">
+  <a class="sigil" href="#">
+    <svg class="gem" viewBox="0 0 32 32" aria-hidden="true">
+      <defs>
+        <radialGradient id="gemGlow5" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+          <stop offset="22%" stop-color="#FFD9DC" stop-opacity="0.7"/>
+          <stop offset="55%" stop-color="#E0303F"/>
+          <stop offset="100%" stop-color="#7A1820"/>
+        </radialGradient>
+      </defs>
+      <polygon points="16,2 26,7 30,16 26,25 16,30 6,25 2,16 6,7" fill="url(#gemGlow5)" stroke="#5A1018" stroke-width="0.5"/>
+      <circle cx="16" cy="14.5" r="1.4" fill="#FFFFFF"/>
+    </svg>
+    <span class="wordmark">GRANAT</span>
+  </a>
+  <div class="lang-toggle" role="group" aria-label="language">
+    <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+    <button class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+  </div>
+</nav>
+
+<!-- === SECTION 5: PHILOSOPHY === -->
+<section id="philosophy" tabindex="-1" aria-labelledby="phTitle">
+  <div class="ph-inner">
+
+    <div class="label">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">05 — philosophy</span><span class="ru">05 — философия</span></span>
+    </div>
+
+    <h2 id="phTitle" class="title">
+      <span class="en">Project philosophy</span>
+      <span class="ru">Философия проекта</span>
+    </h2>
+
+    <p class="lead">
+      <span class="en">Granat is a bridge between Human and <span class="em-peri">Artificial Intelligence</span>, Earth and <span class="em-peri">Cosmos</span>, Reality and <span class="em-peri">Eternity</span>.</span>
+      <span class="ru">Granat — это мост между Человеком и <span class="em-peri">Искусственным Интеллектом</span>, Землёй и <span class="em-peri">Космосом</span>, Реальностью и <span class="em-peri">Вечностью</span>.</span>
+    </p>
+
+    <!-- === TRIPTYCH CARDS === -->
+    <div class="triptych">
+
+      <article class="tcard" data-card="1" tabindex="0"
+        aria-labelledby="card1Label">
+        <div class="img" aria-hidden="true">
+          <!-- Sistine echo: two reaching hands, illustrative not photographic -->
+          <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <radialGradient id="c1bg" cx="50%" cy="55%" r="70%">
+                <stop offset="0%" stop-color="#2D2358"/>
+                <stop offset="55%" stop-color="#1A1043"/>
+                <stop offset="100%" stop-color="#0F0820"/>
+              </radialGradient>
+              <radialGradient id="c1spark" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FFE6A8" stop-opacity="0.95"/>
+                <stop offset="40%" stop-color="#E0303F" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#E0303F" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <rect width="500" height="400" fill="url(#c1bg)"/>
+            <!-- left hand (human) silhouette -->
+            <g fill="none" stroke="rgba(232,229,245,0.55)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M70,260 Q120,235 175,225 L210,205 Q220,200 230,205"/>
+              <path d="M180,225 L175,205 M195,222 L195,200 M210,220 L215,198 M225,217 L235,200"/>
+              <path d="M70,260 Q90,275 130,278"/>
+            </g>
+            <!-- right hand (AI) — geometric -->
+            <g fill="none" stroke="rgba(143,163,232,0.7)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M430,260 Q380,235 325,225 L290,205 Q280,200 270,205"/>
+              <path d="M320,225 L325,205 M305,222 L305,200 M290,220 L285,198 M275,217 L265,200"/>
+              <path d="M430,260 Q410,275 370,278"/>
+              <!-- circuit traces -->
+              <path d="M430,260 L470,260 M450,255 L450,275 M460,240 L470,250"/>
+              <circle cx="470" cy="260" r="2"/>
+              <circle cx="450" cy="275" r="2"/>
+            </g>
+            <!-- spark between fingertips -->
+            <circle cx="250" cy="205" r="32" fill="url(#c1spark)"/>
+            <circle cx="250" cy="205" r="3" fill="#FFFFFF"/>
+            <!-- dust motes -->
+            <g fill="rgba(255,255,255,0.35)">
+              <circle cx="160" cy="120" r="0.8"/><circle cx="340" cy="140" r="0.8"/>
+              <circle cx="220" cy="80" r="0.6"/><circle cx="290" cy="100" r="0.6"/>
+              <circle cx="120" cy="180" r="0.6"/><circle cx="395" cy="170" r="0.6"/>
+            </g>
+          </svg>
+        </div>
+        <div class="body">
+          <h3 id="card1Label" class="clabel">
+            <span class="en">Human <span class="arrow">↔</span> AI</span>
+            <span class="ru">Человек <span class="arrow">↔</span> ИИ</span>
+          </h3>
+          <p class="ctext">
+            <span class="en">Not data passed to the machine, but the soul. Love, creation, beauty.</span>
+            <span class="ru">Не данные передаются машине, а душа. Любовь, творчество, красота.</span>
+          </p>
+        </div>
+      </article>
+
+      <article class="tcard" data-card="2" tabindex="0"
+        aria-labelledby="card2Label">
+        <div class="img" aria-hidden="true">
+          <!-- Apollo-archive Earth-rim -->
+          <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <radialGradient id="c2sky" cx="50%" cy="40%" r="80%">
+                <stop offset="0%" stop-color="#1A1043"/>
+                <stop offset="60%" stop-color="#0F0820"/>
+                <stop offset="100%" stop-color="#06030F"/>
+              </radialGradient>
+              <radialGradient id="c2earth" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#3a4f8a"/>
+                <stop offset="55%" stop-color="#1d2952"/>
+                <stop offset="100%" stop-color="#0F0820"/>
+              </radialGradient>
+              <linearGradient id="c2limb" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(143,163,232,0)"/>
+                <stop offset="50%" stop-color="rgba(143,163,232,0.55)"/>
+                <stop offset="100%" stop-color="rgba(255,210,180,0.25)"/>
+              </linearGradient>
+            </defs>
+            <rect width="500" height="400" fill="url(#c2sky)"/>
+            <!-- stars -->
+            <g fill="rgba(255,255,255,0.55)">
+              <circle cx="60" cy="40" r="0.7"/><circle cx="140" cy="60" r="0.6"/>
+              <circle cx="220" cy="30" r="0.9"/><circle cx="320" cy="50" r="0.6"/>
+              <circle cx="410" cy="35" r="0.8"/><circle cx="470" cy="80" r="0.7"/>
+              <circle cx="80" cy="120" r="0.5"/><circle cx="370" cy="120" r="0.5"/>
+              <circle cx="430" cy="160" r="0.6"/><circle cx="50" cy="200" r="0.5"/>
+            </g>
+            <!-- Earth limb at bottom -->
+            <circle cx="250" cy="700" r="450" fill="url(#c2earth)"/>
+            <!-- atmosphere glow -->
+            <circle cx="250" cy="700" r="455" fill="none" stroke="url(#c2limb)" stroke-width="6" opacity="0.85"/>
+            <circle cx="250" cy="700" r="462" fill="none" stroke="rgba(143,163,232,0.18)" stroke-width="14"/>
+            <!-- subtle sun flare -->
+            <circle cx="380" cy="260" r="60" fill="rgba(255,222,180,0.10)"/>
+          </svg>
+        </div>
+        <div class="body">
+          <h3 id="card2Label" class="clabel">
+            <span class="en">Earth <span class="arrow">↔</span> Cosmos</span>
+            <span class="ru">Земля <span class="arrow">↔</span> Космос</span>
+          </h3>
+          <p class="ctext">
+            <span class="en">The voice of humanity, sent to the stars. An artifact that outlives us.</span>
+            <span class="ru">Голос человечества, отправленный к звёздам. Артефакт, который переживёт нас.</span>
+          </p>
+        </div>
+      </article>
+
+      <article class="tcard" data-card="3" tabindex="0"
+        aria-labelledby="card3Label">
+        <div class="img" aria-hidden="true">
+          <!-- Candle flame, soft natural light -->
+          <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <radialGradient id="c3room" cx="50%" cy="55%" r="75%">
+                <stop offset="0%" stop-color="#2D2358"/>
+                <stop offset="60%" stop-color="#1A1043"/>
+                <stop offset="100%" stop-color="#0A0518"/>
+              </radialGradient>
+              <radialGradient id="c3flame" cx="50%" cy="60%" r="50%">
+                <stop offset="0%" stop-color="#FFF1B8"/>
+                <stop offset="35%" stop-color="#FFB46A" stop-opacity="0.95"/>
+                <stop offset="70%" stop-color="#E0303F" stop-opacity="0.55"/>
+                <stop offset="100%" stop-color="#E0303F" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="c3halo" cx="50%" cy="50%" r="60%">
+                <stop offset="0%" stop-color="rgba(255,200,140,0.30)"/>
+                <stop offset="100%" stop-color="rgba(255,200,140,0)"/>
+              </radialGradient>
+            </defs>
+            <rect width="500" height="400" fill="url(#c3room)"/>
+            <!-- halo of light around candle -->
+            <ellipse cx="250" cy="200" rx="220" ry="180" fill="url(#c3halo)"/>
+            <!-- candle body -->
+            <rect x="237" y="220" width="26" height="120" rx="2" fill="#E8DDC2" opacity="0.85"/>
+            <rect x="237" y="220" width="26" height="120" rx="2" fill="url(#c3room)" opacity="0.30"/>
+            <!-- wax drip -->
+            <path d="M237,260 Q232,275 235,290 L237,290 Z" fill="#E8DDC2" opacity="0.7"/>
+            <!-- wick -->
+            <rect x="249" y="208" width="2" height="14" fill="#2A1810"/>
+            <!-- flame -->
+            <ellipse cx="250" cy="190" rx="22" ry="40" fill="url(#c3flame)"/>
+            <ellipse cx="250" cy="195" rx="9" ry="22" fill="#FFF7D6" opacity="0.85"/>
+            <!-- table reflection -->
+            <rect x="0" y="340" width="500" height="60" fill="rgba(0,0,0,0.45)"/>
+            <ellipse cx="250" cy="345" rx="120" ry="6" fill="rgba(255,200,140,0.18)"/>
+          </svg>
+        </div>
+        <div class="body">
+          <h3 id="card3Label" class="clabel">
+            <span class="en">Reality <span class="arrow">↔</span> Eternity</span>
+            <span class="ru">Реальность <span class="arrow">↔</span> Вечность</span>
+          </h3>
+          <p class="ctext">
+            <span class="en">Every voice forever preserved in digital space as part of a global harmony — cultural heritage for future generations.</span>
+            <span class="ru">Каждый голос навсегда сохраняется в цифровом пространстве как часть глобальной гармонии — культурное наследие для будущих поколений.</span>
+          </p>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="closing">
+      <span class="en">Singularity is not the end of humanity, but <span class="em-peri">the beginning of its immortality</span>.</span>
+      <span class="ru">Сингулярность — это не конец человечества, а <span class="em-peri">начало его бессмертия</span>.</span>
+    </p>
+
+  </div>
+</section>
+
+<script>
+/* === LANG TOGGLE === */
+(function(){
+  var btns=document.querySelectorAll('.lang-btn');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var lang=b.dataset.lang;
+      document.body.classList.toggle('lang-ru', lang==='ru');
+      document.documentElement.setAttribute('lang', lang);
+      btns.forEach(function(x){x.classList.remove('active');x.setAttribute('aria-pressed','false')});
+      b.classList.add('active');b.setAttribute('aria-pressed','true');
+    });
+  });
+})();
+
+/* === REVEAL: stagger triptych + closing === */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cards=document.querySelectorAll('.tcard');
+  var closing=document.querySelector('#philosophy .closing');
+  if(reduced){
+    cards.forEach(function(c){c.classList.add('in')});
+    if(closing) closing.classList.add('in');
+    return;
+  }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      if(e.target.classList.contains('tcard')){
+        var i=parseInt(e.target.getAttribute('data-card'),10)||1;
+        setTimeout(function(){e.target.classList.add('in')},(i-1)*200);
+        io.unobserve(e.target);
+      } else if(e.target===closing){
+        setTimeout(function(){closing.classList.add('in')},300);
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.18});
+  cards.forEach(function(c){io.observe(c)});
+  if(closing) io.observe(closing);
+})();
+
+/* === SUBTLE PARALLAX on card images (max 15% offset) === */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var imgs=document.querySelectorAll('.tcard .img svg');
+  var ticking=false;
+  function update(){
+    imgs.forEach(function(svg){
+      var rect=svg.getBoundingClientRect();
+      var vh=window.innerHeight||1;
+      var center=rect.top+rect.height/2;
+      var pct=Math.max(-1,Math.min(1,(center-vh/2)/vh));
+      var t=-pct*18; // up to ~18px = ~10–15% of card height
+      svg.style.transform='translate3d(0,'+t+'px,0) scale(1.04)';
+    });
+    ticking=false;
+  }
+  window.addEventListener('scroll',function(){
+    if(!ticking){requestAnimationFrame(update);ticking=true}
+  },{passive:true});
+  update();
+})();
+</script>
+
+</body>
+</html>

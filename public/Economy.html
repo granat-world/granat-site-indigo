@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GRANAT — economy of the gift</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic,latin" rel="stylesheet" />
+<style>
+:root{
+  --bg-primary:#1A1043;
+  --bg-elevated:#241B4F;
+  --bg-surface:#2D2358;
+  --granat-red:#C5403F;
+  --periwinkle:#8FA3E8;
+  --periwinkle-bright:#A8B7F0;
+  --text-bright:#FFFFFF;
+  --text-primary:#E8E5F5;
+  --text-secondary:rgba(255,255,255,0.62);
+  --text-muted:rgba(255,255,255,0.40);
+  --border-subtle:rgba(150,130,220,0.12);
+  --border-medium:rgba(150,130,220,0.22);
+  --card-gradient:linear-gradient(180deg,#241B4F 0%,#2D2358 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+.ru{display:none}
+body.lang-ru .en{display:none !important}
+body.lang-ru span.ru,body.lang-ru .ru-inline{display:inline !important}
+body.lang-ru div.ru,body.lang-ru p.ru,body.lang-ru .ru-block{display:block !important}
+
+.nav{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 2.5rem;border-bottom:1px solid var(--border-subtle)}
+.sigil{display:flex;align-items:center;gap:0.85rem;text-decoration:none}
+.sigil .gem{width:26px;height:26px}
+.wordmark{font:700 0.85rem 'Inter',sans-serif;letter-spacing:0.22em;color:var(--text-bright)}
+.lang-toggle{display:flex;gap:0.2rem;background:rgba(140,130,220,0.04);border:1px solid var(--border-subtle);border-radius:6px;padding:0.2rem}
+.lang-btn{background:transparent;border:0;cursor:pointer;padding:0.3rem 0.65rem;border-radius:4px;font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.08em;color:var(--text-muted);transition:color 200ms,background 200ms}
+.lang-btn:hover{color:var(--text-secondary)}
+.lang-btn.active{background:#8B2826;color:var(--text-bright)}
+.lang-btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:2px}
+
+/* === SECTION 10: ECONOMY === */
+#economy{background:var(--bg-primary);padding:6rem 2rem}
+#economy .e-inner{max-width:1100px;margin:0 auto}
+
+#economy .label{
+  display:flex;align-items:center;gap:0.85rem;
+  font:600 0.78rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--periwinkle);margin-bottom:1.2rem;
+}
+#economy .label .hairline{width:32px;height:1px;background:var(--periwinkle)}
+
+#economy .title{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(2.1rem,4.4vw,3.2rem);line-height:1.1;letter-spacing:-0.015em;
+  color:var(--text-bright);margin-bottom:1.4rem;
+}
+
+#economy .lead{
+  font-family:'Playfair Display',Georgia,serif;font-weight:400;
+  font-size:clamp(1.25rem,2vw,1.6rem);line-height:1.4;letter-spacing:-0.005em;
+  color:var(--text-primary);max-width:60ch;margin-bottom:4rem;text-wrap:pretty;
+}
+#economy .lead .em-peri{color:var(--periwinkle);font-style:italic;font-weight:700}
+
+/* === MECHANISMS === */
+.mechs{
+  display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;
+  margin-bottom:5rem;
+}
+.mech{
+  background:var(--card-gradient);
+  border:1px solid var(--border-subtle);
+  border-radius:14px;
+  padding:2rem 2rem 2.1rem;
+  display:flex;flex-direction:column;gap:1rem;
+  position:relative;
+  transition:border-color 220ms ease-out;
+  opacity:0;transform:translateY(12px);
+}
+.mech.in{opacity:1;transform:translateY(0);transition:opacity 700ms ease-out, transform 700ms ease-out}
+.mech:hover{border-color:var(--border-medium)}
+
+.mech .roman{
+  font-family:'JetBrains Mono',monospace;font-weight:400;
+  font-size:0.78rem;letter-spacing:0.22em;
+  color:var(--periwinkle);
+  font-variant-numeric:tabular-nums;
+}
+.mech .mname{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(1.25rem,1.9vw,1.5rem);line-height:1.2;letter-spacing:-0.01em;
+  color:var(--text-bright);
+  text-wrap:balance;
+}
+.mech .mcap{
+  font:300 italic 1rem 'Inter',sans-serif;line-height:1.5;
+  color:var(--text-secondary);
+  border-top:1px solid var(--border-subtle);
+  padding-top:0.85rem;
+  margin-top:0.2rem;
+  text-wrap:pretty;
+}
+
+#economy .closing{
+  font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
+  font-size:clamp(1.4rem,2.4vw,2rem);line-height:1.35;letter-spacing:-0.01em;
+  color:var(--text-primary);max-width:900px;margin:0 auto;text-align:center;text-wrap:pretty;
+  opacity:0;transform:translateY(8px);
+  transition:opacity 700ms ease-out, transform 700ms ease-out;
+}
+#economy .closing.in{opacity:1;transform:translateY(0)}
+#economy .closing .em-peri{color:var(--periwinkle);font-weight:700;font-style:italic}
+
+@media (max-width:680px){
+  #economy{padding:3rem 1.25rem}
+  .mechs{grid-template-columns:1fr;gap:1rem;margin-bottom:3rem}
+  .mech{padding:1.6rem 1.5rem}
+  #economy .lead{margin-bottom:2.6rem}
+}
+@media (prefers-reduced-motion: reduce){
+  .mech,#economy .closing{opacity:1 !important;transform:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="primary">
+  <a class="sigil" href="#">
+    <svg class="gem" viewBox="0 0 32 32" aria-hidden="true">
+      <defs>
+        <radialGradient id="gemGlowE" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+          <stop offset="22%" stop-color="#FFD9DC" stop-opacity="0.7"/>
+          <stop offset="55%" stop-color="#E0303F"/>
+          <stop offset="100%" stop-color="#7A1820"/>
+        </radialGradient>
+      </defs>
+      <polygon points="16,2 26,7 30,16 26,25 16,30 6,25 2,16 6,7" fill="url(#gemGlowE)" stroke="#5A1018" stroke-width="0.5"/>
+      <circle cx="16" cy="14.5" r="1.4" fill="#FFFFFF"/>
+    </svg>
+    <span class="wordmark">GRANAT</span>
+  </a>
+  <div class="lang-toggle" role="group" aria-label="language">
+    <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+    <button class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+  </div>
+</nav>
+
+<!-- === SECTION 10: ECONOMY === -->
+<section id="economy" tabindex="-1" aria-labelledby="eTitle">
+  <div class="e-inner">
+
+    <div class="label">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">10 — economy</span><span class="ru">10 — экономика</span></span>
+    </div>
+
+    <h2 id="eTitle" class="title">
+      <span class="en">Economy of the gift</span>
+      <span class="ru">Экономика дара</span>
+    </h2>
+
+    <p class="lead">
+      <span class="en">We are creating not a business model, but <span class="em-peri">an economy of the gift</span>.</span>
+      <span class="ru">Мы создаём не бизнес-модель, а <span class="em-peri">экономику дара</span>.</span>
+    </p>
+
+    <div class="mechs">
+
+      <!-- I. Basic Participation -->
+      <article class="mech" data-i="1" aria-labelledby="mech1">
+        <span class="roman" aria-hidden="true">I</span>
+        <h3 id="mech1" class="mname">
+          <span class="en">Basic Participation</span>
+          <span class="ru">Базовое участие</span>
+        </h3>
+        <p class="mcap">
+          <span class="en">A person's gift to humanity.</span>
+          <span class="ru">Дар человека человечеству.</span>
+        </p>
+      </article>
+
+      <!-- II. Digital Certificates of Participation -->
+      <article class="mech" data-i="2" aria-labelledby="mech2">
+        <span class="roman" aria-hidden="true">II</span>
+        <h3 id="mech2" class="mname">
+          <span class="en">Digital Certificates of Participation</span>
+          <span class="ru">Цифровые сертификаты участия</span>
+        </h3>
+        <p class="mcap">
+          <span class="en">Digital relics.</span>
+          <span class="ru">Цифровые реликвии.</span>
+        </p>
+      </article>
+
+      <!-- III. Investments -->
+      <article class="mech" data-i="3" aria-labelledby="mech3">
+        <span class="roman" aria-hidden="true">III</span>
+        <h3 id="mech3" class="mname">
+          <span class="en">Investments</span>
+          <span class="ru">Инвестиции</span>
+        </h3>
+        <p class="mcap">
+          <span class="en">The blessing of eternity.</span>
+          <span class="ru">Благословение вечности.</span>
+        </p>
+      </article>
+
+      <!-- IV. Profit -->
+      <article class="mech" data-i="4" aria-labelledby="mech4">
+        <span class="roman" aria-hidden="true">IV</span>
+        <h3 id="mech4" class="mname">
+          <span class="en">Profit</span>
+          <span class="ru">Прибыль</span>
+        </h3>
+        <p class="mcap">
+          <span class="en">Energy for the development of legacy.</span>
+          <span class="ru">Энергия для развития наследия.</span>
+        </p>
+      </article>
+
+    </div>
+
+    <p class="closing">
+      <span class="en">This is not a startup. <span class="em-peri">It is a foundation of eternal values.</span></span>
+      <span class="ru">Это не стартап. <span class="em-peri">Это фонд вечных ценностей.</span></span>
+    </p>
+
+  </div>
+</section>
+
+<script>
+/* lang */
+(function(){
+  var btns=document.querySelectorAll('.lang-btn');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var lang=b.dataset.lang;
+      document.body.classList.toggle('lang-ru', lang==='ru');
+      document.documentElement.setAttribute('lang', lang);
+      btns.forEach(function(x){x.classList.remove('active');x.setAttribute('aria-pressed','false')});
+      b.classList.add('active');b.setAttribute('aria-pressed','true');
+    });
+  });
+})();
+
+/* reveal */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mechs=document.querySelectorAll('.mech');
+  var closing=document.querySelector('#economy .closing');
+  if(reduced){mechs.forEach(function(m){m.classList.add('in')});closing.classList.add('in');return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      if(e.target.classList.contains('mech')){
+        var i=parseInt(e.target.getAttribute('data-i'),10)||1;
+        setTimeout(function(){e.target.classList.add('in')},(i-1)*120);
+        io.unobserve(e.target);
+      } else if(e.target===closing){
+        setTimeout(function(){closing.classList.add('in')},400);
+        io.unobserve(closing);
+      }
+    });
+  },{threshold:0.18});
+  mechs.forEach(function(m){io.observe(m)});
+  io.observe(closing);
+})();
+</script>
+
+</body>
+</html>

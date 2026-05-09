@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GRANAT — how it works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap&subset=cyrillic,latin" rel="stylesheet" />
+<style>
+/* === TOKENS === */
+:root{
+  --bg-deep:#0F0820;
+  --bg-primary:#1A1043;
+  --bg-elevated:#241B4F;
+  --bg-surface:#2D2358;
+  --granat-red:#C5403F;
+  --granat-red-bright:#D04848;
+  --granat-red-deep:#8B2826;
+  --granat-red-glow:rgba(197,64,63,0.18);
+  --ruby:#E0303F;
+  --periwinkle:#8FA3E8;
+  --periwinkle-bright:#A8B7F0;
+  --periwinkle-soft:rgba(143,163,232,0.22);
+  --mint:#7BD8A0;
+  --mint-soft:rgba(123,216,160,0.20);
+  --text-bright:#FFFFFF;
+  --text-primary:#E8E5F5;
+  --text-secondary:rgba(255,255,255,0.62);
+  --text-muted:rgba(255,255,255,0.40);
+  --border-subtle:rgba(150,130,220,0.12);
+  --border-medium:rgba(150,130,220,0.22);
+  --card-gradient:linear-gradient(180deg,#241B4F 0%,#2D2358 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{min-height:100vh}
+
+/* === LANG TOGGLE === */
+.ru{display:none}
+body.lang-ru .en{display:none !important}
+body.lang-ru span.ru,body.lang-ru .ru-inline{display:inline !important}
+body.lang-ru div.ru,body.lang-ru p.ru,body.lang-ru .ru-block{display:block !important}
+
+/* === MINIMAL NAV (sigil + lang toggle) === */
+.nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.4rem 2.5rem;
+  border-bottom:1px solid var(--border-subtle);
+}
+.sigil{display:flex;align-items:center;gap:0.85rem;text-decoration:none}
+.sigil .gem{width:28px;height:28px}
+.wordmark{font:700 0.85rem 'Inter',sans-serif;letter-spacing:0.22em;color:var(--text-bright)}
+.lang-toggle{display:flex;gap:0.2rem;background:rgba(140,130,220,0.04);border:1px solid var(--border-subtle);border-radius:6px;padding:0.2rem}
+.lang-btn{background:transparent;border:0;cursor:pointer;padding:0.3rem 0.65rem;border-radius:4px;font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.08em;color:var(--text-muted);transition:color 200ms,background 200ms}
+.lang-btn:hover{color:var(--text-secondary)}
+.lang-btn.active{background:var(--granat-red-deep);color:var(--text-bright)}
+.lang-btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:2px}
+
+/* === SECTION 7: HOW IT WORKS === */
+#how-it-works{
+  padding:6rem 2rem;
+  background:var(--bg-primary);
+}
+.hiw-inner{max-width:1100px;margin:0 auto}
+
+.section-label{
+  display:flex;align-items:center;gap:0.85rem;
+  font:600 0.78rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--periwinkle);
+  margin-bottom:1.2rem;
+}
+.section-label .hairline{width:32px;height:1px;background:var(--periwinkle)}
+
+.section-title{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(2.2rem,4.4vw,3.4rem);
+  line-height:1.1;letter-spacing:-0.015em;
+  color:var(--text-bright);
+  max-width:18ch;
+  margin-bottom:3.6rem;
+}
+
+.steps{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+}
+.step{
+  position:relative;
+  background:var(--bg-elevated);
+  border:1px solid var(--border-subtle);
+  border-radius:14px;
+  padding:2rem 1.75rem 1.75rem;
+  display:flex;flex-direction:column;gap:0.9rem;
+  transition:border-color 220ms ease-out, transform 220ms ease-out;
+  opacity:0;transform:translateY(14px);
+}
+.step.in{opacity:1;transform:translateY(0);transition:opacity 600ms ease-out, transform 600ms ease-out}
+.step:hover{border-color:var(--border-medium)}
+.step .num{
+  font-family:'JetBrains Mono',monospace;font-weight:400;
+  font-size:clamp(2.4rem,3.8vw,3.2rem);
+  letter-spacing:0.04em;line-height:1;
+  color:var(--periwinkle);
+  margin-bottom:0.6rem;
+  display:flex;align-items:baseline;gap:0.6rem;
+}
+.step .num::after{
+  content:"";flex:1;height:1px;background:var(--periwinkle-soft);
+  align-self:center;margin-bottom:0.15em;
+}
+.step .step-title{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:1.5rem;line-height:1.2;color:var(--text-bright);
+}
+.step .step-body{
+  font:400 1rem 'Inter',sans-serif;line-height:1.6;
+  color:var(--text-secondary);
+}
+
+.cta-wrap{
+  margin-top:3.6rem;
+  display:flex;flex-direction:column;align-items:center;gap:0.9rem;
+}
+.cta-try{
+  position:relative;
+  display:inline-flex;align-items:center;gap:0.6rem;
+  background:var(--granat-red);color:var(--text-bright);
+  border:0;cursor:pointer;
+  padding:1rem 2rem;border-radius:12px;
+  font:600 1rem 'Inter',sans-serif;letter-spacing:0.005em;
+  transition:all 240ms ease-out;
+  box-shadow:0 0 0 rgba(197,64,63,0);
+  animation:heartbeat 3s ease-in-out infinite;
+}
+.cta-try:hover{
+  background:var(--granat-red-bright);
+  transform:translateY(-1px);
+  box-shadow:0 0 36px var(--granat-red-glow);
+}
+.cta-try:focus-visible{outline:2px solid var(--periwinkle);outline-offset:3px}
+.cta-try .arrow{transition:transform 220ms ease-out}
+.cta-try:hover .arrow{transform:translateX(4px)}
+.cta-hint{font:400 0.78rem 'Inter',sans-serif;color:var(--text-muted);letter-spacing:0.04em}
+@keyframes heartbeat{
+  0%,100%{box-shadow:0 0 24px rgba(197,64,63,0.10)}
+  50%{box-shadow:0 0 36px rgba(197,64,63,0.22)}
+}
+
+@media (max-width:880px){
+  .steps{grid-template-columns:1fr;gap:1rem}
+  .section-title{margin-bottom:2.4rem}
+  #how-it-works{padding:4rem 1.25rem}
+}
+
+/* === MODAL: SHELL === */
+.modal-backdrop{
+  position:fixed;inset:0;
+  background:rgba(15,8,32,0.86);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  padding:1.25rem;
+  z-index:300;
+  opacity:0;pointer-events:none;
+  transition:opacity 200ms ease-out;
+}
+.modal-backdrop.open{opacity:1;pointer-events:auto}
+.modal{
+  width:100%;max-width:480px;
+  background:var(--card-gradient);
+  border:1px solid var(--border-medium);
+  border-radius:14px;
+  padding:2.5rem;
+  box-shadow:0 24px 64px rgba(0,0,0,0.45);
+  transform:translateY(8px) scale(0.96);
+  opacity:0;
+  transition:transform 300ms ease-out, opacity 300ms ease-out;
+  max-height:calc(100vh - 2.5rem);
+  overflow-y:auto;
+}
+.modal-backdrop.open .modal{transform:translateY(0) scale(1);opacity:1}
+
+.m-eyebrow{
+  font:600 0.72rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--periwinkle);margin-bottom:0.85rem;
+  display:flex;align-items:center;gap:0.6rem;
+}
+.m-eyebrow .hairline{width:24px;height:1px;background:var(--periwinkle)}
+
+.m-title{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:1.7rem;line-height:1.18;color:var(--text-bright);
+  letter-spacing:-0.01em;
+  margin-bottom:0.85rem;
+}
+.m-body{
+  font:400 0.98rem 'Inter',sans-serif;line-height:1.65;color:var(--text-secondary);
+  margin-bottom:1.6rem;
+}
+.m-actions{
+  display:flex;gap:0.7rem;justify-content:flex-end;flex-wrap:wrap;
+  margin-top:1.5rem;
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
+  padding:0.78rem 1.4rem;border-radius:10px;cursor:pointer;
+  font:500 0.92rem 'Inter',sans-serif;letter-spacing:0.005em;
+  border:1px solid transparent;text-decoration:none;
+  transition:all 220ms ease-out;
+}
+.btn-primary{background:var(--granat-red);color:var(--text-bright);border-color:var(--granat-red)}
+.btn-primary:hover{background:var(--granat-red-bright);box-shadow:0 0 28px var(--granat-red-glow);transform:translateY(-1px)}
+.btn-primary:disabled{background:rgba(197,64,63,0.35);color:rgba(255,255,255,0.55);cursor:not-allowed;box-shadow:none;transform:none}
+.btn-ghost{background:transparent;color:var(--text-secondary);border-color:var(--border-subtle)}
+.btn-ghost:hover{color:var(--text-primary);border-color:var(--border-medium)}
+.btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:3px}
+
+/* === STAGE SWITCHING (cross-fade) === */
+.stage{display:none}
+.modal[data-stage="consent"] .stage-consent,
+.modal[data-stage="recording"] .stage-recording,
+.modal[data-stage="processing"] .stage-processing,
+.modal[data-stage="playback"] .stage-playback{
+  display:block;animation:stageIn 220ms ease-out;
+}
+@keyframes stageIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* === MODAL: CONSENT === */
+.consent-row{
+  display:flex;align-items:flex-start;gap:0.75rem;
+  padding:0.95rem 1rem;
+  background:rgba(140,130,220,0.05);
+  border:1px solid var(--border-subtle);
+  border-radius:10px;
+  margin-bottom:0.85rem;
+  cursor:pointer;
+  user-select:none;
+}
+.consent-row input{position:absolute;opacity:0;pointer-events:none}
+.consent-box{
+  flex:0 0 18px;width:18px;height:18px;border-radius:4px;
+  border:1.5px solid var(--border-medium);
+  background:transparent;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 200ms ease-out;
+  margin-top:1px;
+}
+.consent-row input:checked + .consent-box{
+  background:var(--granat-red);border-color:var(--granat-red);
+}
+.consent-box svg{width:11px;height:11px;opacity:0;transition:opacity 200ms ease-out}
+.consent-row input:checked + .consent-box svg{opacity:1}
+.consent-row input:focus-visible + .consent-box{outline:2px solid var(--periwinkle);outline-offset:2px}
+.consent-label{font:500 0.95rem 'Inter',sans-serif;color:var(--text-primary);line-height:1.5}
+.policy-link{
+  font:400 0.82rem 'Inter',sans-serif;color:var(--periwinkle);
+  text-decoration:underline;text-underline-offset:3px;
+  display:inline-block;margin-bottom:0.2rem;
+}
+.policy-link:hover{color:var(--periwinkle-bright)}
+
+/* === MODAL: RECORDING === */
+.rec-stage{display:flex;flex-direction:column;align-items:center;gap:1.2rem;padding:0.5rem 0 0}
+.rec-ring{
+  position:relative;width:200px;height:200px;
+}
+.rec-ring svg{width:100%;height:100%;animation:ringSpin 60s linear infinite;transform-origin:center}
+@keyframes ringSpin{to{transform:rotate(360deg)}}
+.rec-ring .seg{
+  fill:var(--granat-red);
+  transform-origin:100px 100px;
+  animation:segPulse 1.4s ease-in-out infinite;
+}
+@keyframes segPulse{
+  0%,100%{opacity:0.35;transform:scaleY(0.85)}
+  50%{opacity:1;transform:scaleY(1.15)}
+}
+.rec-btn{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:80px;height:80px;border-radius:50%;
+  background:var(--granat-red);border:0;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 36px var(--granat-red-glow);
+  transition:transform 120ms ease-out;
+}
+.rec-btn:hover{background:var(--granat-red-bright)}
+.rec-btn:active{transform:translate(-50%,-50%) scale(0.95)}
+.rec-btn .stop-square{width:22px;height:22px;background:#fff;border-radius:3px}
+.rec-btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:4px}
+
+.countdown{
+  font-family:'JetBrains Mono',monospace;font-weight:400;
+  font-size:2.4rem;letter-spacing:0.06em;line-height:1;
+  color:var(--periwinkle);
+}
+.rec-status{
+  font:500 0.85rem 'Inter',sans-serif;letter-spacing:0.02em;
+  color:var(--text-secondary);
+  display:flex;align-items:center;gap:0.45rem;
+}
+.rec-status .dots{display:inline-flex;gap:3px}
+.rec-status .dots i{
+  width:4px;height:4px;border-radius:50%;background:var(--granat-red);
+  animation:dotPulse 1.2s ease-in-out infinite;
+}
+.rec-status .dots i:nth-child(2){animation-delay:0.2s}
+.rec-status .dots i:nth-child(3){animation-delay:0.4s}
+@keyframes dotPulse{0%,100%{opacity:0.3}50%{opacity:1}}
+
+/* === MODAL: PROCESSING === */
+.proc-stage{display:flex;flex-direction:column;align-items:center;gap:1.4rem;padding:0.5rem 0 0}
+.proc-ring{
+  width:120px;height:120px;border-radius:50%;
+  background:
+    conic-gradient(from 0deg, var(--granat-red) 0%, var(--granat-red-bright) 35%, transparent 65%, transparent 100%);
+  position:relative;
+  animation:procSpin 3s linear infinite;
+  filter:drop-shadow(0 0 18px var(--granat-red-glow));
+}
+.proc-ring::before{
+  content:"";position:absolute;inset:8px;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%, var(--periwinkle-soft), transparent 70%), var(--bg-elevated);
+}
+@keyframes procSpin{to{transform:rotate(360deg)}}
+.proc-meta{
+  font-family:'JetBrains Mono',monospace;font-size:0.78rem;letter-spacing:0.18em;
+  color:var(--text-muted);text-transform:uppercase;
+}
+
+/* === MODAL: PLAYBACK === */
+.player{
+  margin-top:0.4rem;
+  background:rgba(15,8,32,0.4);
+  border:1px solid var(--border-subtle);
+  border-radius:12px;
+  padding:1rem 1.1rem;
+  display:flex;align-items:center;gap:0.9rem;
+}
+.play-btn{
+  flex:0 0 44px;width:44px;height:44px;border-radius:50%;
+  background:var(--granat-red);border:0;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background 200ms ease-out;
+}
+.play-btn:hover{background:var(--granat-red-bright)}
+.play-btn .ico{width:0;height:0;border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent;margin-left:3px}
+.play-btn.playing .ico{
+  width:11px;height:11px;background:#fff;border:0;margin-left:0;border-radius:1px;
+  /* render two bars via inset shadow trick */
+  background:linear-gradient(90deg,#fff 0 35%, transparent 35% 65%, #fff 65% 100%);
+}
+.play-btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:3px}
+.scrub{flex:1;display:flex;flex-direction:column;gap:0.45rem}
+.scrub-bar{
+  position:relative;height:4px;border-radius:2px;
+  background:rgba(143,163,232,0.18);
+  overflow:hidden;
+}
+.scrub-fill{
+  position:absolute;left:0;top:0;bottom:0;width:0%;
+  background:var(--periwinkle);
+  transition:width 120ms linear;
+}
+.scrub-time{
+  font-family:'JetBrains Mono',monospace;font-size:0.78rem;letter-spacing:0.04em;
+  color:var(--text-muted);display:flex;justify-content:space-between;
+}
+
+.passport{
+  margin-top:1rem;
+  background:rgba(15,8,32,0.4);
+  border:1px solid var(--border-subtle);
+  border-radius:12px;
+  padding:1rem 1.1rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.passport-radar{flex:0 0 64px;width:64px;height:64px}
+.passport-meta{flex:1;display:flex;flex-direction:column;gap:0.2rem}
+.passport-label{font:600 0.68rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;color:var(--periwinkle)}
+.passport-id{font-family:'JetBrains Mono',monospace;font-size:0.92rem;color:var(--text-bright);letter-spacing:0.04em}
+.passport-sub{font:400 0.78rem 'Inter',sans-serif;color:var(--text-muted)}
+
+/* === RESPONSIVE MODAL === */
+@media (max-width:600px){
+  .modal{padding:1.6rem;max-width:none;width:calc(100vw - 2rem);max-height:calc(100vh - 2rem)}
+  .m-title{font-size:1.4rem}
+  .rec-ring{width:170px;height:170px}
+  .countdown{font-size:2rem}
+}
+
+/* === REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce){
+  .step,.cta-try,.modal,.modal-backdrop{animation:none !important;transition:none !important}
+  .stage{animation:none !important}
+  /* keep recording feedback animations — functional */
+}
+</style>
+</head>
+<body>
+
+<!-- === NAV === -->
+<nav class="nav" aria-label="primary">
+  <a class="sigil" href="#">
+    <svg class="gem" viewBox="0 0 32 32" aria-hidden="true">
+      <defs>
+        <radialGradient id="gemGlow2" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+          <stop offset="22%" stop-color="#FFD9DC" stop-opacity="0.7"/>
+          <stop offset="55%" stop-color="#E0303F"/>
+          <stop offset="100%" stop-color="#7A1820"/>
+        </radialGradient>
+      </defs>
+      <polygon points="16,2 26,7 30,16 26,25 16,30 6,25 2,16 6,7" fill="url(#gemGlow2)" stroke="#5A1018" stroke-width="0.5"/>
+      <circle cx="16" cy="14.5" r="1.4" fill="#FFFFFF"/>
+    </svg>
+    <span class="wordmark">GRANAT</span>
+  </a>
+  <div class="lang-toggle" role="group" aria-label="language">
+    <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+    <button class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+  </div>
+</nav>
+
+<!-- === SECTION 7: HOW IT WORKS === -->
+<section id="how-it-works" aria-labelledby="hiwTitle">
+  <div class="hiw-inner">
+
+    <div class="section-label">
+      <span class="hairline"></span>
+      <span><span class="en">how it works</span><span class="ru">как это работает</span></span>
+    </div>
+
+    <h2 id="hiwTitle" class="section-title">
+      <span class="en">Three steps to eternity</span>
+      <span class="ru">Три шага к вечности</span>
+    </h2>
+
+    <div class="steps">
+      <article class="step" data-step="1">
+        <div class="num">01</div>
+        <h3 class="step-title"><span class="en">Record</span><span class="ru">Запись</span></h3>
+        <p class="step-body">
+          <span class="en">5 minutes through the GRANAT app.</span>
+          <span class="ru">5 минут через приложение GRANAT.</span>
+        </p>
+      </article>
+
+      <article class="step" data-step="2">
+        <div class="num">02</div>
+        <h3 class="step-title"><span class="en">Transformation</span><span class="ru">Преображение</span></h3>
+        <p class="step-body">
+          <span class="en">AI finds the perfect place for your voice in the symphony.</span>
+          <span class="ru">AI находит идеальное место для вашего голоса в симфонии.</span>
+        </p>
+      </article>
+
+      <article class="step" data-step="3">
+        <div class="num">03</div>
+        <h3 class="step-title"><span class="en">Eternity</span><span class="ru">Вечность</span></h3>
+        <p class="step-body">
+          <span class="en">A digital certificate — proof of your place in history.</span>
+          <span class="ru">Цифровой сертификат — доказательство вашего места в истории.</span>
+        </p>
+      </article>
+    </div>
+
+    <div class="cta-wrap">
+      <button class="cta-try" id="openDemo" aria-haspopup="dialog" aria-controls="demoModal">
+        <span class="en">Try it now</span><span class="ru">Попробуйте сейчас</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </button>
+      <span class="cta-hint">
+        <span class="en">~30 seconds · uses your microphone</span>
+        <span class="ru">~30 секунд · использует ваш микрофон</span>
+      </span>
+    </div>
+
+  </div>
+</section>
+
+<!-- === MODAL === -->
+<div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+  <div class="modal" id="demoModal" data-stage="consent"
+       role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-live="polite">
+
+    <!-- === MODAL: CONSENT === -->
+    <div class="stage stage-consent">
+      <div class="m-eyebrow"><span class="hairline"></span><span class="en">stage 01 · consent</span><span class="ru">этап 01 · согласие</span></div>
+      <h3 class="m-title" id="modalTitle">
+        <span class="en">Before you record</span>
+        <span class="ru">Прежде чем записать</span>
+      </h3>
+      <p class="m-body">
+        <span class="en">I consent to transferring this audio recording to the GRANAT project for integration into the collective work. Details on rights — see the participant policy.</span>
+        <span class="ru">Я согласен(на) с передачей этой аудио-записи проекту GRANAT для интеграции в общее произведение. Подробнее о правах — в политике участника.</span>
+      </p>
+      <label class="consent-row" for="consentBox">
+        <input type="checkbox" id="consentBox" checked />
+        <span class="consent-box" aria-hidden="true">
+          <svg viewBox="0 0 11 11"><path d="M1.5 5.5 L4.4 8.4 L9.5 2.6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="consent-label">
+          <span class="en">I agree</span><span class="ru">Согласен</span>
+        </span>
+      </label>
+      <a class="policy-link" href="/policy" tabindex="0">
+        <span class="en">→ participant policy</span>
+        <span class="ru">→ политика участника</span>
+      </a>
+      <div class="m-actions">
+        <button class="btn btn-ghost" id="cancelConsent">
+          <span class="en">Cancel</span><span class="ru">Отмена</span>
+        </button>
+        <button class="btn btn-primary" id="goRecord">
+          <span class="en">Record my voice</span><span class="ru">Записать голос</span>
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- === MODAL: RECORDING === -->
+    <div class="stage stage-recording">
+      <div class="m-eyebrow"><span class="hairline"></span><span class="en">stage 02 · recording</span><span class="ru">этап 02 · запись</span></div>
+      <h3 class="m-title">
+        <span class="en">Sing along with the choir</span>
+        <span class="ru">Спойте вместе с хором</span>
+      </h3>
+      <p class="m-body">
+        <span class="en">Use headphones. Listen to the guide track. 27 seconds.</span>
+        <span class="ru">Используйте наушники. Слушайте guide-трек. 27 секунд.</span>
+      </p>
+
+      <div class="rec-stage">
+        <div class="rec-ring">
+          <svg viewBox="0 0 200 200" id="ringSvg" aria-hidden="true"></svg>
+          <button class="rec-btn" id="stopBtn" aria-label="Stop recording">
+            <span class="stop-square" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="countdown" id="countdown">00:27</div>
+        <div class="rec-status">
+          <span class="en">Recording</span><span class="ru">Записываем</span>
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        </div>
+      </div>
+
+      <div class="m-actions">
+        <button class="btn btn-ghost" id="cancelRec">
+          <span class="en">Stop</span><span class="ru">Остановить</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- === MODAL: PROCESSING === -->
+    <div class="stage stage-processing">
+      <div class="m-eyebrow"><span class="hairline"></span><span class="en">stage 03 · processing</span><span class="ru">этап 03 · обработка</span></div>
+      <h3 class="m-title">
+        <span class="en">Processing</span>
+        <span class="ru">Обработка</span>
+      </h3>
+      <p class="m-body">
+        <span class="en">Your voice is being woven into a 25-voice choir.</span>
+        <span class="ru">Ваш голос вплетается в хор из 25 человек.</span>
+      </p>
+      <div class="proc-stage">
+        <div class="proc-ring" aria-hidden="true"></div>
+        <div class="proc-meta" id="procMeta">aligning · 24-bit</div>
+      </div>
+    </div>
+
+    <!-- === MODAL: PLAYBACK === -->
+    <div class="stage stage-playback">
+      <div class="m-eyebrow"><span class="hairline"></span><span class="en">stage 04 · playback</span><span class="ru">этап 04 · прослушивание</span></div>
+      <h3 class="m-title">
+        <span class="en">Hear yourself</span>
+        <span class="ru">Услышьте себя</span>
+      </h3>
+      <p class="m-body">
+        <span class="en">You are voice #25 in the choir. Your fingerprint is saved.</span>
+        <span class="ru">Вы — голос #25 в хоре. Ваш отпечаток сохранён.</span>
+      </p>
+
+      <div class="player">
+        <button class="play-btn" id="playBtn" aria-label="Play"><span class="ico" aria-hidden="true"></span></button>
+        <div class="scrub">
+          <div class="scrub-bar"><div class="scrub-fill" id="scrubFill"></div></div>
+          <div class="scrub-time"><span id="elapsed">0:00</span><span id="total">0:27</span></div>
+        </div>
+      </div>
+
+      <div class="passport" aria-label="voice passport">
+        <svg class="passport-radar" viewBox="-32 -32 64 64" aria-hidden="true">
+          <g stroke="rgba(143,163,232,0.30)" fill="none" stroke-width="0.6">
+            <circle r="10"/><circle r="18"/><circle r="26"/>
+          </g>
+          <polygon id="radarPoly"
+            points="0,-22 14,-12 19,8 9,20 -10,18 -20,4 -16,-10"
+            fill="rgba(197,64,63,0.30)" stroke="#C5403F" stroke-width="0.8" stroke-linejoin="round"/>
+        </svg>
+        <div class="passport-meta">
+          <span class="passport-label">
+            <span class="en">voice passport</span><span class="ru">паспорт голоса</span>
+          </span>
+          <span class="passport-id" id="passportId">A3F2·9D81</span>
+          <span class="passport-sub">
+            <span class="en">12 spectral parameters · timbre signature</span>
+            <span class="ru">12 спектральных параметров · подпись тембра</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="m-actions">
+        <button class="btn btn-ghost" id="recordAgain">
+          <span class="en">Record again</span><span class="ru">Запись снова</span>
+        </button>
+        <button class="btn btn-primary" id="doneBtn">
+          <span class="en">Done</span><span class="ru">Готово</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* === LANG TOGGLE === */
+(function(){
+  var btns=document.querySelectorAll('.lang-btn');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var lang=b.dataset.lang;
+      document.body.classList.toggle('lang-ru', lang==='ru');
+      document.documentElement.setAttribute('lang', lang);
+      btns.forEach(function(x){x.classList.remove('active');x.setAttribute('aria-pressed','false')});
+      b.classList.add('active');b.setAttribute('aria-pressed','true');
+    });
+  });
+})();
+
+/* === STEP REVEAL === */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.querySelectorAll('.step').forEach(function(s){s.classList.add('in')});
+    return;
+  }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var i=parseInt(e.target.getAttribute('data-step'),10)||1;
+        setTimeout(function(){e.target.classList.add('in')}, (i-1)*200);
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.18});
+  document.querySelectorAll('.step').forEach(function(s){io.observe(s)});
+})();
+
+/* === BUILD RECORDING RING (32 segments) === */
+(function(){
+  var svg=document.getElementById('ringSvg');
+  if(!svg) return;
+  var N=32, ns='http://www.w3.org/2000/svg';
+  for(var i=0;i<N;i++){
+    var rect=document.createElementNS(ns,'rect');
+    var a=(360/N)*i;
+    rect.setAttribute('x','99');
+    rect.setAttribute('y','8');
+    rect.setAttribute('width','2');
+    rect.setAttribute('height','14');
+    rect.setAttribute('rx','1');
+    rect.setAttribute('class','seg');
+    rect.setAttribute('transform','rotate('+a+' 100 100)');
+    rect.style.animationDelay=(i*0.04)+'s';
+    svg.appendChild(rect);
+  }
+})();
+
+/* === MODAL STATE MACHINE + FOCUS TRAP === */
+(function(){
+  var backdrop=document.getElementById('modalBackdrop');
+  var modal=document.getElementById('demoModal');
+  var openBtn=document.getElementById('openDemo');
+  var consentBox=document.getElementById('consentBox');
+  var goRecord=document.getElementById('goRecord');
+  var cancelConsent=document.getElementById('cancelConsent');
+  var cancelRec=document.getElementById('cancelRec');
+  var stopBtn=document.getElementById('stopBtn');
+  var recordAgain=document.getElementById('recordAgain');
+  var doneBtn=document.getElementById('doneBtn');
+  var countdownEl=document.getElementById('countdown');
+  var procMeta=document.getElementById('procMeta');
+  var playBtn=document.getElementById('playBtn');
+  var scrubFill=document.getElementById('scrubFill');
+  var elapsedEl=document.getElementById('elapsed');
+  var passportId=document.getElementById('passportId');
+
+  var lastFocus=null, recTimer=null, procTimer=null, playTimer=null, isPlaying=false, playT=0;
+  var REC_LEN=27;
+
+  function setStage(s){
+    modal.setAttribute('data-stage', s);
+    // focus first interactive in stage
+    setTimeout(function(){
+      var sel='.stage-'+s+' button:not(:disabled), .stage-'+s+' [tabindex="0"], .stage-'+s+' input';
+      var first=modal.querySelector(sel);
+      if(first) first.focus();
+    },50);
+  }
+
+  function openModal(){
+    lastFocus=document.activeElement;
+    backdrop.classList.add('open');
+    backdrop.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    setStage('consent');
+    syncConsent();
+    setTimeout(function(){ if(cancelConsent) cancelConsent.focus(); },80);
+  }
+  function closeModal(force){
+    if(modal.getAttribute('data-stage')==='recording' && !force){
+      // confirm-on-close while recording
+      if(!confirm(document.body.classList.contains('lang-ru')
+        ? 'Остановить запись и закрыть?'
+        : 'Stop recording and close?')) return;
+    }
+    backdrop.classList.remove('open');
+    backdrop.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+    clearTimers();
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function clearTimers(){
+    if(recTimer){clearInterval(recTimer);recTimer=null}
+    if(procTimer){clearTimeout(procTimer);procTimer=null}
+    if(playTimer){clearInterval(playTimer);playTimer=null}
+    isPlaying=false;
+    if(playBtn) playBtn.classList.remove('playing');
+  }
+
+  function syncConsent(){
+    goRecord.disabled=!consentBox.checked;
+  }
+
+  // open
+  openBtn.addEventListener('click', openModal);
+
+  // backdrop click — only close from consent/processing/playback (not during recording)
+  backdrop.addEventListener('click', function(e){
+    if(e.target===backdrop){
+      var stage=modal.getAttribute('data-stage');
+      if(stage!=='recording') closeModal();
+    }
+  });
+
+  // ESC
+  document.addEventListener('keydown', function(e){
+    if(!backdrop.classList.contains('open')) return;
+    if(e.key==='Escape'){ e.preventDefault(); closeModal(); return; }
+    // focus trap
+    if(e.key==='Tab'){
+      var focusables=modal.querySelectorAll('button:not(:disabled), [href], input:not(:disabled), [tabindex]:not([tabindex="-1"])');
+      var visible=[].filter.call(focusables, function(el){
+        var s=el.closest('.stage');
+        return !s || getComputedStyle(s).display!=='none';
+      });
+      if(!visible.length) return;
+      var first=visible[0], last=visible[visible.length-1];
+      if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+    }
+  });
+
+  // consent
+  consentBox.addEventListener('change', syncConsent);
+  cancelConsent.addEventListener('click', function(){ closeModal(); });
+
+  // start recording
+  goRecord.addEventListener('click', function(){
+    if(!consentBox.checked) return;
+    setStage('recording');
+    startRecording();
+  });
+
+  function fmt(s){
+    var m=Math.floor(s/60), sec=s%60;
+    return (m<10?'0':'')+m+':'+(sec<10?'0':'')+sec;
+  }
+
+  function startRecording(){
+    // TODO: integrate granat-api.apps.cone.red — Web Audio API recorder @ 16-bit PCM WAV, 27s
+    //   navigator.mediaDevices.getUserMedia({audio:true}) → MediaRecorder or AudioWorkletNode
+    //   then POST WAV blob → https://granat-api.apps.cone.red/api/v1/voice/process
+    var t=REC_LEN;
+    countdownEl.textContent=fmt(t);
+    recTimer=setInterval(function(){
+      t--;
+      countdownEl.textContent=fmt(Math.max(0,t));
+      if(t<=0){
+        clearInterval(recTimer);recTimer=null;
+        startProcessing();
+      }
+    },1000);
+  }
+
+  stopBtn.addEventListener('click', function(){
+    if(recTimer){clearInterval(recTimer);recTimer=null}
+    startProcessing();
+  });
+  cancelRec.addEventListener('click', function(){ closeModal(true); });
+
+  function startProcessing(){
+    setStage('processing');
+    var phases=[
+      {en:'aligning · 24-bit',         ru:'выравнивание · 24-bit'},
+      {en:'matching choir · voice 25', ru:'подбор хора · голос 25'},
+      {en:'fingerprinting · 12 dims',  ru:'отпечаток · 12 параметров'}
+    ];
+    var i=0;
+    function tick(){
+      var ru=document.body.classList.contains('lang-ru');
+      procMeta.textContent=phases[i][ru?'ru':'en'];
+      i++;
+      if(i<phases.length){ procTimer=setTimeout(tick, 1100); }
+      else { procTimer=setTimeout(showPlayback, 900); }
+    }
+    tick();
+    // TODO: replace synthetic phases with real polling of /voice/status/:id
+    //   then fetch /voice/result/:id/audio → blob URL → assign to <audio> element for playback
+  }
+
+  function showPlayback(){
+    // generate a deterministic-ish passport id
+    var hex='0123456789ABCDEF', id='';
+    for(var k=0;k<8;k++){ id+=hex.charAt(Math.floor(Math.random()*16)); if(k===3) id+='·'; }
+    passportId.textContent=id;
+    setStage('playback');
+    resetPlayer();
+  }
+
+  function resetPlayer(){
+    playT=0; isPlaying=false;
+    playBtn.classList.remove('playing');
+    scrubFill.style.width='0%';
+    elapsedEl.textContent='0:00';
+  }
+
+  playBtn.addEventListener('click', function(){
+    isPlaying=!isPlaying;
+    playBtn.classList.toggle('playing', isPlaying);
+    playBtn.setAttribute('aria-label', isPlaying ? 'Pause' : 'Play');
+    if(isPlaying){
+      playTimer=setInterval(function(){
+        playT+=0.2;
+        if(playT>=REC_LEN){
+          playT=REC_LEN;
+          clearInterval(playTimer);playTimer=null;
+          isPlaying=false;
+          playBtn.classList.remove('playing');
+          playBtn.setAttribute('aria-label','Play');
+        }
+        scrubFill.style.width=((playT/REC_LEN)*100)+'%';
+        var s=Math.floor(playT);
+        elapsedEl.textContent=Math.floor(s/60)+':'+(s%60<10?'0':'')+(s%60);
+      },200);
+    } else {
+      if(playTimer){clearInterval(playTimer);playTimer=null}
+    }
+  });
+
+  recordAgain.addEventListener('click', function(){
+    clearTimers();
+    setStage('recording');
+    startRecording();
+  });
+  doneBtn.addEventListener('click', function(){ closeModal(true); });
+
+})();
+</script>
+
+</body>
+</html>

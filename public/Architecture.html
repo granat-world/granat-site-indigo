@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GRANAT — architecture of eternity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap&subset=cyrillic,latin" rel="stylesheet" />
+<style>
+:root{
+  --bg-deep:#0F0820;
+  --bg-primary:#1A1043;
+  --bg-elevated:#241B4F;
+  --bg-surface:#2D2358;
+  --granat-red:#C5403F;
+  --periwinkle:#8FA3E8;
+  --periwinkle-bright:#A8B7F0;
+  --periwinkle-soft:rgba(143,163,232,0.22);
+  --text-bright:#FFFFFF;
+  --text-primary:#E8E5F5;
+  --text-secondary:rgba(255,255,255,0.62);
+  --text-muted:rgba(255,255,255,0.40);
+  --border-subtle:rgba(150,130,220,0.12);
+  --border-medium:rgba(150,130,220,0.22);
+  --card-gradient:linear-gradient(180deg,#241B4F 0%,#2D2358 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+.ru{display:none}
+body.lang-ru .en{display:none !important}
+body.lang-ru span.ru,body.lang-ru .ru-inline{display:inline !important}
+body.lang-ru div.ru,body.lang-ru p.ru,body.lang-ru .ru-block{display:block !important}
+
+.nav{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 2.5rem;border-bottom:1px solid var(--border-subtle)}
+.sigil{display:flex;align-items:center;gap:0.85rem;text-decoration:none}
+.sigil .gem{width:26px;height:26px}
+.wordmark{font:700 0.85rem 'Inter',sans-serif;letter-spacing:0.22em;color:var(--text-bright)}
+.lang-toggle{display:flex;gap:0.2rem;background:rgba(140,130,220,0.04);border:1px solid var(--border-subtle);border-radius:6px;padding:0.2rem}
+.lang-btn{background:transparent;border:0;cursor:pointer;padding:0.3rem 0.65rem;border-radius:4px;font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.08em;color:var(--text-muted);transition:color 200ms,background 200ms}
+.lang-btn:hover{color:var(--text-secondary)}
+.lang-btn.active{background:#8B2826;color:var(--text-bright)}
+.lang-btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:2px}
+
+/* === SECTION 6: ARCHITECTURE === */
+#architecture{background:var(--bg-primary);padding:6rem 2rem}
+#architecture .a-inner{max-width:1180px;margin:0 auto}
+
+#architecture .label{
+  display:flex;align-items:center;gap:0.85rem;
+  font:600 0.78rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--periwinkle);margin-bottom:1.2rem;
+}
+#architecture .label .hairline{width:32px;height:1px;background:var(--periwinkle)}
+
+#architecture .title{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(2.1rem,4.4vw,3.2rem);line-height:1.1;letter-spacing:-0.015em;
+  color:var(--text-bright);margin-bottom:4rem;max-width:22ch;
+}
+
+/* === PILLARS === */
+.pillars{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;
+  margin-bottom:3.5rem;
+}
+.pillar{
+  background:var(--card-gradient);
+  border:1px solid var(--border-subtle);
+  border-radius:14px;
+  padding:2.4rem 2rem 2.6rem;
+  display:flex;flex-direction:column;gap:1.2rem;
+  transition:border-color 220ms ease-out;
+  opacity:0;transform:translateY(14px);
+}
+.pillar.in{opacity:1;transform:translateY(0);transition:opacity 700ms ease-out, transform 700ms ease-out}
+.pillar:hover{border-color:var(--border-medium)}
+
+.pillar .icon{
+  width:48px;height:48px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--periwinkle);
+}
+.pillar .icon svg{width:100%;height:100%}
+
+.pillar .ord{
+  font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--text-muted);font-variant-numeric:tabular-nums;
+}
+.pillar .pname{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(1.3rem,1.9vw,1.55rem);line-height:1.2;letter-spacing:-0.01em;
+  color:var(--text-bright);
+  text-wrap:balance;
+}
+.pillar .pbody{
+  font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
+  font-size:1.02rem;line-height:1.55;letter-spacing:-0.005em;
+  color:var(--text-primary);
+  text-wrap:pretty;
+  border-top:1px solid var(--border-subtle);
+  padding-top:1.1rem;
+  margin-top:0.2rem;
+}
+
+/* === STRATEGIC FRAME === */
+.frame{
+  background:var(--bg-elevated);
+  border:1px solid var(--border-subtle);
+  border-radius:14px;
+  padding:2.6rem 2.6rem;
+  max-width:900px;
+  margin:0 auto;
+  position:relative;
+  opacity:0;transform:translateY(12px);
+  transition:opacity 700ms ease-out, transform 700ms ease-out;
+}
+.frame.in{opacity:1;transform:translateY(0)}
+.frame::before{
+  content:"";position:absolute;left:0;top:2.6rem;bottom:2.6rem;width:2px;
+  background:var(--periwinkle);
+  border-radius:2px;
+}
+.frame .ftext{
+  font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
+  font-size:clamp(1.1rem,1.7vw,1.32rem);line-height:1.55;letter-spacing:-0.005em;
+  color:var(--text-primary);
+  text-wrap:pretty;
+  padding-left:1.2rem;
+}
+.frame .ftext .em-peri{color:var(--periwinkle);font-style:italic;font-weight:700}
+
+@media (max-width:1024px){
+  .pillars{grid-template-columns:repeat(2,1fr)}
+  .pillar:nth-child(3){grid-column:1/-1}
+}
+@media (max-width:680px){
+  #architecture{padding:3rem 1.25rem}
+  .pillars{grid-template-columns:1fr;gap:1rem;margin-bottom:2.2rem}
+  .pillar:nth-child(3){grid-column:auto}
+  .pillar{padding:1.8rem 1.6rem}
+  .frame{padding:1.8rem 1.6rem}
+  .frame::before{top:1.8rem;bottom:1.8rem}
+  .frame .ftext{padding-left:0.9rem}
+}
+@media (prefers-reduced-motion: reduce){
+  .pillar,.frame{opacity:1 !important;transform:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="primary">
+  <a class="sigil" href="#">
+    <svg class="gem" viewBox="0 0 32 32" aria-hidden="true">
+      <defs>
+        <radialGradient id="gemGlowA" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+          <stop offset="22%" stop-color="#FFD9DC" stop-opacity="0.7"/>
+          <stop offset="55%" stop-color="#E0303F"/>
+          <stop offset="100%" stop-color="#7A1820"/>
+        </radialGradient>
+      </defs>
+      <polygon points="16,2 26,7 30,16 26,25 16,30 6,25 2,16 6,7" fill="url(#gemGlowA)" stroke="#5A1018" stroke-width="0.5"/>
+      <circle cx="16" cy="14.5" r="1.4" fill="#FFFFFF"/>
+    </svg>
+    <span class="wordmark">GRANAT</span>
+  </a>
+  <div class="lang-toggle" role="group" aria-label="language">
+    <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+    <button class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+  </div>
+</nav>
+
+<!-- === SECTION 6: ARCHITECTURE === -->
+<section id="architecture" tabindex="-1" aria-labelledby="aTitle">
+  <div class="a-inner">
+
+    <div class="label">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">06 — architecture</span><span class="ru">06 — архитектура</span></span>
+    </div>
+
+    <h2 id="aTitle" class="title">
+      <span class="en">Architecture of eternity</span>
+      <span class="ru">Архитектура вечности</span>
+    </h2>
+
+    <div class="pillars">
+
+      <!-- Pillar 1: AI Composer — bauhaus radiating-lines glyph -->
+      <article class="pillar" data-i="1" aria-labelledby="p1Name">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <circle cx="24" cy="24" r="4" fill="currentColor"/>
+            <line x1="24" y1="6" x2="24" y2="14"/>
+            <line x1="24" y1="34" x2="24" y2="42"/>
+            <line x1="6" y1="24" x2="14" y2="24"/>
+            <line x1="34" y1="24" x2="42" y2="24"/>
+            <line x1="11.3" y1="11.3" x2="17" y2="17"/>
+            <line x1="31" y1="31" x2="36.7" y2="36.7"/>
+            <line x1="36.7" y1="11.3" x2="31" y2="17"/>
+            <line x1="17" y1="31" x2="11.3" y2="36.7"/>
+            <circle cx="24" cy="24" r="14" stroke-dasharray="2 4"/>
+          </svg>
+        </div>
+        <span class="ord">01</span>
+        <h3 id="p1Name" class="pname">
+          <span class="en">AI Composer</span>
+          <span class="ru">AI-композитор</span>
+        </h3>
+        <p class="pbody">
+          <span class="en">A digital shaman weaving every voice into humanity's eternal mantra.</span>
+          <span class="ru">Цифровой шаман, вплетающий каждый голос в вечную мантру человечества.</span>
+        </p>
+      </article>
+
+      <!-- Pillar 2: Blockchain Registry — constructivist hexagon-stack glyph -->
+      <article class="pillar" data-i="2" aria-labelledby="p2Name">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
+            <polygon points="24,6 36,13 36,27 24,34 12,27 12,13"/>
+            <polygon points="24,16 30,19.5 30,26.5 24,30 18,26.5 18,19.5" fill="currentColor" fill-opacity="0.18"/>
+            <line x1="24" y1="34" x2="24" y2="42"/>
+            <line x1="14" y1="40" x2="34" y2="40"/>
+          </svg>
+        </div>
+        <span class="ord">02</span>
+        <h3 id="p2Name" class="pname">
+          <span class="en">Blockchain Registry</span>
+          <span class="ru">Блокчейн-реестр</span>
+        </h3>
+        <p class="pbody">
+          <span class="en">An eternal registry where the name of every creator is inscribed.</span>
+          <span class="ru">Вечный реестр, где вписывается имя каждого творца.</span>
+        </p>
+      </article>
+
+      <!-- Pillar 3: Distributed Archive — bauhaus library-column glyph -->
+      <article class="pillar" data-i="3" aria-labelledby="p3Name">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="6" y1="14" x2="42" y2="14"/>
+            <polygon points="24,6 8,14 40,14" fill="currentColor" fill-opacity="0.18"/>
+            <line x1="11" y1="18" x2="11" y2="36"/>
+            <line x1="19" y1="18" x2="19" y2="36"/>
+            <line x1="29" y1="18" x2="29" y2="36"/>
+            <line x1="37" y1="18" x2="37" y2="36"/>
+            <line x1="6" y1="38" x2="42" y2="38"/>
+            <line x1="6" y1="42" x2="42" y2="42"/>
+          </svg>
+        </div>
+        <span class="ord">03</span>
+        <h3 id="p3Name" class="pname">
+          <span class="en">Distributed Archive</span>
+          <span class="ru">Распределённое хранилище</span>
+        </h3>
+        <p class="pbody">
+          <span class="en">A modern Library of Alexandria for civilization's digital heritage.</span>
+          <span class="ru">Современная Александрийская библиотека для цифрового наследия цивилизации.</span>
+        </p>
+      </article>
+
+    </div>
+
+    <!-- === STRATEGIC FRAME === -->
+    <aside class="frame" id="frame" aria-label="strategic frame">
+      <p class="ftext">
+        <span class="en">Granat is <span class="em-peri">a core plus floating plug-ins</span>. The core is voice technology. Plug-ins are what we add together with partners for their world: voice verification, ceremonies, festivals, educational programs.</span>
+        <span class="ru">Granat — это <span class="em-peri">ядро плюс плавающие плагины</span>. Ядро — голосовая технология. Плагины — то, что мы вместе с партнёрами добавляем под их мир: верификация по голосу, церемонии, фестивали, образовательные программы.</span>
+      </p>
+    </aside>
+
+  </div>
+</section>
+
+<script>
+/* lang */
+(function(){
+  var btns=document.querySelectorAll('.lang-btn');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var lang=b.dataset.lang;
+      document.body.classList.toggle('lang-ru', lang==='ru');
+      document.documentElement.setAttribute('lang', lang);
+      btns.forEach(function(x){x.classList.remove('active');x.setAttribute('aria-pressed','false')});
+      b.classList.add('active');b.setAttribute('aria-pressed','true');
+    });
+  });
+})();
+
+/* reveal */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var pillars=document.querySelectorAll('.pillar');
+  var frame=document.getElementById('frame');
+  if(reduced){
+    pillars.forEach(function(p){p.classList.add('in')});
+    frame.classList.add('in');
+    return;
+  }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      if(e.target.classList.contains('pillar')){
+        var i=parseInt(e.target.getAttribute('data-i'),10)||1;
+        setTimeout(function(){e.target.classList.add('in')},(i-1)*200);
+        io.unobserve(e.target);
+      } else if(e.target===frame){
+        setTimeout(function(){frame.classList.add('in')},400);
+        io.unobserve(frame);
+      }
+    });
+  },{threshold:0.18});
+  pillars.forEach(function(p){io.observe(p)});
+  io.observe(frame);
+})();
+</script>
+
+</body>
+</html>

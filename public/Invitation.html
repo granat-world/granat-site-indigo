@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GRANAT — invitation to history</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap&subset=cyrillic,latin" rel="stylesheet" />
+<style>
+:root{
+  --bg-deep:#0F0820;
+  --bg-primary:#1A1043;
+  --bg-elevated:#241B4F;
+  --granat-red:#C5403F;
+  --granat-red-bright:#D04848;
+  --periwinkle:#8FA3E8;
+  --periwinkle-bright:#A8B7F0;
+  --periwinkle-soft:rgba(143,163,232,0.22);
+  --text-bright:#FFFFFF;
+  --text-primary:#E8E5F5;
+  --text-secondary:rgba(255,255,255,0.62);
+  --text-muted:rgba(255,255,255,0.40);
+  --border-subtle:rgba(150,130,220,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+/* === LANG TOGGLE === */
+.ru{display:none}
+body.lang-ru .en{display:none !important}
+body.lang-ru span.ru,body.lang-ru .ru-inline{display:inline !important}
+body.lang-ru div.ru,body.lang-ru p.ru,body.lang-ru .ru-block{display:block !important}
+
+/* === MINIMAL NAV (sigil + lang toggle, kept quiet for review) === */
+.nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.4rem 2.5rem;
+  border-bottom:1px solid var(--border-subtle);
+}
+.sigil{display:flex;align-items:center;gap:0.85rem;text-decoration:none}
+.sigil .gem{width:26px;height:26px}
+.wordmark{font:700 0.85rem 'Inter',sans-serif;letter-spacing:0.22em;color:var(--text-bright)}
+.lang-toggle{display:flex;gap:0.2rem;background:rgba(140,130,220,0.04);border:1px solid var(--border-subtle);border-radius:6px;padding:0.2rem}
+.lang-btn{background:transparent;border:0;cursor:pointer;padding:0.3rem 0.65rem;border-radius:4px;font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.08em;color:var(--text-muted);transition:color 200ms,background 200ms}
+.lang-btn:hover{color:var(--text-secondary)}
+.lang-btn.active{background:#8B2826;color:var(--text-bright)}
+.lang-btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:2px}
+
+/* === SECTION 11: INVITATION === */
+#invitation{
+  background:var(--bg-primary);
+  padding:8rem 2rem;
+}
+#invitation .inv-inner{
+  max-width:720px;
+  margin:0 auto;
+  display:flex;flex-direction:column;
+}
+
+#invitation .label{
+  font:400 0.84rem 'Inter',sans-serif;
+  letter-spacing:0.02em;
+  color:var(--periwinkle);
+  margin-bottom:4rem;
+}
+
+#invitation .pull{
+  font-family:'Playfair Display',Georgia,serif;
+  font-style:italic;font-weight:400;
+  font-size:clamp(1.5rem,2.6vw,2.05rem);
+  line-height:1.3;
+  letter-spacing:-0.01em;
+  color:var(--text-primary);
+  margin-bottom:3rem;
+  text-wrap:pretty;
+}
+#invitation .pull .em-peri{
+  color:var(--periwinkle);
+  transition:color 200ms ease-out;
+}
+#invitation .pull .em-peri:hover{color:var(--periwinkle-bright)}
+
+#invitation .strategic{
+  display:flex;flex-direction:column;gap:1.4rem;
+  margin-bottom:4rem;
+}
+#invitation .strategic p{
+  font-family:'Inter',sans-serif;font-weight:300;
+  font-size:clamp(1.05rem,1.45vw,1.2rem);
+  line-height:1.65;
+  color:var(--text-primary);
+  letter-spacing:0;
+  text-wrap:pretty;
+}
+#invitation .strategic .em-red{
+  color:var(--granat-red);
+  font-style:italic;
+  font-weight:300;
+  transition:color 200ms ease-out;
+}
+#invitation .strategic .em-red:hover{color:var(--granat-red-bright)}
+
+#invitation .hairline{
+  width:60%;height:1px;
+  background:var(--border-subtle);
+  margin:0 auto 3rem;
+}
+
+#invitation .closing{
+  font-family:'Playfair Display',Georgia,serif;
+  font-style:italic;font-weight:400;
+  font-size:clamp(1.1rem,1.6vw,1.3rem);
+  line-height:1.5;
+  color:var(--text-secondary);
+  letter-spacing:-0.005em;
+  text-align:center;
+  text-wrap:pretty;
+}
+
+/* fade-up on view */
+#invitation .reveal{opacity:0;transform:translateY(8px)}
+#invitation .reveal.in{
+  opacity:1;transform:translateY(0);
+  transition:opacity 600ms ease-out, transform 600ms ease-out;
+}
+#invitation .reveal.d1.in{transition-delay:0ms}
+#invitation .reveal.d2.in{transition-delay:200ms}
+#invitation .reveal.d3.in{transition-delay:400ms}
+
+/* focus on anchor */
+#invitation:focus{outline:none}
+#invitation:focus-visible{outline:2px solid var(--periwinkle);outline-offset:6px}
+
+@media (max-width:768px){
+  #invitation{padding:5rem 1.4rem}
+  #invitation .label{margin-bottom:2.6rem}
+  #invitation .pull{font-size:clamp(1.35rem,5vw,1.65rem);line-height:1.32;margin-bottom:2.4rem}
+  #invitation .strategic{gap:1.1rem;margin-bottom:3rem}
+  #invitation .hairline{margin-bottom:2.2rem}
+}
+
+@media (prefers-reduced-motion: reduce){
+  #invitation .reveal{opacity:1 !important;transform:none !important;transition:none !important}
+  #invitation .pull .em-peri,#invitation .strategic .em-red{transition:none !important}
+}
+</style>
+</head>
+<body>
+
+<!-- === NAV === -->
+<nav class="nav" aria-label="primary">
+  <a class="sigil" href="#">
+    <svg class="gem" viewBox="0 0 32 32" aria-hidden="true">
+      <defs>
+        <radialGradient id="gemGlow3" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+          <stop offset="22%" stop-color="#FFD9DC" stop-opacity="0.7"/>
+          <stop offset="55%" stop-color="#E0303F"/>
+          <stop offset="100%" stop-color="#7A1820"/>
+        </radialGradient>
+      </defs>
+      <polygon points="16,2 26,7 30,16 26,25 16,30 6,25 2,16 6,7" fill="url(#gemGlow3)" stroke="#5A1018" stroke-width="0.5"/>
+      <circle cx="16" cy="14.5" r="1.4" fill="#FFFFFF"/>
+    </svg>
+    <span class="wordmark">GRANAT</span>
+  </a>
+  <div class="lang-toggle" role="group" aria-label="language">
+    <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+    <button class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+  </div>
+</nav>
+
+<!-- === SECTION 11: INVITATION === -->
+<section id="invitation" tabindex="-1" aria-labelledby="invLabel">
+  <div class="inv-inner">
+
+    <div id="invLabel" class="label">
+      <span class="en">invitation to history</span>
+      <span class="ru">приглашение в историю</span>
+    </div>
+
+    <p class="pull reveal d1">
+      <span class="en">Before you is not a partnership offer. Before you is a choice: to remain a statistic in textbooks, or to become <span class="em-peri">an eternally sounding note in the symphony of humanity</span>.</span>
+      <span class="ru">Перед вами не предложение о партнёрстве. Перед вами выбор: остаться статистикой в учебниках или стать <span class="em-peri">вечно звучащей нотой в симфонии человечества</span>.</span>
+    </p>
+
+    <div class="strategic reveal d2">
+      <p>
+        <span class="en">We do not come to sell. We <span class="em-red">come with a world</span> to which we invite.</span>
+        <span class="ru">Мы не приходим продавать. Мы <span class="em-red">приходим с миром</span>, в который зовём.</span>
+      </p>
+      <p>
+        <span class="en">Granat is not absorbed — Granat connects.</span>
+        <span class="ru">Granat не поглощается — Granat соединяется.</span>
+      </p>
+      <p>
+        <span class="en">We remain co-authors of what we create.</span>
+        <span class="ru">Мы остаёмся со-авторами того, что мы создаём.</span>
+      </p>
+    </div>
+
+    <div class="hairline" aria-hidden="true"></div>
+
+    <p class="closing reveal d3">
+      <span class="en">Your name may be inscribed not in reports, but in the DNA of civilization.</span>
+      <span class="ru">Ваше имя может быть вписано не в отчёты, а в ДНК цивилизации.</span>
+    </p>
+
+  </div>
+</section>
+
+<script>
+/* === LANG TOGGLE === */
+(function(){
+  var btns=document.querySelectorAll('.lang-btn');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var lang=b.dataset.lang;
+      document.body.classList.toggle('lang-ru', lang==='ru');
+      document.documentElement.setAttribute('lang', lang);
+      btns.forEach(function(x){x.classList.remove('active');x.setAttribute('aria-pressed','false')});
+      b.classList.add('active');b.setAttribute('aria-pressed','true');
+    });
+  });
+})();
+
+/* === FADE-UP ON VIEW === */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.querySelectorAll('#invitation .reveal').forEach(function(el){el.classList.add('in')});
+    return;
+  }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:0.2});
+  document.querySelectorAll('#invitation .reveal').forEach(function(el){io.observe(el)});
+})();
+</script>
+
+</body>
+</html>

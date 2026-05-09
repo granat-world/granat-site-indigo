@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GRANAT — civilization roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic,latin" rel="stylesheet" />
+<style>
+:root{
+  --bg-primary:#1A1043;
+  --bg-elevated:#241B4F;
+  --granat-red:#C5403F;
+  --periwinkle:#8FA3E8;
+  --periwinkle-bright:#A8B7F0;
+  --text-bright:#FFFFFF;
+  --text-primary:#E8E5F5;
+  --text-secondary:rgba(255,255,255,0.62);
+  --text-muted:rgba(255,255,255,0.40);
+  --border-subtle:rgba(150,130,220,0.12);
+  --border-medium:rgba(150,130,220,0.22);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+.ru{display:none}
+body.lang-ru .en{display:none !important}
+body.lang-ru span.ru,body.lang-ru .ru-inline{display:inline !important}
+body.lang-ru div.ru,body.lang-ru p.ru,body.lang-ru .ru-block{display:block !important}
+
+.nav{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 2.5rem;border-bottom:1px solid var(--border-subtle)}
+.sigil{display:flex;align-items:center;gap:0.85rem;text-decoration:none}
+.sigil .gem{width:26px;height:26px}
+.wordmark{font:700 0.85rem 'Inter',sans-serif;letter-spacing:0.22em;color:var(--text-bright)}
+.lang-toggle{display:flex;gap:0.2rem;background:rgba(140,130,220,0.04);border:1px solid var(--border-subtle);border-radius:6px;padding:0.2rem}
+.lang-btn{background:transparent;border:0;cursor:pointer;padding:0.3rem 0.65rem;border-radius:4px;font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.08em;color:var(--text-muted);transition:color 200ms,background 200ms}
+.lang-btn:hover{color:var(--text-secondary)}
+.lang-btn.active{background:#8B2826;color:var(--text-bright)}
+.lang-btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:2px}
+
+/* === SECTION 8: ROADMAP === */
+#roadmap{background:var(--bg-primary);padding:6rem 2rem}
+#roadmap .r-inner{max-width:1100px;margin:0 auto}
+
+#roadmap .label{
+  display:flex;align-items:center;gap:0.85rem;
+  font:600 0.78rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--periwinkle);margin-bottom:1.2rem;
+  opacity:0;transition:opacity 600ms ease-out;
+}
+#roadmap .label.in{opacity:1}
+#roadmap .label .hairline{width:32px;height:1px;background:var(--periwinkle)}
+
+#roadmap .title{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(2.1rem,4.4vw,3.2rem);line-height:1.1;letter-spacing:-0.015em;
+  color:var(--text-bright);margin-bottom:4rem;max-width:22ch;
+  opacity:0;transform:translateY(8px);
+  transition:opacity 700ms ease-out, transform 700ms ease-out;
+}
+#roadmap .title.in{opacity:1;transform:translateY(0)}
+
+/* === TIMELINE === */
+.timeline{
+  position:relative;
+  padding-left:0;
+  margin-bottom:5rem;
+  max-width:880px;
+  list-style:none;
+}
+.timeline::before{
+  content:"";position:absolute;left:5.5rem;top:1.2rem;bottom:1.2rem;
+  width:1px;background:var(--border-medium);
+}
+.mile{
+  position:relative;
+  display:grid;
+  grid-template-columns:6.5rem 1fr;
+  gap:2rem;
+  padding:1.6rem 0 2.4rem;
+  align-items:start;
+  opacity:0;transform:translateY(12px);
+}
+.mile.in{opacity:1;transform:translateY(0);transition:opacity 700ms ease-out, transform 700ms ease-out}
+
+.mile .year{
+  font-family:'JetBrains Mono',monospace;font-weight:500;
+  font-size:clamp(1.7rem,3vw,2.2rem);line-height:1;letter-spacing:-0.01em;
+  color:var(--text-bright);
+  font-variant-numeric:tabular-nums;
+  display:inline-block;
+  transform:scale(0.95);opacity:0;
+  transition:transform 240ms ease-out 200ms, opacity 240ms ease-out 200ms;
+}
+.mile.in .year{transform:scale(1);opacity:1}
+
+.mile .node{
+  position:absolute;left:5.5rem;top:1.85rem;
+  width:11px;height:11px;border-radius:50%;
+  background:var(--bg-primary);
+  border:1.5px solid var(--periwinkle);
+  transform:translateX(-50%) scale(0);
+  transition:transform 300ms cubic-bezier(.34,1.56,.64,1) 350ms;
+}
+.mile.in .node{transform:translateX(-50%) scale(1)}
+.mile[data-final="true"] .node{
+  background:var(--granat-red);border-color:var(--granat-red);
+  box-shadow:0 0 0 4px rgba(197,64,63,0.18);
+}
+
+.mile .body{padding-top:0.1rem}
+.mile .stage{
+  font:600 0.72rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--periwinkle);margin-bottom:0.5rem;
+}
+.mile .desc{
+  font-family:'Playfair Display',Georgia,serif;font-weight:400;font-style:italic;
+  font-size:clamp(1.15rem,1.7vw,1.4rem);line-height:1.4;letter-spacing:-0.005em;
+  color:var(--text-primary);
+  text-wrap:pretty;
+  max-width:42ch;
+}
+
+#roadmap .closing{
+  font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
+  font-size:clamp(1.3rem,2.2vw,1.85rem);line-height:1.4;letter-spacing:-0.01em;
+  color:var(--text-primary);
+  max-width:880px;margin:0 auto;
+  text-align:center;text-wrap:pretty;
+  opacity:0;transform:translateY(8px);
+  transition:opacity 700ms ease-out, transform 700ms ease-out;
+}
+#roadmap .closing.in{opacity:1;transform:translateY(0)}
+#roadmap .closing .em-peri{color:var(--periwinkle)}
+
+@media (max-width:680px){
+  #roadmap{padding:3rem 1.25rem}
+  .timeline::before{left:3.6rem}
+  .mile{grid-template-columns:4.2rem 1fr;gap:1.4rem;padding:1.2rem 0 1.8rem}
+  .mile .node{left:3.6rem}
+  .mile .year{font-size:1.6rem}
+}
+@media (prefers-reduced-motion: reduce){
+  #roadmap .label,#roadmap .title,#roadmap .closing,
+  .mile,.mile .year,.mile .node{
+    opacity:1 !important;transform:none !important;transition:none !important;
+  }
+  .mile .node{transform:translateX(-50%) !important}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="primary">
+  <a class="sigil" href="#">
+    <svg class="gem" viewBox="0 0 32 32" aria-hidden="true">
+      <defs>
+        <radialGradient id="gemGlowR" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+          <stop offset="22%" stop-color="#FFD9DC" stop-opacity="0.7"/>
+          <stop offset="55%" stop-color="#E0303F"/>
+          <stop offset="100%" stop-color="#7A1820"/>
+        </radialGradient>
+      </defs>
+      <polygon points="16,2 26,7 30,16 26,25 16,30 6,25 2,16 6,7" fill="url(#gemGlowR)" stroke="#5A1018" stroke-width="0.5"/>
+      <circle cx="16" cy="14.5" r="1.4" fill="#FFFFFF"/>
+    </svg>
+    <span class="wordmark">GRANAT</span>
+  </a>
+  <div class="lang-toggle" role="group" aria-label="language">
+    <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+    <button class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+  </div>
+</nav>
+
+<!-- === SECTION 8: ROADMAP === -->
+<section id="roadmap" tabindex="-1" aria-labelledby="rTitle">
+  <div class="r-inner">
+
+    <div class="label">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">08 — roadmap</span><span class="ru">08 — дорожная карта</span></span>
+    </div>
+
+    <h2 id="rTitle" class="title">
+      <span class="en">Civilization roadmap</span>
+      <span class="ru">Дорожная карта цивилизации</span>
+    </h2>
+
+    <ol class="timeline">
+
+      <!-- 2026 LAUNCH -->
+      <li class="mile" data-i="1">
+        <time class="year" datetime="2026">2026</time>
+        <span class="node" aria-hidden="true"></span>
+        <div class="body">
+          <div class="stage"><span class="en">Launch</span><span class="ru">Старт</span></div>
+          <p class="desc">
+            <span class="en">The first million voices.</span>
+            <span class="ru">Первый миллион голосов.</span>
+          </p>
+        </div>
+      </li>
+
+      <!-- 2027 GROWTH -->
+      <li class="mile" data-i="2">
+        <time class="year" datetime="2027">2027</time>
+        <span class="node" aria-hidden="true"></span>
+        <div class="body">
+          <div class="stage"><span class="en">Growth</span><span class="ru">Рост</span></div>
+          <p class="desc">
+            <span class="en">50 million participants.</span>
+            <span class="ru">50 миллионов участников.</span>
+          </p>
+        </div>
+      </li>
+
+      <!-- 2028 RECOGNITION -->
+      <li class="mile" data-i="3">
+        <time class="year" datetime="2028">2028</time>
+        <span class="node" aria-hidden="true"></span>
+        <div class="body">
+          <div class="stage"><span class="en">Recognition</span><span class="ru">Признание</span></div>
+          <p class="desc">
+            <span class="en">Inclusion in UNESCO heritage.</span>
+            <span class="ru">Включение в наследие ЮНЕСКО.</span>
+          </p>
+        </div>
+      </li>
+
+      <!-- 2029 ETERNITY -->
+      <li class="mile" data-i="4" data-final="true">
+        <time class="year" datetime="2029">2029</time>
+        <span class="node" aria-hidden="true"></span>
+        <div class="body">
+          <div class="stage"><span class="en">Eternity</span><span class="ru">Вечность</span></div>
+          <p class="desc">
+            <span class="en">The artifact sent into space.</span>
+            <span class="ru">Отправка артефакта в космос.</span>
+          </p>
+        </div>
+      </li>
+
+    </ol>
+
+    <p class="closing">
+      <span class="en">We create not a product but a <span class="em-peri">legacy</span>. Not a company but an <span class="em-peri">institution</span>. Not a brand but a <span class="em-peri">legend</span>.</span>
+      <span class="ru">Мы создаём не продукт, а <span class="em-peri">наследие</span>. Не компанию, а <span class="em-peri">институцию</span>. Не бренд, а <span class="em-peri">легенду</span>.</span>
+    </p>
+
+  </div>
+</section>
+
+<script>
+/* lang */
+(function(){
+  var btns=document.querySelectorAll('.lang-btn');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var lang=b.dataset.lang;
+      document.body.classList.toggle('lang-ru', lang==='ru');
+      document.documentElement.setAttribute('lang', lang);
+      btns.forEach(function(x){x.classList.remove('active');x.setAttribute('aria-pressed','false')});
+      b.classList.add('active');b.setAttribute('aria-pressed','true');
+    });
+  });
+})();
+
+/* reveal */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var label=document.querySelector('#roadmap .label');
+  var title=document.querySelector('#roadmap .title');
+  var miles=document.querySelectorAll('.mile');
+  var closing=document.querySelector('#roadmap .closing');
+  if(reduced){
+    [label,title,closing].forEach(function(n){n&&n.classList.add('in')});
+    miles.forEach(function(m){m.classList.add('in')});
+    return;
+  }
+  var headerSeen=false;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      if(e.target===title && !headerSeen){
+        headerSeen=true;
+        label.classList.add('in');
+        title.classList.add('in');
+        io.unobserve(title);
+      } else if(e.target.classList.contains('mile')){
+        var i=parseInt(e.target.getAttribute('data-i'),10)||1;
+        setTimeout(function(){e.target.classList.add('in')},(i-1)*250);
+        io.unobserve(e.target);
+      } else if(e.target===closing){
+        setTimeout(function(){closing.classList.add('in')},400);
+        io.unobserve(closing);
+      }
+    });
+  },{threshold:0.18});
+  io.observe(title);
+  miles.forEach(function(m){io.observe(m)});
+  io.observe(closing);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GRANAT — team</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap&subset=cyrillic,latin" rel="stylesheet" />
+<style>
+:root{
+  --bg-deep:#0F0820;
+  --bg-primary:#1A1043;
+  --bg-elevated:#241B4F;
+  --bg-surface:#2D2358;
+  --granat-red:#C5403F;
+  --periwinkle:#8FA3E8;
+  --periwinkle-bright:#A8B7F0;
+  --periwinkle-soft:rgba(143,163,232,0.22);
+  --text-bright:#FFFFFF;
+  --text-primary:#E8E5F5;
+  --text-secondary:rgba(255,255,255,0.62);
+  --text-muted:rgba(255,255,255,0.40);
+  --border-subtle:rgba(150,130,220,0.12);
+  --border-medium:rgba(150,130,220,0.22);
+  --card-gradient:linear-gradient(180deg,#241B4F 0%,#2D2358 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+.ru{display:none}
+body.lang-ru .en{display:none !important}
+body.lang-ru span.ru,body.lang-ru .ru-inline{display:inline !important}
+body.lang-ru div.ru,body.lang-ru p.ru,body.lang-ru .ru-block{display:block !important}
+
+.nav{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 2.5rem;border-bottom:1px solid var(--border-subtle)}
+.sigil{display:flex;align-items:center;gap:0.85rem;text-decoration:none}
+.sigil .gem{width:26px;height:26px}
+.wordmark{font:700 0.85rem 'Inter',sans-serif;letter-spacing:0.22em;color:var(--text-bright)}
+.lang-toggle{display:flex;gap:0.2rem;background:rgba(140,130,220,0.04);border:1px solid var(--border-subtle);border-radius:6px;padding:0.2rem}
+.lang-btn{background:transparent;border:0;cursor:pointer;padding:0.3rem 0.65rem;border-radius:4px;font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.08em;color:var(--text-muted);transition:color 200ms,background 200ms}
+.lang-btn:hover{color:var(--text-secondary)}
+.lang-btn.active{background:#8B2826;color:var(--text-bright)}
+.lang-btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:2px}
+
+/* === SECTION 4: TEAM === */
+#team{background:var(--bg-primary);padding:6rem 2rem}
+#team .t-inner{max-width:1100px;margin:0 auto}
+
+#team .label{
+  display:flex;align-items:center;gap:0.85rem;
+  font:600 0.78rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--periwinkle);margin-bottom:1.2rem;
+}
+#team .label .hairline{width:32px;height:1px;background:var(--periwinkle)}
+
+#team .title{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(2.1rem,4.4vw,3.2rem);line-height:1.1;letter-spacing:-0.015em;
+  color:var(--text-bright);margin-bottom:1rem;
+}
+
+#team .subline{
+  font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
+  font-size:clamp(1.05rem,1.6vw,1.25rem);line-height:1.4;
+  color:var(--text-secondary);margin-bottom:4rem;text-wrap:pretty;
+  max-width:60ch;
+}
+
+/* === MEMBER CARDS === */
+.members{
+  display:grid;grid-template-columns:1fr 1fr;gap:2rem;
+  margin-bottom:3rem;
+}
+.member{
+  background:var(--card-gradient);
+  border:1px solid var(--border-subtle);
+  border-radius:14px;
+  padding:2.4rem 2.2rem;
+  display:flex;flex-direction:column;gap:1.6rem;
+  transition:border-color 220ms ease-out;
+  opacity:0;transform:translateY(12px);
+}
+.member.in{opacity:1;transform:translateY(0);transition:opacity 700ms ease-out, transform 700ms ease-out}
+.member:hover{border-color:var(--border-medium)}
+
+.member .head{display:flex;align-items:center;gap:1.1rem}
+.member .avatar{
+  width:64px;height:64px;border-radius:50%;
+  background:linear-gradient(135deg,#2D2358 0%,#1A1043 100%);
+  border:1px solid var(--border-medium);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:1.4rem;color:var(--periwinkle);
+  flex-shrink:0;
+}
+.member .name{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(1.4rem,2vw,1.65rem);line-height:1.15;letter-spacing:-0.01em;
+  color:var(--text-bright);
+}
+
+.member .creds{
+  list-style:none;display:flex;flex-direction:column;gap:0.85rem;
+  padding-top:0.4rem;
+  border-top:1px solid var(--border-subtle);
+  margin-top:0.2rem;
+  padding-top:1.2rem;
+}
+.member .creds li{
+  position:relative;padding-left:1.4rem;
+  font:400 1rem 'Inter',sans-serif;line-height:1.55;
+  color:var(--text-primary);
+  text-wrap:pretty;
+}
+.member .creds li::before{
+  content:"";
+  position:absolute;left:0;top:0.65rem;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--periwinkle);
+}
+.member .creds li em{font-style:italic;color:var(--text-bright)}
+
+/* === MACHETE ORG BLOCK === */
+.org{
+  display:flex;align-items:center;gap:1.5rem;
+  background:rgba(36,27,79,0.4);
+  border:1px solid var(--border-subtle);
+  border-radius:14px;
+  padding:1.5rem 1.8rem;
+  opacity:0;transform:translateY(12px);
+  transition:opacity 700ms ease-out, transform 700ms ease-out;
+}
+.org.in{opacity:1;transform:translateY(0)}
+.org .logo{
+  width:54px;height:54px;border-radius:8px;
+  background:#0F0820;
+  border:1px solid var(--border-medium);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  position:relative;
+}
+.org .logo::before,.org .logo::after{
+  content:"";position:absolute;background:var(--text-bright);
+}
+.org .logo::before{width:22px;height:1.5px;transform:rotate(45deg);top:50%;left:50%;margin-left:-11px}
+.org .logo::after{width:22px;height:1.5px;transform:rotate(-45deg);top:50%;left:50%;margin-left:-11px}
+
+.org .text{display:flex;flex-direction:column;gap:0.25rem}
+.org .org-name{
+  font:700 0.82rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--text-bright);
+}
+.org .org-tag{
+  font:300 0.95rem 'Inter',sans-serif;line-height:1.5;
+  color:var(--text-secondary);
+  text-wrap:pretty;
+}
+
+@media (max-width:760px){
+  #team{padding:3rem 1.25rem}
+  .members{grid-template-columns:1fr;gap:1.25rem;margin-bottom:1.75rem}
+  .member{padding:1.8rem 1.6rem}
+  .org{padding:1.2rem 1.3rem;gap:1rem}
+  #team .subline{margin-bottom:2.6rem}
+}
+@media (prefers-reduced-motion: reduce){
+  .member,.org{opacity:1 !important;transform:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="primary">
+  <a class="sigil" href="#">
+    <svg class="gem" viewBox="0 0 32 32" aria-hidden="true">
+      <defs>
+        <radialGradient id="gemGlowT" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+          <stop offset="22%" stop-color="#FFD9DC" stop-opacity="0.7"/>
+          <stop offset="55%" stop-color="#E0303F"/>
+          <stop offset="100%" stop-color="#7A1820"/>
+        </radialGradient>
+      </defs>
+      <polygon points="16,2 26,7 30,16 26,25 16,30 6,25 2,16 6,7" fill="url(#gemGlowT)" stroke="#5A1018" stroke-width="0.5"/>
+      <circle cx="16" cy="14.5" r="1.4" fill="#FFFFFF"/>
+    </svg>
+    <span class="wordmark">GRANAT</span>
+  </a>
+  <div class="lang-toggle" role="group" aria-label="language">
+    <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+    <button class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+  </div>
+</nav>
+
+<!-- === SECTION 4: TEAM === -->
+<section id="team" tabindex="-1" aria-labelledby="tTitle">
+  <div class="t-inner">
+
+    <div class="label">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">04 — team</span><span class="ru">04 — команда</span></span>
+    </div>
+
+    <h2 id="tTitle" class="title">
+      <span class="en">Team</span>
+      <span class="ru">Команда</span>
+    </h2>
+
+    <p class="subline">
+      <span class="en">People who have proven that the impossible is possible.</span>
+      <span class="ru">Люди, доказавшие, что невозможное возможно.</span>
+    </p>
+
+    <!-- === MEMBER CARDS === -->
+    <div class="members">
+
+      <article class="member" data-i="1" aria-labelledby="m1Name">
+        <div class="head">
+          <div class="avatar" aria-hidden="true">Я<span class="en" style="display:none">Y</span></div>
+          <h3 id="m1Name" class="name">
+            <span class="en">Yaroslav Malyi</span>
+            <span class="ru">Ярослав Малый</span>
+          </h3>
+        </div>
+        <ul class="creds">
+          <li>
+            <span class="en">Creator of the Olympic anthem performed by a million-voice choir</span>
+            <span class="ru">Создатель олимпийского гимна с миллионным хором</span>
+          </li>
+          <li>
+            <span class="en">Artist of <em>Machete</em> and <em>Tokio</em></span>
+            <span class="ru">Артист «Мачете» и «Токио»</span>
+          </li>
+          <li>
+            <span class="en">Producer of 42 international festivals</span>
+            <span class="ru">Продюсер 42 международных фестивалей</span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="member" data-i="2" aria-labelledby="m2Name">
+        <div class="head">
+          <div class="avatar" aria-hidden="true">О<span class="en" style="display:none">O</span></div>
+          <h3 id="m2Name" class="name">
+            <span class="en">Olga Malaya</span>
+            <span class="ru">Ольга Малая</span>
+          </h3>
+        </div>
+        <ul class="creds">
+          <li>
+            <span class="en">Strategist and General Manager of the project</span>
+            <span class="ru">Стратег и генеральный менеджер проекта</span>
+          </li>
+          <li>
+            <span class="en">Track record of turning ambition into results at the intersection of people, businesses, and ideas</span>
+            <span class="ru">Опыт превращения амбиции в результат на стыке людей, бизнесов и идей</span>
+          </li>
+        </ul>
+      </article>
+
+    </div>
+
+    <!-- === MACHETE ORG === -->
+    <aside class="org" data-i="3" aria-label="Machete Records">
+      <div class="logo" aria-hidden="true"></div>
+      <div class="text">
+        <span class="org-name">Machete Records</span>
+        <span class="org-tag">
+          <span class="en">Experience in creating global cultural phenomena</span>
+          <span class="ru">Опыт создания глобальных культурных явлений</span>
+        </span>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<script>
+/* swap avatar initials with language */
+(function(){
+  function setInitials(){
+    var ru=document.body.classList.contains('lang-ru');
+    document.querySelectorAll('.member .avatar').forEach(function(a,i){
+      a.textContent = ru ? (i===0?'Я':'О') : (i===0?'Y':'O');
+    });
+  }
+  var btns=document.querySelectorAll('.lang-btn');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var lang=b.dataset.lang;
+      document.body.classList.toggle('lang-ru', lang==='ru');
+      document.documentElement.setAttribute('lang', lang);
+      btns.forEach(function(x){x.classList.remove('active');x.setAttribute('aria-pressed','false')});
+      b.classList.add('active');b.setAttribute('aria-pressed','true');
+      setInitials();
+    });
+  });
+  setInitials();
+})();
+
+/* reveal */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nodes=document.querySelectorAll('.member,.org');
+  if(reduced){nodes.forEach(function(n){n.classList.add('in')});return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var i=parseInt(e.target.getAttribute('data-i'),10)||1;
+      setTimeout(function(){e.target.classList.add('in')},(i-1)*200);
+      io.unobserve(e.target);
+    });
+  },{threshold:0.2});
+  nodes.forEach(function(n){io.observe(n)});
+})();
+</script>
+
+</body>
+</html>

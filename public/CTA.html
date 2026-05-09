@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GRANAT — time to choose a role</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap&subset=cyrillic,latin" rel="stylesheet" />
+<style>
+:root{
+  --bg-primary:#1A1043;
+  --bg-elevated:#241B4F;
+  --bg-surface:#2D2358;
+  --granat-red:#C5403F;
+  --periwinkle:#8FA3E8;
+  --periwinkle-bright:#A8B7F0;
+  --text-bright:#FFFFFF;
+  --text-primary:#E8E5F5;
+  --text-secondary:rgba(255,255,255,0.62);
+  --text-muted:rgba(255,255,255,0.40);
+  --border-subtle:rgba(150,130,220,0.12);
+  --border-medium:rgba(150,130,220,0.22);
+  --card-gradient:linear-gradient(180deg,#241B4F 0%,#2D2358 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+.ru{display:none}
+body.lang-ru .en{display:none !important}
+body.lang-ru span.ru,body.lang-ru .ru-inline{display:inline !important}
+
+.nav{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 2.5rem;border-bottom:1px solid var(--border-subtle)}
+.sigil{display:flex;align-items:center;gap:0.85rem;text-decoration:none}
+.sigil .gem{width:26px;height:26px}
+.wordmark{font:700 0.85rem 'Inter',sans-serif;letter-spacing:0.22em;color:var(--text-bright)}
+.lang-toggle{display:flex;gap:0.2rem;background:rgba(140,130,220,0.04);border:1px solid var(--border-subtle);border-radius:6px;padding:0.2rem}
+.lang-btn{background:transparent;border:0;cursor:pointer;padding:0.3rem 0.65rem;border-radius:4px;font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.08em;color:var(--text-muted);transition:color 200ms,background 200ms}
+.lang-btn:hover{color:var(--text-secondary)}
+.lang-btn.active{background:#8B2826;color:var(--text-bright)}
+.lang-btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:2px}
+
+/* === SECTION 12: CALL TO ACTION === */
+#cta{background:var(--bg-primary);padding:6rem 2rem 5rem}
+#cta .c-inner{max-width:1180px;margin:0 auto}
+
+#cta .label{
+  display:flex;align-items:center;gap:0.85rem;
+  font:600 0.78rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--periwinkle);margin-bottom:1.2rem;
+}
+#cta .label .hairline{width:32px;height:1px;background:var(--periwinkle)}
+
+#cta .title{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(2.1rem,4.4vw,3.2rem);line-height:1.1;letter-spacing:-0.015em;
+  color:var(--text-bright);margin-bottom:3.5rem;max-width:18ch;
+}
+
+/* === ROLE CARDS === */
+.roles{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;
+  margin-bottom:6rem;
+}
+.role{
+  background:var(--card-gradient);
+  border:1px solid var(--border-subtle);
+  border-radius:14px;
+  padding:2.2rem 1.9rem 2.4rem;
+  display:flex;flex-direction:column;gap:1.4rem;
+  text-decoration:none;color:inherit;
+  transition:border-color 220ms ease-out, transform 220ms ease-out;
+  opacity:0;transform:translateY(12px);
+  cursor:pointer;
+  position:relative;
+}
+.role.in{opacity:1;transform:translateY(0);transition:opacity 700ms ease-out, transform 700ms ease-out}
+.role:hover,.role:focus-visible{border-color:var(--border-medium);transform:translateY(-2px)}
+.role.in:hover,.role.in:focus-visible{transform:translateY(-2px)}
+.role:focus-visible{outline:2px solid var(--periwinkle);outline-offset:3px}
+
+.role .icon{
+  width:44px;height:44px;color:var(--periwinkle);
+  display:flex;align-items:center;justify-content:center;
+}
+.role .icon svg{width:100%;height:100%}
+
+.role .rlabel{
+  font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--periwinkle);
+}
+.role .rcta{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(1.2rem,1.9vw,1.45rem);line-height:1.25;letter-spacing:-0.01em;
+  color:var(--text-bright);
+  border-top:1px solid var(--border-subtle);
+  padding-top:1.2rem;
+  margin-top:auto;
+  text-wrap:balance;
+}
+.role .arr{
+  position:absolute;right:1.6rem;bottom:1.6rem;
+  color:var(--periwinkle);
+  font-size:1.1rem;line-height:1;
+  opacity:0.5;
+  transition:opacity 220ms ease-out, transform 220ms ease-out;
+}
+.role:hover .arr,.role:focus-visible .arr{opacity:1;transform:translateX(3px)}
+
+#cta .closing{
+  font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
+  font-size:clamp(1.5rem,2.8vw,2.3rem);line-height:1.35;letter-spacing:-0.01em;
+  color:var(--text-primary);max-width:900px;margin:0 auto 2rem;text-align:center;text-wrap:pretty;
+  opacity:0;transform:translateY(8px);
+  transition:opacity 800ms ease-out, transform 800ms ease-out;
+}
+#cta .closing.in{opacity:1;transform:translateY(0)}
+#cta .closing .em-peri{color:var(--periwinkle)}
+
+footer.sig{
+  text-align:center;
+  font:400 0.78rem 'Inter',sans-serif;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--text-muted);
+  padding:2rem 2rem 3rem;
+  border-top:1px solid var(--border-subtle);
+  margin-top:1rem;
+}
+footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
+
+@media (max-width:880px){
+  .roles{grid-template-columns:1fr;gap:1rem;margin-bottom:4rem}
+}
+@media (max-width:680px){
+  #cta{padding:3rem 1.25rem 3rem}
+}
+@media (prefers-reduced-motion: reduce){
+  .role,#cta .closing{opacity:1 !important;transform:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="primary">
+  <a class="sigil" href="#">
+    <svg class="gem" viewBox="0 0 32 32" aria-hidden="true">
+      <defs>
+        <radialGradient id="gemGlowC" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+          <stop offset="22%" stop-color="#FFD9DC" stop-opacity="0.7"/>
+          <stop offset="55%" stop-color="#E0303F"/>
+          <stop offset="100%" stop-color="#7A1820"/>
+        </radialGradient>
+      </defs>
+      <polygon points="16,2 26,7 30,16 26,25 16,30 6,25 2,16 6,7" fill="url(#gemGlowC)" stroke="#5A1018" stroke-width="0.5"/>
+      <circle cx="16" cy="14.5" r="1.4" fill="#FFFFFF"/>
+    </svg>
+    <span class="wordmark">GRANAT</span>
+  </a>
+  <div class="lang-toggle" role="group" aria-label="language">
+    <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+    <button class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+  </div>
+</nav>
+
+<!-- === SECTION 12: CALL TO ACTION === -->
+<section id="cta" tabindex="-1" aria-labelledby="cTitle">
+  <div class="c-inner">
+
+    <div class="label">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">12 — call to action</span><span class="ru">12 — призыв</span></span>
+    </div>
+
+    <h2 id="cTitle" class="title">
+      <span class="en">Time to choose a role</span>
+      <span class="ru">Время выбирать роль</span>
+    </h2>
+
+    <div class="roles">
+
+      <!-- PARTICIPANT -->
+      <a class="role" data-i="1" href="#how-it-works"
+         aria-label="Participant — Record your voice">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="17" y="9" width="10" height="18" rx="5"/>
+            <path d="M12 22 a10 10 0 0 0 20 0"/>
+            <line x1="22" y1="32" x2="22" y2="38"/>
+            <line x1="16" y1="38" x2="28" y2="38"/>
+          </svg>
+        </span>
+        <span class="rlabel">
+          <span class="en">Participant</span>
+          <span class="ru">Участник</span>
+        </span>
+        <span class="rcta">
+          <span class="en">Record your voice</span>
+          <span class="ru">Запишите свой голос</span>
+        </span>
+        <span class="arr" aria-hidden="true">→</span>
+      </a>
+
+      <!-- GUARDIAN -->
+      <a class="role" data-i="2" href="mailto:partners@granat.world?subject=Guardian%20—%20Support%20the%20project"
+         aria-label="Guardian — Support the project">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <!-- cradling hands holding a gem -->
+            <path d="M8 26 Q14 30 22 30 Q30 30 36 26"/>
+            <path d="M8 26 L8 32 Q8 35 11 35 L22 35"/>
+            <path d="M36 26 L36 32 Q36 35 33 35 L22 35"/>
+            <polygon points="22,12 27,15 28,21 22,25 16,21 17,15"/>
+            <line x1="22" y1="12" x2="22" y2="25"/>
+          </svg>
+        </span>
+        <span class="rlabel">
+          <span class="en">Guardian</span>
+          <span class="ru">Хранитель</span>
+        </span>
+        <span class="rcta">
+          <span class="en">Support the project</span>
+          <span class="ru">Поддержите проект</span>
+        </span>
+        <span class="arr" aria-hidden="true">→</span>
+      </a>
+
+      <!-- ARCHITECT -->
+      <a class="role" data-i="3" href="mailto:team@granat.world?subject=Architect%20—%20Join%20the%20team%20of%20creators"
+         aria-label="Architect — Join the team of creators">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <!-- compass / drafting -->
+            <line x1="22" y1="8" x2="13" y2="34"/>
+            <line x1="22" y1="8" x2="31" y2="34"/>
+            <circle cx="22" cy="8" r="2"/>
+            <path d="M14 30 Q22 34 30 30"/>
+            <line x1="22" y1="8" x2="22" y2="22"/>
+          </svg>
+        </span>
+        <span class="rlabel">
+          <span class="en">Architect</span>
+          <span class="ru">Архитектор</span>
+        </span>
+        <span class="rcta">
+          <span class="en">Join the team of creators</span>
+          <span class="ru">Войдите в команду создателей</span>
+        </span>
+        <span class="arr" aria-hidden="true">→</span>
+      </a>
+
+    </div>
+
+    <p class="closing">
+      <span class="en">GRANAT is a reality <span class="em-peri">that is chosen to be created</span>.</span>
+      <span class="ru">GRANAT — это реальность, <span class="em-peri">которую выбирают творить</span>.</span>
+    </p>
+
+  </div>
+</section>
+
+<footer class="sig">
+  Granat Music Artistic Talent <span class="dot">·</span> 2026 <span class="dot">·</span> granat.world
+</footer>
+
+<script>
+/* lang */
+(function(){
+  var btns=document.querySelectorAll('.lang-btn');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var lang=b.dataset.lang;
+      document.body.classList.toggle('lang-ru', lang==='ru');
+      document.documentElement.setAttribute('lang', lang);
+      btns.forEach(function(x){x.classList.remove('active');x.setAttribute('aria-pressed','false')});
+      b.classList.add('active');b.setAttribute('aria-pressed','true');
+    });
+  });
+})();
+
+/* reveal */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var roles=document.querySelectorAll('.role');
+  var closing=document.querySelector('#cta .closing');
+  if(reduced){roles.forEach(function(r){r.classList.add('in')});closing.classList.add('in');return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      if(e.target.classList.contains('role')){
+        var i=parseInt(e.target.getAttribute('data-i'),10)||1;
+        setTimeout(function(){e.target.classList.add('in')},(i-1)*150);
+        io.unobserve(e.target);
+      } else if(e.target===closing){
+        setTimeout(function(){closing.classList.add('in')},400);
+        io.unobserve(closing);
+      }
+    });
+  },{threshold:0.18});
+  roles.forEach(function(r){io.observe(r)});
+  io.observe(closing);
+})();
+</script>
+
+</body>
+</html>

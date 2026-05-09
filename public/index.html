@@ -1,0 +1,1867 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1A1043" />
+<title>GRANAT — the voice of humanity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic,latin" rel="stylesheet" />
+<style>
+/* === TOKENS === */
+:root{
+  --bg-deep:#0F0820;
+  --bg-primary:#1A1043;
+  --bg-elevated:#241B4F;
+  --bg-surface:#2D2358;
+  --granat-red:#C5403F;
+  --granat-red-bright:#D04848;
+  --granat-red-deep:#8B2826;
+  --granat-red-glow:rgba(197,64,63,0.18);
+  --ruby:#E0303F;
+  --ruby-glow:rgba(224,48,63,0.35);
+  --periwinkle:#8FA3E8;
+  --periwinkle-bright:#A8B7F0;
+  --periwinkle-soft:rgba(143,163,232,0.22);
+  --text-bright:#FFFFFF;
+  --text-primary:#E8E5F5;
+  --text-secondary:rgba(255,255,255,0.62);
+  --text-muted:rgba(255,255,255,0.40);
+  --border-subtle:rgba(150,130,220,0.12);
+  --border-medium:rgba(150,130,220,0.22);
+  --card-gradient:linear-gradient(180deg,#241B4F 0%,#2D2358 100%);
+  --hero-gradient:linear-gradient(180deg,#0F0820 0%,#1A1043 60%);
+  --scroll-progress-gradient:linear-gradient(90deg,var(--granat-red),var(--periwinkle));
+  --nav-h:60px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+html,body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+img{display:block;max-width:100%}
+section{scroll-margin-top:var(--nav-h)}
+
+/* === LANG TOGGLE PATTERN === */
+.ru{display:none}
+body.lang-ru .en{display:none !important}
+body.lang-ru span.ru,body.lang-ru .ru-inline{display:inline !important}
+body.lang-ru div.ru,body.lang-ru p.ru,body.lang-ru .ru-block,body.lang-ru h1 .ru{display:block !important}
+
+/* === SCROLL PROGRESS === */
+.scroll-progress{position:fixed;top:0;left:0;height:2px;width:0%;background:var(--scroll-progress-gradient);z-index:200;transition:width 100ms linear}
+
+/* === STICKY NAV === */
+.nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0.85rem 2rem;
+  min-height:var(--nav-h);
+  background:rgba(15,8,32,0.78);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border-subtle);
+}
+.sigil{display:flex;align-items:center;gap:0.7rem;text-decoration:none;flex-shrink:0}
+.sigil .gem{width:24px;height:24px;flex:0 0 24px;filter:drop-shadow(0 0 10px var(--ruby-glow))}
+.wordmark{font:700 0.82rem 'Inter',sans-serif;letter-spacing:0.22em;color:var(--text-bright)}
+
+.nav-right{display:flex;align-items:center;gap:0.6rem}
+.lang-toggle{display:flex;gap:0.2rem;background:rgba(140,130,220,0.04);border:1px solid var(--border-subtle);border-radius:6px;padding:0.18rem}
+.lang-btn{background:transparent;border:0;cursor:pointer;padding:0.3rem 0.62rem;border-radius:4px;font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.08em;color:var(--text-muted);transition:color 200ms,background 200ms;min-height:32px}
+.lang-btn:hover{color:var(--text-secondary)}
+.lang-btn.active{background:var(--granat-red-deep);color:var(--text-bright)}
+.lang-btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:2px}
+
+.menu-btn{
+  background:transparent;border:1px solid var(--border-subtle);
+  border-radius:6px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:0.5rem;
+  padding:0.45rem 0.8rem;min-height:36px;min-width:36px;
+  font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-secondary);
+  transition:all 220ms ease-out;
+}
+.menu-btn:hover{border-color:var(--border-medium);color:var(--text-bright)}
+.menu-btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:2px}
+.menu-btn .bars{display:inline-flex;flex-direction:column;gap:3px}
+.menu-btn .bars i{width:14px;height:1.5px;background:currentColor;display:block;border-radius:1px}
+.menu-btn .menu-label{display:inline}
+
+/* === SECTION INDEX OVERLAY === */
+.idx-overlay{
+  position:fixed;inset:0;z-index:150;
+  background:rgba(15,8,32,0.92);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:center;
+  padding:max(2rem,env(safe-area-inset-top,2rem)) 1.5rem 2rem;
+  opacity:0;pointer-events:none;
+  transition:opacity 240ms ease-out;
+  overflow-y:auto;
+}
+.idx-overlay.open{opacity:1;pointer-events:auto}
+.idx-overlay .idx-close{
+  position:absolute;top:1rem;right:1.4rem;
+  background:transparent;border:1px solid var(--border-subtle);
+  width:36px;height:36px;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-secondary);font-size:1.1rem;line-height:1;
+  transition:all 220ms ease-out;
+}
+.idx-overlay .idx-close:hover{color:var(--text-bright);border-color:var(--border-medium)}
+.idx-overlay ol{
+  list-style:none;display:flex;flex-direction:column;gap:0.4rem;
+  max-width:560px;width:100%;
+  font-family:'Playfair Display',Georgia,serif;
+}
+.idx-overlay ol li{
+  opacity:0;transform:translateY(8px);
+  transition:opacity 360ms ease-out,transform 360ms ease-out;
+}
+.idx-overlay.open ol li{opacity:1;transform:translateY(0)}
+.idx-overlay ol li:nth-child(1){transition-delay:60ms}
+.idx-overlay ol li:nth-child(2){transition-delay:90ms}
+.idx-overlay ol li:nth-child(3){transition-delay:120ms}
+.idx-overlay ol li:nth-child(4){transition-delay:150ms}
+.idx-overlay ol li:nth-child(5){transition-delay:180ms}
+.idx-overlay ol li:nth-child(6){transition-delay:210ms}
+.idx-overlay ol li:nth-child(7){transition-delay:240ms}
+.idx-overlay ol li:nth-child(8){transition-delay:270ms}
+.idx-overlay ol li:nth-child(9){transition-delay:300ms}
+.idx-overlay ol li:nth-child(10){transition-delay:330ms}
+.idx-overlay ol li:nth-child(11){transition-delay:360ms}
+.idx-overlay ol li:nth-child(12){transition-delay:390ms}
+.idx-overlay a{
+  display:flex;align-items:baseline;gap:1.2rem;
+  text-decoration:none;color:var(--text-primary);
+  padding:0.65rem 0.4rem;border-bottom:1px solid var(--border-subtle);
+  transition:color 200ms ease-out,padding 200ms ease-out;
+}
+.idx-overlay a:hover{color:var(--text-bright);padding-left:0.8rem}
+.idx-overlay .idx-num{
+  flex:0 0 auto;
+  font-family:'JetBrains Mono',monospace;font-weight:400;
+  font-size:0.78rem;letter-spacing:0.18em;color:var(--periwinkle);
+  font-variant-numeric:tabular-nums;
+}
+.idx-overlay .idx-name{
+  font-weight:400;font-size:clamp(1.2rem,3vw,1.6rem);line-height:1.2;
+  letter-spacing:-0.005em;
+}
+
+/* === HERO (Section 1) === */
+#hero{position:relative;min-height:calc(100vh - var(--nav-h));background:var(--hero-gradient);overflow:hidden}
+.hero-image{position:absolute;inset:0;pointer-events:none;z-index:1}
+.hero-image .photo{position:absolute;right:0;bottom:0;width:62%;height:100%;background-image:url('assets/hero-pomegranate.jpg');background-size:cover;background-position:center bottom;filter:saturate(1.05) contrast(1.04) hue-rotate(-6deg);will-change:transform}
+.hero-image .wash{position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 80% 75%,rgba(15,8,32,0) 0%,rgba(26,16,67,0.35) 55%,rgba(26,16,67,0.85) 100%),linear-gradient(90deg,var(--bg-deep) 0%,rgba(15,8,32,0.92) 25%,rgba(26,16,67,0.35) 55%,rgba(26,16,67,0) 80%),linear-gradient(180deg,rgba(15,8,32,0.92) 0%,rgba(15,8,32,0) 28%,rgba(15,8,32,0) 70%,rgba(26,16,67,0.55) 100%)}
+.hero-image .tint{position:absolute;right:0;bottom:0;width:62%;height:100%;background:linear-gradient(180deg,rgba(40,30,90,0.22),rgba(26,16,67,0.05));mix-blend-mode:soft-light}
+.hero-inner{position:relative;z-index:2;max-width:1280px;margin:0 auto;min-height:calc(100vh - var(--nav-h));padding:6rem 2.5rem 5rem;display:flex;flex-direction:column;justify-content:center}
+.hero-content{max-width:640px;margin-top:-1rem}
+.sigil-line{display:flex;align-items:center;gap:0.9rem;margin-bottom:2.2rem;opacity:0;transform:translateY(8px);animation:fadeUp 700ms 100ms ease-out forwards}
+.sigil-line .hairline{width:36px;height:1px;background:var(--periwinkle-soft)}
+.sigil-line .label{font:600 0.72rem 'Inter',sans-serif;letter-spacing:0.28em;color:var(--periwinkle);text-transform:uppercase}
+.headline{font-family:'Playfair Display',Georgia,serif;font-weight:900;font-size:clamp(3rem,7.2vw,6rem);line-height:1.02;letter-spacing:-0.025em;color:var(--text-bright);max-width:11ch;opacity:0;transform:translateY(10px);animation:fadeUp 800ms 200ms ease-out forwards;text-wrap:pretty}
+.headline .em{font-style:italic;font-weight:400;color:var(--text-bright)}
+.subtitle{margin-top:1.5rem;font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(1.02rem,1.45vw,1.2rem);line-height:1.55;color:var(--text-secondary);max-width:36ch;opacity:0;transform:translateY(8px);animation:fadeUp 800ms 400ms ease-out forwards}
+.cta-row{margin-top:2.2rem;display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;opacity:0;transform:translateY(8px);animation:fadeUp 800ms 600ms ease-out forwards}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:0.55rem;padding:0.85rem 1.5rem;border-radius:10px;font:500 0.92rem 'Inter',sans-serif;letter-spacing:0.01em;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:all 220ms ease-out;min-height:44px}
+.btn-primary{background:var(--granat-red);color:var(--text-bright);border-color:var(--granat-red)}
+.btn-primary:hover{background:var(--granat-red-bright);box-shadow:0 0 32px var(--granat-red-glow);transform:translateY(-1px)}
+.btn-primary:disabled{background:rgba(197,64,63,0.35);color:rgba(255,255,255,0.55);cursor:not-allowed;box-shadow:none;transform:none}
+.btn-ghost{background:transparent;color:var(--text-secondary);border-color:var(--border-subtle)}
+.btn-ghost:hover{color:var(--text-primary);border-color:var(--border-medium)}
+.btn .arrow{font-size:0.95em;transition:transform 220ms ease-out}
+.btn:hover .arrow{transform:translateX(3px)}
+.btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:3px}
+.hero-meta{margin-top:2.8rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap;font:400 0.72rem 'Inter',sans-serif;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);opacity:0;transform:translateY(8px);animation:fadeUp 800ms 800ms ease-out forwards}
+.hero-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--text-muted)}
+.scroll-cue{position:absolute;left:50%;bottom:1.6rem;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;font:500 0.66rem 'Inter',sans-serif;letter-spacing:0.28em;color:var(--text-muted);text-transform:uppercase;z-index:3;opacity:0;animation:fadeUp 800ms 1100ms ease-out forwards}
+.scroll-cue .chev{width:1px;height:24px;background:linear-gradient(180deg,var(--text-muted),rgba(255,255,255,0));animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0);opacity:0.7}50%{transform:translateY(6px);opacity:1}}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+/* === SHARED SECTION HEADER PATTERN === */
+.s-label{display:flex;align-items:center;gap:0.85rem;font:600 0.78rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;color:var(--periwinkle);margin-bottom:1.2rem;opacity:0;transition:opacity 600ms ease-out}
+.s-label.in{opacity:1}
+.s-label .hairline{width:32px;height:1px;background:var(--periwinkle)}
+.s-title{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(2rem,4.4vw,3.2rem);line-height:1.1;letter-spacing:-0.015em;color:var(--text-bright);margin-bottom:2rem;text-wrap:balance}
+
+/* === SECTION 2: CHALLENGE === */
+#challenge{padding:5rem 2rem}
+#challenge .ch-inner{max-width:1100px;margin:0 auto}
+#challenge .hook{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(2rem,4.4vw,3.2rem);line-height:1.1;letter-spacing:-0.015em;color:var(--text-bright);max-width:18ch;margin-bottom:4rem;opacity:0;transform:translateY(8px);transition:opacity 700ms 200ms ease-out,transform 700ms 200ms ease-out;text-wrap:balance}
+#challenge .hook.in{opacity:1;transform:translateY(0)}
+#challenge .divider{width:100%;height:1px;background:var(--border-subtle);margin-bottom:3.5rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:3.5rem;align-items:start;margin-bottom:4rem}
+.stat{display:flex;flex-direction:column;gap:0.85rem;position:relative}
+.stat .num{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:clamp(3.4rem,9vw,7rem);line-height:1;letter-spacing:-0.01em;color:var(--text-bright);font-variant-numeric:tabular-nums;display:inline-block}
+.stat[data-wound="true"] .num{color:var(--granat-red)}
+.stat[data-wound="true"] .wound-line{display:block;width:50%;height:1px;background:var(--granat-red);margin-top:0.5rem;opacity:0;transform:scaleX(0);transform-origin:left;transition:opacity 600ms ease-out 1500ms,transform 900ms ease-out 1500ms}
+.stats.in .stat[data-wound="true"] .wound-line{opacity:1;transform:scaleX(1)}
+.stat .suffix{font:300 1rem 'Inter',sans-serif;line-height:1.4;color:var(--text-secondary);margin-top:0.25rem}
+.stat .lbl{font:400 0.9rem 'Inter',sans-serif;line-height:1.4;color:var(--text-muted)}
+#challenge .tail{font-family:'Playfair Display',Georgia,serif;font-weight:400;font-style:italic;font-size:clamp(1.15rem,1.8vw,1.45rem);line-height:1.5;letter-spacing:-0.005em;color:var(--text-primary);max-width:720px;margin:0 auto;text-align:center;text-wrap:pretty;opacity:0;transform:translateY(8px);transition:opacity 700ms ease-out,transform 700ms ease-out}
+#challenge .tail.in{opacity:1;transform:translateY(0)}
+#challenge .tail .em-peri,#philosophy .em-peri,#economy .em-peri{color:var(--periwinkle);transition:color 200ms ease-out}
+
+/* === SECTION 3: ANSWER === */
+#answer{padding:6rem 2rem;background:var(--bg-deep);border-top:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle)}
+#answer .a-inner{max-width:900px;margin:0 auto;text-align:center}
+#answer .ans-headline{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-style:italic;font-size:clamp(2rem,5vw,3.6rem);line-height:1.18;letter-spacing:-0.02em;color:var(--text-bright);margin:1.6rem auto 2rem;text-wrap:balance;opacity:0;transform:translateY(10px);transition:opacity 800ms ease-out,transform 800ms ease-out}
+#answer .ans-headline.in{opacity:1;transform:translateY(0)}
+#answer .ans-headline .em-peri{color:var(--periwinkle)}
+#answer .ans-rule{width:1px;height:42px;background:var(--periwinkle);margin:0 auto;opacity:0;transform:scaleY(0);transform-origin:top;transition:opacity 500ms 700ms ease-out,transform 700ms 700ms ease-out}
+#answer .ans-rule.in{opacity:1;transform:scaleY(1)}
+#answer .ans-body{font:300 clamp(1.05rem,1.5vw,1.2rem) 'Inter',sans-serif;line-height:1.65;color:var(--text-secondary);max-width:46ch;margin:2rem auto 0;text-wrap:pretty;opacity:0;transform:translateY(8px);transition:opacity 700ms 900ms ease-out,transform 700ms 900ms ease-out}
+#answer .ans-body.in{opacity:1;transform:translateY(0)}
+
+/* === SECTION 4: TEAM === */
+#team{padding:5rem 2rem}
+#team .t-inner{max-width:1100px;margin:0 auto}
+#team .subline{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(1.05rem,1.6vw,1.25rem);line-height:1.4;color:var(--text-secondary);margin-bottom:3rem;text-wrap:pretty;max-width:60ch;margin-top:-1rem}
+.members{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2.4rem}
+.member{background:var(--card-gradient);border:1px solid var(--border-subtle);border-radius:14px;padding:2.2rem 2rem;display:flex;flex-direction:column;gap:1.4rem;transition:border-color 220ms ease-out;opacity:0;transform:translateY(12px)}
+.member.in{opacity:1;transform:translateY(0);transition:opacity 700ms ease-out,transform 700ms ease-out}
+.member:hover{border-color:var(--border-medium)}
+.member .head{display:flex;align-items:center;gap:1rem}
+.member .avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#2D2358 0%,#1A1043 100%);border:1px solid var(--border-medium);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:1.35rem;color:var(--periwinkle);flex-shrink:0}
+.member .name{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(1.3rem,2vw,1.6rem);line-height:1.15;letter-spacing:-0.01em;color:var(--text-bright)}
+.member .creds{list-style:none;display:flex;flex-direction:column;gap:0.85rem;border-top:1px solid var(--border-subtle);padding-top:1.1rem}
+.member .creds li{position:relative;padding-left:1.3rem;font:400 0.98rem 'Inter',sans-serif;line-height:1.55;color:var(--text-primary);text-wrap:pretty}
+.member .creds li::before{content:"";position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--periwinkle)}
+.member .creds li em{font-style:italic;color:var(--text-bright)}
+.org{display:flex;align-items:center;gap:1.4rem;background:rgba(36,27,79,0.4);border:1px solid var(--border-subtle);border-radius:14px;padding:1.3rem 1.6rem;opacity:0;transform:translateY(12px);transition:opacity 700ms ease-out,transform 700ms ease-out}
+.org.in{opacity:1;transform:translateY(0)}
+.org .logo{width:50px;height:50px;border-radius:8px;background:#0F0820;border:1px solid var(--border-medium);display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative}
+.org .logo::before,.org .logo::after{content:"";position:absolute;background:var(--text-bright);width:20px;height:1.5px;top:50%;left:50%;margin-left:-10px}
+.org .logo::before{transform:rotate(45deg)}
+.org .logo::after{transform:rotate(-45deg)}
+.org .text{display:flex;flex-direction:column;gap:0.2rem}
+.org .org-name{font:700 0.78rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-bright)}
+.org .org-tag{font:300 0.92rem 'Inter',sans-serif;line-height:1.5;color:var(--text-secondary);text-wrap:pretty}
+
+/* === SECTION 5: PHILOSOPHY === */
+#philosophy{padding:5rem 2rem}
+#philosophy .ph-inner{max-width:1180px;margin:0 auto}
+#philosophy .lead{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(1.3rem,2.2vw,1.75rem);line-height:1.35;letter-spacing:-0.01em;color:var(--text-primary);max-width:60ch;margin-bottom:3.5rem;text-wrap:pretty;margin-top:-1rem}
+#philosophy .lead .em-peri{font-style:italic;font-weight:400}
+.triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-bottom:4rem}
+.tcard{background:var(--card-gradient);border:1px solid var(--border-subtle);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:border-color 220ms ease-out;opacity:0;transform:translateY(14px)}
+.tcard.in{opacity:1;transform:translateY(0);transition:opacity 700ms ease-out,transform 700ms ease-out}
+.tcard:hover,.tcard:focus-within{border-color:var(--border-medium)}
+.tcard:focus-visible{outline:2px solid var(--periwinkle);outline-offset:3px}
+.tcard .img{position:relative;aspect-ratio:5/4;width:100%;overflow:hidden;background:linear-gradient(180deg,#1A1043 0%,#241B4F 100%);border-bottom:1px solid var(--border-subtle)}
+.tcard .img svg{position:absolute;inset:0;width:100%;height:100%;will-change:transform;transition:transform 200ms ease-out}
+.tcard .body{padding:1.4rem 1.6rem 1.6rem;display:flex;flex-direction:column;gap:0.8rem}
+.tcard .clabel{font:600 0.72rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;color:var(--periwinkle);display:flex;align-items:center;gap:0.45rem;flex-wrap:wrap}
+.tcard .clabel .arrow{color:var(--periwinkle);font-weight:400}
+.tcard .ctext{font:300 1rem 'Inter',sans-serif;line-height:1.6;color:var(--text-primary);text-wrap:pretty}
+#philosophy .closing,#economy .closing,#cta .closing,#roadmap .closing{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(1.3rem,2.4vw,2rem);line-height:1.35;letter-spacing:-0.01em;color:var(--text-primary);max-width:900px;margin:0 auto;text-align:center;text-wrap:pretty;opacity:0;transform:translateY(8px);transition:opacity 700ms ease-out,transform 700ms ease-out}
+#philosophy .closing.in,#economy .closing.in,#cta .closing.in,#roadmap .closing.in{opacity:1;transform:translateY(0)}
+#economy .closing .em-peri{font-weight:700;font-style:italic}
+
+/* === SECTION 6: ARCHITECTURE === */
+#architecture{padding:5rem 2rem}
+#architecture .a-inner{max-width:1180px;margin:0 auto}
+#architecture .s-title{margin-bottom:3.5rem;max-width:22ch}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-bottom:3rem}
+.pillar{background:var(--card-gradient);border:1px solid var(--border-subtle);border-radius:14px;padding:2.2rem 1.9rem 2.4rem;display:flex;flex-direction:column;gap:1.1rem;transition:border-color 220ms ease-out;opacity:0;transform:translateY(14px)}
+.pillar.in{opacity:1;transform:translateY(0);transition:opacity 700ms ease-out,transform 700ms ease-out}
+.pillar:hover{border-color:var(--border-medium)}
+.pillar .icon{width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:var(--periwinkle)}
+.pillar .icon svg{width:100%;height:100%}
+.pillar .ord{font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-muted);font-variant-numeric:tabular-nums}
+.pillar .pname{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(1.2rem,1.9vw,1.5rem);line-height:1.2;letter-spacing:-0.01em;color:var(--text-bright);text-wrap:balance}
+.pillar .pbody{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;font-size:1rem;line-height:1.55;color:var(--text-primary);text-wrap:pretty;border-top:1px solid var(--border-subtle);padding-top:1rem;margin-top:0.2rem}
+.frame{background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:14px;padding:2.4rem;max-width:900px;margin:0 auto;position:relative;opacity:0;transform:translateY(12px);transition:opacity 700ms ease-out,transform 700ms ease-out}
+.frame.in{opacity:1;transform:translateY(0)}
+.frame::before{content:"";position:absolute;left:0;top:2.4rem;bottom:2.4rem;width:2px;background:var(--periwinkle);border-radius:2px}
+.frame .ftext{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(1.05rem,1.7vw,1.32rem);line-height:1.55;letter-spacing:-0.005em;color:var(--text-primary);text-wrap:pretty;padding-left:1.2rem}
+.frame .ftext .em-peri{color:var(--periwinkle);font-style:italic;font-weight:700}
+
+/* === SECTION 7: HOW IT WORKS === */
+#how-it-works{padding:5rem 2rem}
+.hiw-inner{max-width:1100px;margin:0 auto}
+#how-it-works .s-title{max-width:18ch;margin-bottom:3.4rem}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.step{position:relative;background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:14px;padding:1.9rem 1.7rem 1.7rem;display:flex;flex-direction:column;gap:0.85rem;transition:border-color 220ms ease-out;opacity:0;transform:translateY(14px)}
+.step.in{opacity:1;transform:translateY(0);transition:opacity 600ms ease-out,transform 600ms ease-out}
+.step:hover{border-color:var(--border-medium)}
+.step .num{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:clamp(2.2rem,3.8vw,3.2rem);letter-spacing:0.04em;line-height:1;color:var(--periwinkle);margin-bottom:0.5rem;display:flex;align-items:baseline;gap:0.6rem}
+.step .num::after{content:"";flex:1;height:1px;background:var(--periwinkle-soft);align-self:center;margin-bottom:0.15em}
+.step .step-title{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:1.4rem;line-height:1.2;color:var(--text-bright)}
+.step .step-body{font:400 0.98rem 'Inter',sans-serif;line-height:1.6;color:var(--text-secondary)}
+.cta-wrap{margin-top:3.2rem;display:flex;flex-direction:column;align-items:center;gap:0.85rem}
+.cta-try{position:relative;display:inline-flex;align-items:center;gap:0.6rem;background:var(--granat-red);color:var(--text-bright);border:0;cursor:pointer;padding:1rem 2rem;border-radius:12px;font:600 1rem 'Inter',sans-serif;letter-spacing:0.005em;transition:all 240ms ease-out;box-shadow:0 0 0 rgba(197,64,63,0);animation:heartbeat 3s ease-in-out infinite;min-height:48px}
+.cta-try:hover{background:var(--granat-red-bright);transform:translateY(-1px);box-shadow:0 0 36px var(--granat-red-glow)}
+.cta-try:focus-visible{outline:2px solid var(--periwinkle);outline-offset:3px}
+.cta-try .arrow{transition:transform 220ms ease-out}
+.cta-try:hover .arrow{transform:translateX(4px)}
+.cta-hint{font:400 0.78rem 'Inter',sans-serif;color:var(--text-muted);letter-spacing:0.04em;text-align:center;text-wrap:pretty}
+@keyframes heartbeat{0%,100%{box-shadow:0 0 24px rgba(197,64,63,0.10)}50%{box-shadow:0 0 36px rgba(197,64,63,0.22)}}
+
+/* === MODAL (used by section 7) === */
+.modal-backdrop{position:fixed;inset:0;background:rgba(15,8,32,0.86);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:300;opacity:0;pointer-events:none;transition:opacity 200ms ease-out}
+.modal-backdrop.open{opacity:1;pointer-events:auto}
+.modal{width:100%;max-width:480px;background:var(--card-gradient);border:1px solid var(--border-medium);border-radius:14px;padding:2.2rem;box-shadow:0 24px 64px rgba(0,0,0,0.45);transform:translateY(8px) scale(0.96);opacity:0;transition:transform 300ms ease-out,opacity 300ms ease-out;max-height:calc(100vh - 2.5rem);overflow-y:auto}
+.modal-backdrop.open .modal{transform:translateY(0) scale(1);opacity:1}
+.m-eyebrow{font:600 0.72rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;color:var(--periwinkle);margin-bottom:0.85rem;display:flex;align-items:center;gap:0.6rem}
+.m-eyebrow .hairline{width:24px;height:1px;background:var(--periwinkle)}
+.m-title{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:1.6rem;line-height:1.18;color:var(--text-bright);letter-spacing:-0.01em;margin-bottom:0.85rem}
+.m-body{font:400 0.96rem 'Inter',sans-serif;line-height:1.65;color:var(--text-secondary);margin-bottom:1.4rem}
+.m-actions{display:flex;gap:0.7rem;justify-content:flex-end;flex-wrap:wrap;margin-top:1.4rem}
+.stage{display:none}
+.modal[data-stage="consent"] .stage-consent,.modal[data-stage="recording"] .stage-recording,.modal[data-stage="processing"] .stage-processing,.modal[data-stage="playback"] .stage-playback{display:block;animation:stageIn 220ms ease-out}
+@keyframes stageIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.consent-row{display:flex;align-items:flex-start;gap:0.75rem;padding:0.9rem 1rem;background:rgba(140,130,220,0.05);border:1px solid var(--border-subtle);border-radius:10px;margin-bottom:0.85rem;cursor:pointer;user-select:none;position:relative}
+.consent-row input{position:absolute;opacity:0;pointer-events:none}
+.consent-box{flex:0 0 18px;width:18px;height:18px;border-radius:4px;border:1.5px solid var(--border-medium);background:transparent;display:flex;align-items:center;justify-content:center;transition:all 200ms ease-out;margin-top:1px}
+.consent-row input:checked + .consent-box{background:var(--granat-red);border-color:var(--granat-red)}
+.consent-box svg{width:11px;height:11px;opacity:0;transition:opacity 200ms ease-out}
+.consent-row input:checked + .consent-box svg{opacity:1}
+.consent-row input:focus-visible + .consent-box{outline:2px solid var(--periwinkle);outline-offset:2px}
+.consent-label{font:500 0.94rem 'Inter',sans-serif;color:var(--text-primary);line-height:1.5}
+.policy-link{font:400 0.82rem 'Inter',sans-serif;color:var(--periwinkle);text-decoration:underline;text-underline-offset:3px;display:inline-block;margin-bottom:0.2rem}
+.policy-link:hover{color:var(--periwinkle-bright)}
+.rec-stage{display:flex;flex-direction:column;align-items:center;gap:1.1rem;padding:0.4rem 0 0}
+.rec-ring{position:relative;width:200px;height:200px}
+.rec-ring svg{width:100%;height:100%;animation:ringSpin 60s linear infinite;transform-origin:center}
+@keyframes ringSpin{to{transform:rotate(360deg)}}
+.rec-ring .seg{fill:var(--granat-red);transform-origin:100px 100px;animation:segPulse 1.4s ease-in-out infinite}
+@keyframes segPulse{0%,100%{opacity:0.35;transform:scaleY(0.85)}50%{opacity:1;transform:scaleY(1.15)}}
+.rec-btn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:80px;height:80px;border-radius:50%;background:var(--granat-red);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 0 36px var(--granat-red-glow);transition:transform 120ms ease-out}
+.rec-btn:hover{background:var(--granat-red-bright)}
+.rec-btn:active{transform:translate(-50%,-50%) scale(0.95)}
+.rec-btn .stop-square{width:22px;height:22px;background:#fff;border-radius:3px}
+.rec-btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:4px}
+.countdown{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:2.3rem;letter-spacing:0.06em;line-height:1;color:var(--periwinkle)}
+.rec-status{font:500 0.85rem 'Inter',sans-serif;letter-spacing:0.02em;color:var(--text-secondary);display:flex;align-items:center;gap:0.45rem}
+.rec-status .dots{display:inline-flex;gap:3px}
+.rec-status .dots i{width:4px;height:4px;border-radius:50%;background:var(--granat-red);animation:dotPulse 1.2s ease-in-out infinite}
+.rec-status .dots i:nth-child(2){animation-delay:0.2s}
+.rec-status .dots i:nth-child(3){animation-delay:0.4s}
+@keyframes dotPulse{0%,100%{opacity:0.3}50%{opacity:1}}
+.proc-stage{display:flex;flex-direction:column;align-items:center;gap:1.3rem;padding:0.4rem 0 0}
+.proc-ring{width:120px;height:120px;border-radius:50%;background:conic-gradient(from 0deg,var(--granat-red) 0%,var(--granat-red-bright) 35%,transparent 65%,transparent 100%);position:relative;animation:procSpin 3s linear infinite;filter:drop-shadow(0 0 18px var(--granat-red-glow))}
+.proc-ring::before{content:"";position:absolute;inset:8px;border-radius:50%;background:radial-gradient(circle at 50% 50%,var(--periwinkle-soft),transparent 70%),var(--bg-elevated)}
+@keyframes procSpin{to{transform:rotate(360deg)}}
+.proc-meta{font-family:'JetBrains Mono',monospace;font-size:0.78rem;letter-spacing:0.18em;color:var(--text-muted);text-transform:uppercase}
+.player{margin-top:0.4rem;background:rgba(15,8,32,0.4);border:1px solid var(--border-subtle);border-radius:12px;padding:1rem 1.1rem;display:flex;align-items:center;gap:0.9rem}
+.play-btn{flex:0 0 44px;width:44px;height:44px;border-radius:50%;background:var(--granat-red);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 200ms ease-out}
+.play-btn:hover{background:var(--granat-red-bright)}
+.play-btn .ico{width:0;height:0;border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent;margin-left:3px}
+.play-btn.playing .ico{width:11px;height:11px;border:0;margin-left:0;border-radius:1px;background:linear-gradient(90deg,#fff 0 35%,transparent 35% 65%,#fff 65% 100%)}
+.play-btn:focus-visible{outline:2px solid var(--periwinkle);outline-offset:3px}
+.scrub{flex:1;display:flex;flex-direction:column;gap:0.45rem}
+.scrub-bar{position:relative;height:4px;border-radius:2px;background:rgba(143,163,232,0.18);overflow:hidden}
+.scrub-fill{position:absolute;left:0;top:0;bottom:0;width:0%;background:var(--periwinkle);transition:width 120ms linear}
+.scrub-time{font-family:'JetBrains Mono',monospace;font-size:0.78rem;letter-spacing:0.04em;color:var(--text-muted);display:flex;justify-content:space-between}
+.passport{margin-top:1rem;background:rgba(15,8,32,0.4);border:1px solid var(--border-subtle);border-radius:12px;padding:1rem 1.1rem;display:flex;align-items:center;gap:1rem}
+.passport-radar{flex:0 0 60px;width:60px;height:60px}
+.passport-meta{flex:1;display:flex;flex-direction:column;gap:0.2rem;min-width:0}
+.passport-label{font:600 0.68rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;color:var(--periwinkle)}
+.passport-id{font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:var(--text-bright);letter-spacing:0.04em}
+.passport-sub{font:400 0.76rem 'Inter',sans-serif;color:var(--text-muted)}
+
+/* === SECTION 8: ROADMAP === */
+#roadmap{padding:5rem 2rem}
+#roadmap .r-inner{max-width:1100px;margin:0 auto}
+#roadmap .s-title{margin-bottom:3.5rem;max-width:22ch}
+.timeline{position:relative;padding-left:0;margin-bottom:4.5rem;max-width:880px;list-style:none}
+.timeline::before{content:"";position:absolute;left:5.5rem;top:1.2rem;bottom:1.2rem;width:1px;background:var(--border-medium)}
+.mile{position:relative;display:grid;grid-template-columns:6.5rem 1fr;gap:2rem;padding:1.4rem 0 2rem;align-items:start;opacity:0;transform:translateY(12px)}
+.mile.in{opacity:1;transform:translateY(0);transition:opacity 700ms ease-out,transform 700ms ease-out}
+.mile .year{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:clamp(1.6rem,3vw,2.2rem);line-height:1;letter-spacing:-0.01em;color:var(--text-bright);font-variant-numeric:tabular-nums;display:inline-block;transform:scale(0.95);opacity:0;transition:transform 240ms ease-out 200ms,opacity 240ms ease-out 200ms}
+.mile.in .year{transform:scale(1);opacity:1}
+.mile .node{position:absolute;left:5.5rem;top:1.65rem;width:11px;height:11px;border-radius:50%;background:var(--bg-primary);border:1.5px solid var(--periwinkle);transform:translateX(-50%) scale(0);transition:transform 300ms cubic-bezier(.34,1.56,.64,1) 350ms}
+.mile.in .node{transform:translateX(-50%) scale(1)}
+.mile[data-final="true"] .node{background:var(--granat-red);border-color:var(--granat-red);box-shadow:0 0 0 4px rgba(197,64,63,0.18)}
+.mile .body{padding-top:0.1rem}
+.mile .stage-lbl{font:600 0.72rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;color:var(--periwinkle);margin-bottom:0.5rem}
+.mile .desc{font-family:'Playfair Display',Georgia,serif;font-weight:400;font-style:italic;font-size:clamp(1.1rem,1.7vw,1.4rem);line-height:1.4;letter-spacing:-0.005em;color:var(--text-primary);text-wrap:pretty;max-width:42ch}
+#roadmap .closing .em-peri{color:var(--periwinkle)}
+
+/* === SECTION 9: SOCIAL === */
+#social{padding:5rem 2rem}
+#social .s-inner{max-width:1100px;margin:0 auto}
+#social .lead{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(1.3rem,2.4vw,1.85rem);line-height:1.35;letter-spacing:-0.01em;color:var(--text-primary);max-width:62ch;margin-bottom:0.4rem;text-wrap:pretty;opacity:0;transform:translateY(8px);transition:opacity 700ms ease-out,transform 700ms ease-out;margin-top:-1rem}
+#social .lead.in{opacity:1;transform:translateY(0)}
+#social .verdict{font-family:'Playfair Display',Georgia,serif;font-weight:900;font-style:italic;font-size:clamp(1.6rem,3.6vw,2.6rem);line-height:1.15;letter-spacing:-0.015em;color:var(--granat-red);margin-bottom:4.5rem;opacity:0;transform:translateY(8px);transition:opacity 800ms ease-out,transform 800ms ease-out}
+#social .verdict.in{opacity:1;transform:translateY(0)}
+.pairs{max-width:900px;margin:0 auto;border-top:1px solid var(--border-subtle)}
+.pair{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:2rem;padding:2rem 0.5rem;border-bottom:1px solid var(--border-subtle);position:relative}
+.pair .num{position:absolute;top:0.85rem;left:0.5rem;font:400 0.72rem 'Inter',sans-serif;letter-spacing:0.22em;color:var(--text-muted);font-variant-numeric:tabular-nums}
+.pair .before,.pair .after{font:600 clamp(1rem,2vw,1.4rem) 'Inter',sans-serif;letter-spacing:0.18em;text-transform:uppercase;line-height:1.2;text-wrap:balance;opacity:0;transform:translateY(6px);transition:opacity 600ms ease-out,transform 600ms ease-out}
+.pair.in .before,.pair.in .after{opacity:1;transform:translateY(0)}
+.pair .before{color:var(--granat-red);text-align:right;transition-delay:50ms}
+.pair .after{color:var(--periwinkle);text-align:left;transition-delay:350ms}
+.pair .arr{font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(1.5rem,3vw,2.2rem);color:var(--periwinkle);line-height:1;display:inline-block;transform:scale(0);transform-origin:center;transition:transform 240ms cubic-bezier(.34,1.56,.64,1) 200ms;user-select:none}
+.pair.in .arr{transform:scale(1)}
+
+/* === SECTION 10: ECONOMY === */
+#economy{padding:5rem 2rem}
+#economy .e-inner{max-width:1100px;margin:0 auto}
+#economy .lead{font-family:'Playfair Display',Georgia,serif;font-weight:400;font-size:clamp(1.2rem,2vw,1.6rem);line-height:1.4;letter-spacing:-0.005em;color:var(--text-primary);max-width:60ch;margin-bottom:3.5rem;text-wrap:pretty;margin-top:-1rem}
+#economy .lead .em-peri{font-style:italic;font-weight:700}
+.mechs{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:4.5rem}
+.mech{background:var(--card-gradient);border:1px solid var(--border-subtle);border-radius:14px;padding:1.9rem 1.9rem 2rem;display:flex;flex-direction:column;gap:0.9rem;position:relative;transition:border-color 220ms ease-out;opacity:0;transform:translateY(12px)}
+.mech.in{opacity:1;transform:translateY(0);transition:opacity 700ms ease-out,transform 700ms ease-out}
+.mech:hover{border-color:var(--border-medium)}
+.mech .roman{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:0.78rem;letter-spacing:0.22em;color:var(--periwinkle);font-variant-numeric:tabular-nums}
+.mech .mname{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(1.2rem,1.9vw,1.5rem);line-height:1.2;letter-spacing:-0.01em;color:var(--text-bright);text-wrap:balance}
+.mech .mcap{font:300 italic 0.98rem 'Inter',sans-serif;line-height:1.5;color:var(--text-secondary);border-top:1px solid var(--border-subtle);padding-top:0.85rem;margin-top:0.2rem;text-wrap:pretty}
+
+/* === SECTION 11: INVITATION === */
+#invitation{padding:7rem 2rem}
+#invitation .inv-inner{max-width:720px;margin:0 auto;display:flex;flex-direction:column}
+#invitation .label{font:400 0.84rem 'Inter',sans-serif;letter-spacing:0.02em;color:var(--periwinkle);margin-bottom:3.5rem}
+#invitation .pull{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(1.4rem,2.6vw,2.05rem);line-height:1.3;letter-spacing:-0.01em;color:var(--text-primary);margin-bottom:2.6rem;text-wrap:pretty}
+#invitation .pull .em-peri{color:var(--periwinkle);transition:color 200ms ease-out}
+#invitation .strategic{display:flex;flex-direction:column;gap:1.3rem;margin-bottom:3.5rem}
+#invitation .strategic p{font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(1rem,1.45vw,1.2rem);line-height:1.65;color:var(--text-primary);text-wrap:pretty}
+#invitation .strategic .em-red{color:var(--granat-red);font-style:italic;font-weight:300;transition:color 200ms ease-out}
+#invitation .hairline-rule{width:60%;height:1px;background:var(--border-subtle);margin:0 auto 2.6rem}
+#invitation .closing-line{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(1.05rem,1.6vw,1.3rem);line-height:1.5;color:var(--text-secondary);letter-spacing:-0.005em;text-align:center;text-wrap:pretty}
+#invitation .reveal{opacity:0;transform:translateY(8px)}
+#invitation .reveal.in{opacity:1;transform:translateY(0);transition:opacity 600ms ease-out,transform 600ms ease-out}
+#invitation .reveal.d2.in{transition-delay:200ms}
+#invitation .reveal.d3.in{transition-delay:400ms}
+
+/* === SECTION 12: CTA === */
+#cta{padding:5rem 2rem 4rem}
+#cta .c-inner{max-width:1180px;margin:0 auto}
+#cta .s-title{margin-bottom:3rem;max-width:18ch}
+.roles{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-bottom:5rem}
+.role{background:var(--card-gradient);border:1px solid var(--border-subtle);border-radius:14px;padding:2rem 1.8rem 2.2rem;display:flex;flex-direction:column;gap:1.3rem;text-decoration:none;color:inherit;transition:border-color 220ms ease-out,transform 220ms ease-out;opacity:0;transform:translateY(12px);cursor:pointer;position:relative;min-height:200px}
+.role.in{opacity:1;transform:translateY(0);transition:opacity 700ms ease-out,transform 700ms ease-out}
+.role:hover,.role:focus-visible{border-color:var(--border-medium);transform:translateY(-2px)}
+.role.in:hover,.role.in:focus-visible{transform:translateY(-2px)}
+.role:focus-visible{outline:2px solid var(--periwinkle);outline-offset:3px}
+.role .icon{width:42px;height:42px;color:var(--periwinkle);display:flex;align-items:center;justify-content:center}
+.role .icon svg{width:100%;height:100%}
+.role .rlabel{font:600 0.7rem 'Inter',sans-serif;letter-spacing:0.22em;text-transform:uppercase;color:var(--periwinkle)}
+.role .rcta{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(1.15rem,1.9vw,1.45rem);line-height:1.25;letter-spacing:-0.01em;color:var(--text-bright);border-top:1px solid var(--border-subtle);padding-top:1.1rem;margin-top:auto;text-wrap:balance}
+.role .arr{position:absolute;right:1.4rem;bottom:1.4rem;color:var(--periwinkle);font-size:1.05rem;line-height:1;opacity:0.5;transition:opacity 220ms ease-out,transform 220ms ease-out}
+.role:hover .arr,.role:focus-visible .arr{opacity:1;transform:translateX(3px)}
+#cta .closing .em-peri{color:var(--periwinkle)}
+footer.sig{text-align:center;font:400 0.76rem 'Inter',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-muted);padding:2rem 2rem 2.6rem;border-top:1px solid var(--border-subtle);margin-top:1rem}
+footer.sig .dot{margin:0 0.6rem;color:var(--periwinkle);opacity:0.5}
+
+/* === MOBILE === */
+@media (max-width:1024px){
+  .triptych{grid-template-columns:repeat(2,1fr)}
+  .tcard:nth-child(3){grid-column:1/-1}
+  .pillars{grid-template-columns:repeat(2,1fr)}
+  .pillar:nth-child(3){grid-column:1/-1}
+}
+@media (max-width:880px){
+  .nav{padding:0.7rem 1.2rem}
+  .menu-btn .menu-label{display:none}
+  .hero-image .photo{width:100%;opacity:0.45}
+  .hero-image .tint{width:100%}
+  .hero-image .wash{background:linear-gradient(180deg,rgba(15,8,32,0.85) 0%,rgba(15,8,32,0.55) 35%,rgba(26,16,67,0.55) 70%,rgba(26,16,67,0.92) 100%)}
+  .hero-inner{padding:5rem 1.4rem 5rem}
+  .hero-content{margin-top:0;max-width:100%}
+  .headline{max-width:14ch}
+  .hero-meta{margin-top:2.2rem;gap:0.8rem;font-size:0.66rem}
+  #hero{min-height:auto;padding-bottom:1rem}
+  #challenge,#answer,#team,#philosophy,#architecture,#how-it-works,#roadmap,#social,#economy,#cta{padding:3.5rem 1.25rem}
+  #invitation{padding:4.5rem 1.4rem}
+  .stats{grid-template-columns:1fr;gap:2.4rem;margin-bottom:3rem}
+  .members{grid-template-columns:1fr;gap:1.1rem;margin-bottom:1.6rem}
+  .member{padding:1.6rem 1.4rem}
+  .org{padding:1.1rem 1.2rem;gap:1rem}
+  .triptych{grid-template-columns:1fr;gap:1rem;margin-bottom:2.6rem}
+  .tcard:nth-child(3){grid-column:auto}
+  .pillars{grid-template-columns:1fr;gap:1rem;margin-bottom:2rem}
+  .pillar:nth-child(3){grid-column:auto}
+  .pillar{padding:1.7rem 1.5rem}
+  .frame{padding:1.7rem 1.5rem}
+  .frame::before{top:1.7rem;bottom:1.7rem}
+  .frame .ftext{padding-left:1rem}
+  .steps{grid-template-columns:1fr;gap:1rem}
+  .timeline::before{left:3.6rem}
+  .mile{grid-template-columns:4.2rem 1fr;gap:1.2rem;padding:1rem 0 1.4rem}
+  .mile .node{left:3.6rem}
+  .mile .year{font-size:1.5rem}
+  .pair{grid-template-columns:1fr;gap:0.4rem;padding:1.5rem 0.5rem;text-align:center}
+  .pair .num{position:static;margin-bottom:0.4rem;display:block;text-align:left}
+  .pair .before,.pair .after{text-align:center}
+  .pair .arr{transform:rotate(90deg) scale(0);margin:0.2rem 0}
+  .pair.in .arr{transform:rotate(90deg) scale(1)}
+  .mechs{grid-template-columns:1fr;gap:1rem;margin-bottom:2.6rem}
+  .mech{padding:1.5rem 1.4rem}
+  .roles{grid-template-columns:1fr;gap:1rem;margin-bottom:3.5rem}
+  .role{min-height:auto;padding:1.7rem 1.5rem 1.9rem}
+  .modal{padding:1.6rem;max-width:none;width:calc(100vw - 2rem);max-height:calc(100vh - 2rem)}
+  .m-title{font-size:1.35rem}
+  .rec-ring{width:170px;height:170px}
+  .countdown{font-size:1.9rem}
+  .idx-overlay .idx-name{font-size:1.25rem}
+}
+@media (max-width:480px){
+  .nav{padding:0.6rem 1rem}
+  .wordmark{font-size:0.78rem;letter-spacing:0.18em}
+  .sigil .gem{width:22px;height:22px;flex:0 0 22px}
+  .lang-btn{padding:0.3rem 0.55rem;font-size:0.66rem}
+  .menu-btn{padding:0.4rem 0.55rem}
+  .hero-inner{padding:4rem 1.25rem 5rem}
+  .headline{font-size:clamp(2.6rem,11vw,3.4rem)}
+  .cta-row{flex-direction:column;align-items:stretch}
+  .btn{width:100%}
+  .hero-meta{font-size:0.62rem}
+  .scroll-cue{font-size:0.6rem;letter-spacing:0.22em}
+}
+
+/* === REDUCED MOTION === */
+@media (prefers-reduced-motion:reduce){
+  .sigil-line,.headline,.subtitle,.cta-row,.hero-meta,.scroll-cue{animation:none !important;opacity:1 !important;transform:none !important}
+  .scroll-cue .chev{animation:none !important}
+  .hero-image .photo{transform:none !important}
+  .s-label,.s-title,#challenge .hook,#challenge .tail,
+  .stats.in .stat[data-wound="true"] .wound-line,.stats .stat[data-wound="true"] .wound-line,
+  #answer .ans-headline,#answer .ans-rule,#answer .ans-body,
+  .member,.org,.tcard,#philosophy .closing,
+  .pillar,.frame,.step,
+  #roadmap .label,#roadmap .title,.mile,.mile .year,.mile .node,#roadmap .closing,
+  #social .label,#social .title,#social .lead,#social .verdict,
+  .pair .before,.pair .after,.pair .arr,
+  .mech,#economy .closing,
+  #invitation .reveal,
+  .role,#cta .closing{
+    opacity:1 !important;transform:none !important;transition:none !important;animation:none !important;
+  }
+  .mile .node{transform:translateX(-50%) !important}
+  @media (max-width:880px){.pair .arr{transform:rotate(90deg) !important}}
+  .tcard .img svg{transition:none !important}
+  .cta-try,.modal,.modal-backdrop,.stage{animation:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+
+<!-- === SCROLL PROGRESS === -->
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<!-- === STICKY NAV === -->
+<nav class="nav" aria-label="primary">
+  <a class="sigil" href="#hero" aria-label="GRANAT — top">
+    <svg class="gem" viewBox="0 0 32 32" aria-hidden="true">
+      <defs>
+        <radialGradient id="gemGlow" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+          <stop offset="22%" stop-color="#FFD9DC" stop-opacity="0.7"/>
+          <stop offset="55%" stop-color="#E0303F" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#7A1820" stop-opacity="1"/>
+        </radialGradient>
+        <linearGradient id="gemFacet" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#F26072"/>
+          <stop offset="100%" stop-color="#9F1F2A"/>
+        </linearGradient>
+      </defs>
+      <polygon points="16,2 26,7 30,16 26,25 16,30 6,25 2,16 6,7" fill="url(#gemGlow)" stroke="#5A1018" stroke-width="0.5"/>
+      <polygon points="16,2 26,7 16,12 6,7" fill="url(#gemFacet)" opacity="0.55"/>
+      <polygon points="16,12 26,7 30,16 26,25 16,20" fill="#9F1F2A" opacity="0.30"/>
+      <polygon points="16,12 6,7 2,16 6,25 16,20" fill="#F26072" opacity="0.18"/>
+      <circle cx="16" cy="14.5" r="2.4" fill="#FFFFFF" opacity="0.85"/>
+      <circle cx="16" cy="14.5" r="1.1" fill="#FFFFFF"/>
+    </svg>
+    <span class="wordmark">GRANAT</span>
+  </a>
+  <div class="nav-right">
+    <button class="menu-btn" id="openIdx" aria-haspopup="dialog" aria-controls="idxOverlay" aria-expanded="false">
+      <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="menu-label"><span class="en">Index</span><span class="ru">Индекс</span></span>
+    </button>
+    <div class="lang-toggle" role="group" aria-label="language">
+      <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+      <button class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+    </div>
+  </div>
+</nav>
+
+<!-- === SECTION INDEX OVERLAY === -->
+<div class="idx-overlay" id="idxOverlay" role="dialog" aria-modal="true" aria-hidden="true" aria-label="section index">
+  <button class="idx-close" id="closeIdx" aria-label="Close index">×</button>
+  <ol>
+    <li><a href="#hero"><span class="idx-num">01</span><span class="idx-name"><span class="en">The voice of humanity</span><span class="ru">Голос человечества</span></span></a></li>
+    <li><a href="#challenge"><span class="idx-num">02</span><span class="idx-name"><span class="en">The challenge of our time</span><span class="ru">Вызов нашего времени</span></span></a></li>
+    <li><a href="#answer"><span class="idx-num">03</span><span class="idx-name"><span class="en">The answer</span><span class="ru">Ответ</span></span></a></li>
+    <li><a href="#team"><span class="idx-num">04</span><span class="idx-name"><span class="en">Team</span><span class="ru">Команда</span></span></a></li>
+    <li><a href="#philosophy"><span class="idx-num">05</span><span class="idx-name"><span class="en">Philosophy</span><span class="ru">Философия</span></span></a></li>
+    <li><a href="#architecture"><span class="idx-num">06</span><span class="idx-name"><span class="en">Architecture of eternity</span><span class="ru">Архитектура вечности</span></span></a></li>
+    <li><a href="#how-it-works"><span class="idx-num">07</span><span class="idx-name"><span class="en">How it works</span><span class="ru">Как это работает</span></span></a></li>
+    <li><a href="#roadmap"><span class="idx-num">08</span><span class="idx-name"><span class="en">Roadmap</span><span class="ru">Дорожная карта</span></span></a></li>
+    <li><a href="#social"><span class="idx-num">09</span><span class="idx-name"><span class="en">Social transformation</span><span class="ru">Социальная трансформация</span></span></a></li>
+    <li><a href="#economy"><span class="idx-num">10</span><span class="idx-name"><span class="en">Economy of the gift</span><span class="ru">Экономика дара</span></span></a></li>
+    <li><a href="#invitation"><span class="idx-num">11</span><span class="idx-name"><span class="en">Invitation</span><span class="ru">Приглашение</span></span></a></li>
+    <li><a href="#cta"><span class="idx-num">12</span><span class="idx-name"><span class="en">Time to choose a role</span><span class="ru">Время выбирать роль</span></span></a></li>
+  </ol>
+</div>
+
+<!-- ============================================================
+     SECTION 1 — HERO
+     ============================================================ -->
+<section id="hero" data-screen-label="01 Hero" aria-labelledby="heroTitle">
+  <div class="hero-image" aria-hidden="true">
+    <div class="photo" id="heroPhoto"></div>
+    <div class="tint"></div>
+    <div class="wash"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="sigil-line">
+        <span class="hairline"></span>
+        <span class="label">
+          <span class="en">a participatory monument · est. 2026</span>
+          <span class="ru">соучаствующий памятник · с 2026</span>
+        </span>
+      </div>
+      <h1 id="heroTitle" class="headline">
+        <span class="en">the voice<br/>of <span class="em">humanity</span></span>
+        <span class="ru">голос<br/><span class="em">человечества</span></span>
+      </h1>
+      <p class="subtitle">
+        <span class="en">The first digital artifact, created by all of humanity — one voice at a time, across eight years and seven thousand cities.</span>
+        <span class="ru">Первый цифровой артефакт, созданный всем человечеством — по одному голосу за раз, через восемь лет и семь тысяч городов.</span>
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#how-it-works">
+          <span class="en">listen</span><span class="ru">послушать</span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn-ghost" href="#cta">
+          <span class="en">connect</span><span class="ru">связаться</span>
+        </a>
+      </div>
+      <div class="hero-meta" aria-hidden="true">
+        <span><span class="en">vol. 01 · 2026—2034</span><span class="ru">вып. 01 · 2026—2034</span></span>
+        <span class="dot"></span>
+        <span><span class="en">8 years · 7000 cities · 1 song</span><span class="ru">8 лет · 7000 городов · 1 песня</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true">
+    <span class="en">scroll to begin</span>
+    <span class="ru">прокрутите вниз</span>
+    <span class="chev"></span>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 2 — CHALLENGE
+     ============================================================ -->
+<section id="challenge" data-screen-label="02 Challenge" tabindex="-1" aria-labelledby="chHook">
+  <div class="ch-inner">
+    <div class="s-label" data-reveal="self">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">02 — the challenge of our time</span><span class="ru">02 — вызов нашего времени</span></span>
+    </div>
+    <h2 id="chHook" class="hook">
+      <span class="en">we have created a technological paradise yet live in a spiritual desert</span>
+      <span class="ru">мы создали технологический рай, но живём в духовной пустыне</span>
+    </h2>
+    <div class="divider" aria-hidden="true"></div>
+    <div class="stats" id="stats">
+      <figure class="stat" role="figure" aria-label="8 billion people">
+        <span class="num" data-target="8" data-duration="1200">0</span>
+        <span class="suffix"><span class="en">billion</span><span class="ru">миллиардов</span></span>
+        <figcaption class="lbl"><span class="en">people</span><span class="ru">человек</span></figcaption>
+      </figure>
+      <figure class="stat" role="figure" aria-label="7000 languages">
+        <span class="num" data-target="7000" data-duration="1500">0</span>
+        <span class="suffix">&nbsp;</span>
+        <figcaption class="lbl"><span class="en">languages</span><span class="ru">языков</span></figcaption>
+      </figure>
+      <figure class="stat" data-wound="true" role="figure" aria-label="zero shared voices">
+        <span class="num" data-static="true">0</span>
+        <span class="wound-line" aria-hidden="true"></span>
+        <span class="suffix">&nbsp;</span>
+        <figcaption class="lbl"><span class="en">shared voices</span><span class="ru">общих голосов</span></figcaption>
+      </figure>
+    </div>
+    <p class="tail">
+      <span class="en">History will judge us not by our technologies, but by what we did with <span class="em-peri">the human soul</span>.</span>
+      <span class="ru">История будет судить нас не по нашим технологиям, а по тому, что мы сделали с <span class="em-peri">человеческой душой</span>.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 3 — ANSWER
+     ============================================================ -->
+<section id="answer" data-screen-label="03 Answer" tabindex="-1" aria-labelledby="ansTitle">
+  <div class="a-inner">
+    <div class="s-label" data-reveal="self" style="justify-content:center">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">03 — the answer</span><span class="ru">03 — ответ</span></span>
+    </div>
+    <h2 id="ansTitle" class="ans-headline">
+      <span class="en">A single song, sung by <span class="em-peri">all of us</span> — and by no one alone.</span>
+      <span class="ru">Одна песня, спетая <span class="em-peri">всеми нами</span> — и никем в одиночку.</span>
+    </h2>
+    <div class="ans-rule" aria-hidden="true"></div>
+    <p class="ans-body">
+      <span class="en">Granat is the first work of art whose author is humanity itself. Each voice is a note. Each note has a name. Together they form an artifact that outlasts every empire that recorded it.</span>
+      <span class="ru">Granat — первое произведение, автор которого — само человечество. Каждый голос — нота. У каждой ноты есть имя. Вместе они складываются в артефакт, переживающий любую империю, его записавшую.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 4 — TEAM
+     ============================================================ -->
+<section id="team" data-screen-label="04 Team" tabindex="-1" aria-labelledby="tTitle">
+  <div class="t-inner">
+    <div class="s-label" data-reveal="self">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">04 — team</span><span class="ru">04 — команда</span></span>
+    </div>
+    <h2 id="tTitle" class="s-title">
+      <span class="en">Team</span><span class="ru">Команда</span>
+    </h2>
+    <p class="subline">
+      <span class="en">People who have proven that the impossible is possible.</span>
+      <span class="ru">Люди, доказавшие, что невозможное возможно.</span>
+    </p>
+    <div class="members">
+      <article class="member" data-i="1" aria-labelledby="m1Name">
+        <div class="head">
+          <div class="avatar" aria-hidden="true">Я</div>
+          <h3 id="m1Name" class="name">
+            <span class="en">Yaroslav Malyi</span><span class="ru">Ярослав Малый</span>
+          </h3>
+        </div>
+        <ul class="creds">
+          <li><span class="en">Creator of the Olympic anthem performed by a million-voice choir</span><span class="ru">Создатель олимпийского гимна с миллионным хором</span></li>
+          <li><span class="en">Artist of <em>Machete</em> and <em>Tokio</em></span><span class="ru">Артист «Мачете» и «Токио»</span></li>
+          <li><span class="en">Producer of 42 international festivals</span><span class="ru">Продюсер 42 международных фестивалей</span></li>
+        </ul>
+      </article>
+      <article class="member" data-i="2" aria-labelledby="m2Name">
+        <div class="head">
+          <div class="avatar" aria-hidden="true">О</div>
+          <h3 id="m2Name" class="name">
+            <span class="en">Olga Malaya</span><span class="ru">Ольга Малая</span>
+          </h3>
+        </div>
+        <ul class="creds">
+          <li><span class="en">Strategist and General Manager of the project</span><span class="ru">Стратег и генеральный менеджер проекта</span></li>
+          <li><span class="en">Track record of turning ambition into results at the intersection of people, businesses, and ideas</span><span class="ru">Опыт превращения амбиции в результат на стыке людей, бизнесов и идей</span></li>
+        </ul>
+      </article>
+    </div>
+    <aside class="org" data-i="3" aria-label="Machete Records">
+      <div class="logo" aria-hidden="true"></div>
+      <div class="text">
+        <span class="org-name">Machete Records</span>
+        <span class="org-tag">
+          <span class="en">Experience in creating global cultural phenomena</span>
+          <span class="ru">Опыт создания глобальных культурных явлений</span>
+        </span>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 5 — PHILOSOPHY
+     ============================================================ -->
+<section id="philosophy" data-screen-label="05 Philosophy" tabindex="-1" aria-labelledby="phTitle">
+  <div class="ph-inner">
+    <div class="s-label" data-reveal="self">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">05 — philosophy</span><span class="ru">05 — философия</span></span>
+    </div>
+    <h2 id="phTitle" class="s-title">
+      <span class="en">Project philosophy</span><span class="ru">Философия проекта</span>
+    </h2>
+    <p class="lead">
+      <span class="en">Granat is a bridge between Human and <span class="em-peri">Artificial Intelligence</span>, Earth and <span class="em-peri">Cosmos</span>, Reality and <span class="em-peri">Eternity</span>.</span>
+      <span class="ru">Granat — это мост между Человеком и <span class="em-peri">Искусственным Интеллектом</span>, Землёй и <span class="em-peri">Космосом</span>, Реальностью и <span class="em-peri">Вечностью</span>.</span>
+    </p>
+    <div class="triptych">
+      <article class="tcard" data-card="1" tabindex="0" aria-labelledby="card1Label">
+        <div class="img" aria-hidden="true">
+          <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <radialGradient id="c1bg" cx="50%" cy="55%" r="70%"><stop offset="0%" stop-color="#2D2358"/><stop offset="55%" stop-color="#1A1043"/><stop offset="100%" stop-color="#0F0820"/></radialGradient>
+              <radialGradient id="c1spark" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFE6A8" stop-opacity="0.95"/><stop offset="40%" stop-color="#E0303F" stop-opacity="0.6"/><stop offset="100%" stop-color="#E0303F" stop-opacity="0"/></radialGradient>
+            </defs>
+            <rect width="500" height="400" fill="url(#c1bg)"/>
+            <g fill="none" stroke="rgba(232,229,245,0.55)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M70,260 Q120,235 175,225 L210,205 Q220,200 230,205"/>
+              <path d="M180,225 L175,205 M195,222 L195,200 M210,220 L215,198 M225,217 L235,200"/>
+              <path d="M70,260 Q90,275 130,278"/>
+            </g>
+            <g fill="none" stroke="rgba(143,163,232,0.7)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M430,260 Q380,235 325,225 L290,205 Q280,200 270,205"/>
+              <path d="M320,225 L325,205 M305,222 L305,200 M290,220 L285,198 M275,217 L265,200"/>
+              <path d="M430,260 Q410,275 370,278"/>
+              <path d="M430,260 L470,260 M450,255 L450,275 M460,240 L470,250"/>
+              <circle cx="470" cy="260" r="2"/><circle cx="450" cy="275" r="2"/>
+            </g>
+            <circle cx="250" cy="205" r="32" fill="url(#c1spark)"/>
+            <circle cx="250" cy="205" r="3" fill="#FFFFFF"/>
+            <g fill="rgba(255,255,255,0.35)"><circle cx="160" cy="120" r="0.8"/><circle cx="340" cy="140" r="0.8"/><circle cx="220" cy="80" r="0.6"/><circle cx="290" cy="100" r="0.6"/><circle cx="120" cy="180" r="0.6"/><circle cx="395" cy="170" r="0.6"/></g>
+          </svg>
+        </div>
+        <div class="body">
+          <h3 id="card1Label" class="clabel">
+            <span class="en">Human <span class="arrow">↔</span> AI</span>
+            <span class="ru">Человек <span class="arrow">↔</span> ИИ</span>
+          </h3>
+          <p class="ctext">
+            <span class="en">Not data passed to the machine, but the soul. Love, creation, beauty.</span>
+            <span class="ru">Не данные передаются машине, а душа. Любовь, творчество, красота.</span>
+          </p>
+        </div>
+      </article>
+      <article class="tcard" data-card="2" tabindex="0" aria-labelledby="card2Label">
+        <div class="img" aria-hidden="true">
+          <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <radialGradient id="c2sky" cx="50%" cy="40%" r="80%"><stop offset="0%" stop-color="#1A1043"/><stop offset="60%" stop-color="#0F0820"/><stop offset="100%" stop-color="#06030F"/></radialGradient>
+              <radialGradient id="c2earth" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#3a4f8a"/><stop offset="55%" stop-color="#1d2952"/><stop offset="100%" stop-color="#0F0820"/></radialGradient>
+              <linearGradient id="c2limb" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(143,163,232,0)"/><stop offset="50%" stop-color="rgba(143,163,232,0.55)"/><stop offset="100%" stop-color="rgba(255,210,180,0.25)"/></linearGradient>
+            </defs>
+            <rect width="500" height="400" fill="url(#c2sky)"/>
+            <g fill="rgba(255,255,255,0.55)"><circle cx="60" cy="40" r="0.7"/><circle cx="140" cy="60" r="0.6"/><circle cx="220" cy="30" r="0.9"/><circle cx="320" cy="50" r="0.6"/><circle cx="410" cy="35" r="0.8"/><circle cx="470" cy="80" r="0.7"/><circle cx="80" cy="120" r="0.5"/><circle cx="370" cy="120" r="0.5"/><circle cx="430" cy="160" r="0.6"/><circle cx="50" cy="200" r="0.5"/></g>
+            <circle cx="250" cy="700" r="450" fill="url(#c2earth)"/>
+            <circle cx="250" cy="700" r="455" fill="none" stroke="url(#c2limb)" stroke-width="6" opacity="0.85"/>
+            <circle cx="250" cy="700" r="462" fill="none" stroke="rgba(143,163,232,0.18)" stroke-width="14"/>
+            <circle cx="380" cy="260" r="60" fill="rgba(255,222,180,0.10)"/>
+          </svg>
+        </div>
+        <div class="body">
+          <h3 id="card2Label" class="clabel">
+            <span class="en">Earth <span class="arrow">↔</span> Cosmos</span>
+            <span class="ru">Земля <span class="arrow">↔</span> Космос</span>
+          </h3>
+          <p class="ctext">
+            <span class="en">The voice of humanity, sent to the stars. An artifact that outlives us.</span>
+            <span class="ru">Голос человечества, отправленный к звёздам. Артефакт, который переживёт нас.</span>
+          </p>
+        </div>
+      </article>
+      <article class="tcard" data-card="3" tabindex="0" aria-labelledby="card3Label">
+        <div class="img" aria-hidden="true">
+          <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <radialGradient id="c3room" cx="50%" cy="55%" r="75%"><stop offset="0%" stop-color="#2D2358"/><stop offset="60%" stop-color="#1A1043"/><stop offset="100%" stop-color="#0A0518"/></radialGradient>
+              <radialGradient id="c3flame" cx="50%" cy="60%" r="50%"><stop offset="0%" stop-color="#FFF1B8"/><stop offset="35%" stop-color="#FFB46A" stop-opacity="0.95"/><stop offset="70%" stop-color="#E0303F" stop-opacity="0.55"/><stop offset="100%" stop-color="#E0303F" stop-opacity="0"/></radialGradient>
+              <radialGradient id="c3halo" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="rgba(255,200,140,0.30)"/><stop offset="100%" stop-color="rgba(255,200,140,0)"/></radialGradient>
+            </defs>
+            <rect width="500" height="400" fill="url(#c3room)"/>
+            <ellipse cx="250" cy="200" rx="220" ry="180" fill="url(#c3halo)"/>
+            <rect x="237" y="220" width="26" height="120" rx="2" fill="#E8DDC2" opacity="0.85"/>
+            <rect x="237" y="220" width="26" height="120" rx="2" fill="url(#c3room)" opacity="0.30"/>
+            <path d="M237,260 Q232,275 235,290 L237,290 Z" fill="#E8DDC2" opacity="0.7"/>
+            <rect x="249" y="208" width="2" height="14" fill="#2A1810"/>
+            <ellipse cx="250" cy="190" rx="22" ry="40" fill="url(#c3flame)"/>
+            <ellipse cx="250" cy="195" rx="9" ry="22" fill="#FFF7D6" opacity="0.85"/>
+            <rect x="0" y="340" width="500" height="60" fill="rgba(0,0,0,0.45)"/>
+            <ellipse cx="250" cy="345" rx="120" ry="6" fill="rgba(255,200,140,0.18)"/>
+          </svg>
+        </div>
+        <div class="body">
+          <h3 id="card3Label" class="clabel">
+            <span class="en">Reality <span class="arrow">↔</span> Eternity</span>
+            <span class="ru">Реальность <span class="arrow">↔</span> Вечность</span>
+          </h3>
+          <p class="ctext">
+            <span class="en">Every voice forever preserved in digital space as part of a global harmony — cultural heritage for future generations.</span>
+            <span class="ru">Каждый голос навсегда сохраняется в цифровом пространстве как часть глобальной гармонии — культурное наследие для будущих поколений.</span>
+          </p>
+        </div>
+      </article>
+    </div>
+    <p class="closing">
+      <span class="en">Singularity is not the end of humanity, but <span class="em-peri">the beginning of its immortality</span>.</span>
+      <span class="ru">Сингулярность — это не конец человечества, а <span class="em-peri">начало его бессмертия</span>.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 6 — ARCHITECTURE
+     ============================================================ -->
+<section id="architecture" data-screen-label="06 Architecture" tabindex="-1" aria-labelledby="aTitle">
+  <div class="a-inner">
+    <div class="s-label" data-reveal="self">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">06 — architecture</span><span class="ru">06 — архитектура</span></span>
+    </div>
+    <h2 id="aTitle" class="s-title">
+      <span class="en">Architecture of eternity</span><span class="ru">Архитектура вечности</span>
+    </h2>
+    <div class="pillars">
+      <article class="pillar" data-i="1" aria-labelledby="p1Name">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <circle cx="24" cy="24" r="4" fill="currentColor"/>
+            <line x1="24" y1="6" x2="24" y2="14"/><line x1="24" y1="34" x2="24" y2="42"/>
+            <line x1="6" y1="24" x2="14" y2="24"/><line x1="34" y1="24" x2="42" y2="24"/>
+            <line x1="11.3" y1="11.3" x2="17" y2="17"/><line x1="31" y1="31" x2="36.7" y2="36.7"/>
+            <line x1="36.7" y1="11.3" x2="31" y2="17"/><line x1="17" y1="31" x2="11.3" y2="36.7"/>
+            <circle cx="24" cy="24" r="14" stroke-dasharray="2 4"/>
+          </svg>
+        </div>
+        <span class="ord">01</span>
+        <h3 id="p1Name" class="pname"><span class="en">AI Composer</span><span class="ru">AI-композитор</span></h3>
+        <p class="pbody">
+          <span class="en">A digital shaman weaving every voice into humanity's eternal mantra.</span>
+          <span class="ru">Цифровой шаман, вплетающий каждый голос в вечную мантру человечества.</span>
+        </p>
+      </article>
+      <article class="pillar" data-i="2" aria-labelledby="p2Name">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
+            <polygon points="24,6 36,13 36,27 24,34 12,27 12,13"/>
+            <polygon points="24,16 30,19.5 30,26.5 24,30 18,26.5 18,19.5" fill="currentColor" fill-opacity="0.18"/>
+            <line x1="24" y1="34" x2="24" y2="42"/><line x1="14" y1="40" x2="34" y2="40"/>
+          </svg>
+        </div>
+        <span class="ord">02</span>
+        <h3 id="p2Name" class="pname"><span class="en">Blockchain Registry</span><span class="ru">Блокчейн-реестр</span></h3>
+        <p class="pbody">
+          <span class="en">An eternal registry where the name of every creator is inscribed.</span>
+          <span class="ru">Вечный реестр, где вписывается имя каждого творца.</span>
+        </p>
+      </article>
+      <article class="pillar" data-i="3" aria-labelledby="p3Name">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="6" y1="14" x2="42" y2="14"/>
+            <polygon points="24,6 8,14 40,14" fill="currentColor" fill-opacity="0.18"/>
+            <line x1="11" y1="18" x2="11" y2="36"/><line x1="19" y1="18" x2="19" y2="36"/>
+            <line x1="29" y1="18" x2="29" y2="36"/><line x1="37" y1="18" x2="37" y2="36"/>
+            <line x1="6" y1="38" x2="42" y2="38"/><line x1="6" y1="42" x2="42" y2="42"/>
+          </svg>
+        </div>
+        <span class="ord">03</span>
+        <h3 id="p3Name" class="pname"><span class="en">Distributed Archive</span><span class="ru">Распределённое хранилище</span></h3>
+        <p class="pbody">
+          <span class="en">A modern Library of Alexandria for civilization's digital heritage.</span>
+          <span class="ru">Современная Александрийская библиотека для цифрового наследия цивилизации.</span>
+        </p>
+      </article>
+    </div>
+    <aside class="frame" id="frame" aria-label="strategic frame">
+      <p class="ftext">
+        <span class="en">Granat is <span class="em-peri">a core plus floating plug-ins</span>. The core is voice technology. Plug-ins are what we add together with partners for their world: voice verification, ceremonies, festivals, educational programs.</span>
+        <span class="ru">Granat — это <span class="em-peri">ядро плюс плавающие плагины</span>. Ядро — голосовая технология. Плагины — то, что мы вместе с партнёрами добавляем под их мир: верификация по голосу, церемонии, фестивали, образовательные программы.</span>
+      </p>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 7 — HOW IT WORKS
+     ============================================================ -->
+<section id="how-it-works" data-screen-label="07 How It Works" aria-labelledby="hiwTitle">
+  <div class="hiw-inner">
+    <div class="s-label" data-reveal="self">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">07 — how it works</span><span class="ru">07 — как это работает</span></span>
+    </div>
+    <h2 id="hiwTitle" class="s-title">
+      <span class="en">Three steps to eternity</span><span class="ru">Три шага к вечности</span>
+    </h2>
+    <div class="steps">
+      <article class="step" data-step="1">
+        <div class="num">01</div>
+        <h3 class="step-title"><span class="en">Record</span><span class="ru">Запись</span></h3>
+        <p class="step-body"><span class="en">5 minutes through the GRANAT app.</span><span class="ru">5 минут через приложение GRANAT.</span></p>
+      </article>
+      <article class="step" data-step="2">
+        <div class="num">02</div>
+        <h3 class="step-title"><span class="en">Transformation</span><span class="ru">Преображение</span></h3>
+        <p class="step-body"><span class="en">AI finds the perfect place for your voice in the symphony.</span><span class="ru">AI находит идеальное место для вашего голоса в симфонии.</span></p>
+      </article>
+      <article class="step" data-step="3">
+        <div class="num">03</div>
+        <h3 class="step-title"><span class="en">Eternity</span><span class="ru">Вечность</span></h3>
+        <p class="step-body"><span class="en">A digital certificate — proof of your place in history.</span><span class="ru">Цифровой сертификат — доказательство вашего места в истории.</span></p>
+      </article>
+    </div>
+    <div class="cta-wrap">
+      <button class="cta-try" id="openDemo" aria-haspopup="dialog" aria-controls="demoModal">
+        <span class="en">Try it now</span><span class="ru">Попробуйте сейчас</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </button>
+      <span class="cta-hint">
+        <span class="en">~30 seconds · uses your microphone</span>
+        <span class="ru">~30 секунд · использует ваш микрофон</span>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- === DEMO MODAL === -->
+<div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+  <div class="modal" id="demoModal" data-stage="consent" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-live="polite">
+    <div class="stage stage-consent">
+      <div class="m-eyebrow"><span class="hairline"></span><span class="en">stage 01 · consent</span><span class="ru">этап 01 · согласие</span></div>
+      <h3 class="m-title" id="modalTitle"><span class="en">Before you record</span><span class="ru">Прежде чем записать</span></h3>
+      <p class="m-body">
+        <span class="en">I consent to transferring this audio recording to the GRANAT project for integration into the collective work. Details on rights — see the participant policy.</span>
+        <span class="ru">Я согласен(на) с передачей этой аудио-записи проекту GRANAT для интеграции в общее произведение. Подробнее о правах — в политике участника.</span>
+      </p>
+      <label class="consent-row" for="consentBox">
+        <input type="checkbox" id="consentBox" checked />
+        <span class="consent-box" aria-hidden="true">
+          <svg viewBox="0 0 11 11"><path d="M1.5 5.5 L4.4 8.4 L9.5 2.6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="consent-label"><span class="en">I agree</span><span class="ru">Согласен</span></span>
+      </label>
+      <a class="policy-link" href="#" tabindex="0"><span class="en">→ participant policy</span><span class="ru">→ политика участника</span></a>
+      <div class="m-actions">
+        <button class="btn btn-ghost" id="cancelConsent"><span class="en">Cancel</span><span class="ru">Отмена</span></button>
+        <button class="btn btn-primary" id="goRecord"><span class="en">Record my voice</span><span class="ru">Записать голос</span><span aria-hidden="true">→</span></button>
+      </div>
+    </div>
+    <div class="stage stage-recording">
+      <div class="m-eyebrow"><span class="hairline"></span><span class="en">stage 02 · recording</span><span class="ru">этап 02 · запись</span></div>
+      <h3 class="m-title"><span class="en">Sing along with the choir</span><span class="ru">Спойте вместе с хором</span></h3>
+      <p class="m-body"><span class="en">Use headphones. Listen to the guide track. 27 seconds.</span><span class="ru">Используйте наушники. Слушайте guide-трек. 27 секунд.</span></p>
+      <div class="rec-stage">
+        <div class="rec-ring">
+          <svg viewBox="0 0 200 200" id="ringSvg" aria-hidden="true"></svg>
+          <button class="rec-btn" id="stopBtn" aria-label="Stop recording"><span class="stop-square" aria-hidden="true"></span></button>
+        </div>
+        <div class="countdown" id="countdown">00:27</div>
+        <div class="rec-status">
+          <span class="en">Recording</span><span class="ru">Записываем</span>
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        </div>
+      </div>
+      <div class="m-actions">
+        <button class="btn btn-ghost" id="cancelRec"><span class="en">Stop</span><span class="ru">Остановить</span></button>
+      </div>
+    </div>
+    <div class="stage stage-processing">
+      <div class="m-eyebrow"><span class="hairline"></span><span class="en">stage 03 · processing</span><span class="ru">этап 03 · обработка</span></div>
+      <h3 class="m-title"><span class="en">Processing</span><span class="ru">Обработка</span></h3>
+      <p class="m-body"><span class="en">Your voice is being woven into a 25-voice choir.</span><span class="ru">Ваш голос вплетается в хор из 25 человек.</span></p>
+      <div class="proc-stage">
+        <div class="proc-ring" aria-hidden="true"></div>
+        <div class="proc-meta" id="procMeta">aligning · 24-bit</div>
+      </div>
+    </div>
+    <div class="stage stage-playback">
+      <div class="m-eyebrow"><span class="hairline"></span><span class="en">stage 04 · playback</span><span class="ru">этап 04 · прослушивание</span></div>
+      <h3 class="m-title"><span class="en">Hear yourself</span><span class="ru">Услышьте себя</span></h3>
+      <p class="m-body"><span class="en">You are voice #25 in the choir. Your fingerprint is saved.</span><span class="ru">Вы — голос #25 в хоре. Ваш отпечаток сохранён.</span></p>
+      <div class="player">
+        <button class="play-btn" id="playBtn" aria-label="Play"><span class="ico" aria-hidden="true"></span></button>
+        <div class="scrub">
+          <div class="scrub-bar"><div class="scrub-fill" id="scrubFill"></div></div>
+          <div class="scrub-time"><span id="elapsed">0:00</span><span id="total">0:27</span></div>
+        </div>
+      </div>
+      <div class="passport" aria-label="voice passport">
+        <svg class="passport-radar" viewBox="-32 -32 64 64" aria-hidden="true">
+          <g stroke="rgba(143,163,232,0.30)" fill="none" stroke-width="0.6"><circle r="10"/><circle r="18"/><circle r="26"/></g>
+          <polygon id="radarPoly" points="0,-22 14,-12 19,8 9,20 -10,18 -20,4 -16,-10" fill="rgba(197,64,63,0.30)" stroke="#C5403F" stroke-width="0.8" stroke-linejoin="round"/>
+        </svg>
+        <div class="passport-meta">
+          <span class="passport-label"><span class="en">voice passport</span><span class="ru">паспорт голоса</span></span>
+          <span class="passport-id" id="passportId">A3F2·9D81</span>
+          <span class="passport-sub"><span class="en">12 spectral parameters · timbre signature</span><span class="ru">12 спектральных параметров · подпись тембра</span></span>
+        </div>
+      </div>
+      <div class="m-actions">
+        <button class="btn btn-ghost" id="recordAgain"><span class="en">Record again</span><span class="ru">Запись снова</span></button>
+        <button class="btn btn-primary" id="doneBtn"><span class="en">Done</span><span class="ru">Готово</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 8 — ROADMAP
+     ============================================================ -->
+<section id="roadmap" data-screen-label="08 Roadmap" tabindex="-1" aria-labelledby="rTitle">
+  <div class="r-inner">
+    <div class="s-label" data-reveal="self">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">08 — roadmap</span><span class="ru">08 — дорожная карта</span></span>
+    </div>
+    <h2 id="rTitle" class="s-title">
+      <span class="en">Civilization roadmap</span><span class="ru">Дорожная карта цивилизации</span>
+    </h2>
+    <ol class="timeline">
+      <li class="mile" data-i="1">
+        <time class="year" datetime="2026">2026</time>
+        <span class="node" aria-hidden="true"></span>
+        <div class="body">
+          <div class="stage-lbl"><span class="en">Launch</span><span class="ru">Старт</span></div>
+          <p class="desc"><span class="en">The first million voices.</span><span class="ru">Первый миллион голосов.</span></p>
+        </div>
+      </li>
+      <li class="mile" data-i="2">
+        <time class="year" datetime="2027">2027</time>
+        <span class="node" aria-hidden="true"></span>
+        <div class="body">
+          <div class="stage-lbl"><span class="en">Growth</span><span class="ru">Рост</span></div>
+          <p class="desc"><span class="en">50 million participants.</span><span class="ru">50 миллионов участников.</span></p>
+        </div>
+      </li>
+      <li class="mile" data-i="3">
+        <time class="year" datetime="2028">2028</time>
+        <span class="node" aria-hidden="true"></span>
+        <div class="body">
+          <div class="stage-lbl"><span class="en">Recognition</span><span class="ru">Признание</span></div>
+          <p class="desc"><span class="en">Inclusion in UNESCO heritage.</span><span class="ru">Включение в наследие ЮНЕСКО.</span></p>
+        </div>
+      </li>
+      <li class="mile" data-i="4" data-final="true">
+        <time class="year" datetime="2029">2029</time>
+        <span class="node" aria-hidden="true"></span>
+        <div class="body">
+          <div class="stage-lbl"><span class="en">Eternity</span><span class="ru">Вечность</span></div>
+          <p class="desc"><span class="en">The artifact sent into space.</span><span class="ru">Отправка артефакта в космос.</span></p>
+        </div>
+      </li>
+    </ol>
+    <p class="closing">
+      <span class="en">We create not a product but a <span class="em-peri">legacy</span>. Not a company but an <span class="em-peri">institution</span>. Not a brand but a <span class="em-peri">legend</span>.</span>
+      <span class="ru">Мы создаём не продукт, а <span class="em-peri">наследие</span>. Не компанию, а <span class="em-peri">институцию</span>. Не бренд, а <span class="em-peri">легенду</span>.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 9 — SOCIAL TRANSFORMATION
+     ============================================================ -->
+<section id="social" data-screen-label="09 Social" tabindex="-1" aria-labelledby="sTitle">
+  <div class="s-inner">
+    <div class="s-label" data-reveal="self">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">09 — social transformation</span><span class="ru">09 — социальная трансформация</span></span>
+    </div>
+    <h2 id="sTitle" class="s-title">
+      <span class="en">Social transformation</span><span class="ru">Социальная трансформация</span>
+    </h2>
+    <p class="lead">
+      <span class="en">Granat heals the main illness of our time —</span>
+      <span class="ru">Granat лечит главную болезнь современности —</span>
+    </p>
+    <p class="verdict" aria-live="polite">
+      <span class="en">collective loneliness.</span>
+      <span class="ru">коллективное одиночество.</span>
+    </p>
+    <dl class="pairs" aria-label="four transformations" id="pairs">
+      <div class="pair" data-i="1">
+        <span class="num">01</span>
+        <dt class="before"><span class="en">Disconnection</span><span class="ru">Разобщённость</span></dt>
+        <span class="arr" aria-hidden="true">→</span>
+        <dd class="after"><span class="en">Unity</span><span class="ru">Единство</span></dd>
+      </div>
+      <div class="pair" data-i="2">
+        <span class="num">02</span>
+        <dt class="before"><span class="en">Statistics</span><span class="ru">Статистика</span></dt>
+        <span class="arr" aria-hidden="true">→</span>
+        <dd class="after"><span class="en">Story</span><span class="ru">История</span></dd>
+      </div>
+      <div class="pair" data-i="3">
+        <span class="num">03</span>
+        <dt class="before"><span class="en">Observer</span><span class="ru">Наблюдатель</span></dt>
+        <span class="arr" aria-hidden="true">→</span>
+        <dd class="after"><span class="en">Creator</span><span class="ru">Творец</span></dd>
+      </div>
+      <div class="pair" data-i="4">
+        <span class="num">04</span>
+        <dt class="before"><span class="en">Contemporaries</span><span class="ru">Современники</span></dt>
+        <span class="arr" aria-hidden="true">→</span>
+        <dd class="after"><span class="en">Legacy</span><span class="ru">Наследие</span></dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 10 — ECONOMY
+     ============================================================ -->
+<section id="economy" data-screen-label="10 Economy" tabindex="-1" aria-labelledby="eTitle">
+  <div class="e-inner">
+    <div class="s-label" data-reveal="self">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">10 — economy</span><span class="ru">10 — экономика</span></span>
+    </div>
+    <h2 id="eTitle" class="s-title">
+      <span class="en">Economy of the gift</span><span class="ru">Экономика дара</span>
+    </h2>
+    <p class="lead">
+      <span class="en">We are creating not a business model, but <span class="em-peri">an economy of the gift</span>.</span>
+      <span class="ru">Мы создаём не бизнес-модель, а <span class="em-peri">экономику дара</span>.</span>
+    </p>
+    <div class="mechs">
+      <article class="mech" data-i="1" aria-labelledby="mech1">
+        <span class="roman" aria-hidden="true">I</span>
+        <h3 id="mech1" class="mname"><span class="en">Basic Participation</span><span class="ru">Базовое участие</span></h3>
+        <p class="mcap"><span class="en">A person's gift to humanity.</span><span class="ru">Дар человека человечеству.</span></p>
+      </article>
+      <article class="mech" data-i="2" aria-labelledby="mech2">
+        <span class="roman" aria-hidden="true">II</span>
+        <h3 id="mech2" class="mname"><span class="en">Digital Certificates of Participation</span><span class="ru">Цифровые сертификаты участия</span></h3>
+        <p class="mcap"><span class="en">Digital relics.</span><span class="ru">Цифровые реликвии.</span></p>
+      </article>
+      <article class="mech" data-i="3" aria-labelledby="mech3">
+        <span class="roman" aria-hidden="true">III</span>
+        <h3 id="mech3" class="mname"><span class="en">Investments</span><span class="ru">Инвестиции</span></h3>
+        <p class="mcap"><span class="en">The blessing of eternity.</span><span class="ru">Благословение вечности.</span></p>
+      </article>
+      <article class="mech" data-i="4" aria-labelledby="mech4">
+        <span class="roman" aria-hidden="true">IV</span>
+        <h3 id="mech4" class="mname"><span class="en">Profit</span><span class="ru">Прибыль</span></h3>
+        <p class="mcap"><span class="en">Energy for the development of legacy.</span><span class="ru">Энергия для развития наследия.</span></p>
+      </article>
+    </div>
+    <p class="closing">
+      <span class="en">This is not a startup. <span class="em-peri">It is a foundation of eternal values.</span></span>
+      <span class="ru">Это не стартап. <span class="em-peri">Это фонд вечных ценностей.</span></span>
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 11 — INVITATION
+     ============================================================ -->
+<section id="invitation" data-screen-label="11 Invitation" tabindex="-1" aria-labelledby="invLabel">
+  <div class="inv-inner">
+    <div id="invLabel" class="label">
+      <span class="en">11 — invitation to history</span>
+      <span class="ru">11 — приглашение в историю</span>
+    </div>
+    <p class="pull reveal d1">
+      <span class="en">Before you is not a partnership offer. Before you is a choice: to remain a statistic in textbooks, or to become <span class="em-peri">an eternally sounding note in the symphony of humanity</span>.</span>
+      <span class="ru">Перед вами не предложение о партнёрстве. Перед вами выбор: остаться статистикой в учебниках или стать <span class="em-peri">вечно звучащей нотой в симфонии человечества</span>.</span>
+    </p>
+    <div class="strategic reveal d2">
+      <p>
+        <span class="en">We do not come to sell. We <span class="em-red">come with a world</span> to which we invite.</span>
+        <span class="ru">Мы не приходим продавать. Мы <span class="em-red">приходим с миром</span>, в который зовём.</span>
+      </p>
+      <p>
+        <span class="en">Granat is not absorbed — Granat connects.</span>
+        <span class="ru">Granat не поглощается — Granat соединяется.</span>
+      </p>
+      <p>
+        <span class="en">We remain co-authors of what we create.</span>
+        <span class="ru">Мы остаёмся со-авторами того, что мы создаём.</span>
+      </p>
+    </div>
+    <div class="hairline-rule" aria-hidden="true"></div>
+    <p class="closing-line reveal d3">
+      <span class="en">Your name may be inscribed not in reports, but in the DNA of civilization.</span>
+      <span class="ru">Ваше имя может быть вписано не в отчёты, а в ДНК цивилизации.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 12 — CALL TO ACTION
+     ============================================================ -->
+<section id="cta" data-screen-label="12 CTA" tabindex="-1" aria-labelledby="cTitle">
+  <div class="c-inner">
+    <div class="s-label" data-reveal="self">
+      <span class="hairline" aria-hidden="true"></span>
+      <span><span class="en">12 — call to action</span><span class="ru">12 — призыв</span></span>
+    </div>
+    <h2 id="cTitle" class="s-title">
+      <span class="en">Time to choose a role</span><span class="ru">Время выбирать роль</span>
+    </h2>
+    <div class="roles">
+      <a class="role" data-i="1" href="#how-it-works" aria-label="Participant — Record your voice">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="17" y="9" width="10" height="18" rx="5"/>
+            <path d="M12 22 a10 10 0 0 0 20 0"/>
+            <line x1="22" y1="32" x2="22" y2="38"/><line x1="16" y1="38" x2="28" y2="38"/>
+          </svg>
+        </span>
+        <span class="rlabel"><span class="en">Participant</span><span class="ru">Участник</span></span>
+        <span class="rcta"><span class="en">Record your voice</span><span class="ru">Запишите свой голос</span></span>
+        <span class="arr" aria-hidden="true">→</span>
+      </a>
+      <a class="role" data-i="2" href="mailto:partners@granat.world?subject=Guardian%20—%20Support%20the%20project" aria-label="Guardian — Support the project">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 26 Q14 30 22 30 Q30 30 36 26"/>
+            <path d="M8 26 L8 32 Q8 35 11 35 L22 35"/>
+            <path d="M36 26 L36 32 Q36 35 33 35 L22 35"/>
+            <polygon points="22,12 27,15 28,21 22,25 16,21 17,15"/>
+            <line x1="22" y1="12" x2="22" y2="25"/>
+          </svg>
+        </span>
+        <span class="rlabel"><span class="en">Guardian</span><span class="ru">Хранитель</span></span>
+        <span class="rcta"><span class="en">Support the project</span><span class="ru">Поддержите проект</span></span>
+        <span class="arr" aria-hidden="true">→</span>
+      </a>
+      <a class="role" data-i="3" href="mailto:team@granat.world?subject=Architect%20—%20Join%20the%20team%20of%20creators" aria-label="Architect — Join the team of creators">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="8" x2="13" y2="34"/>
+            <line x1="22" y1="8" x2="31" y2="34"/>
+            <circle cx="22" cy="8" r="2"/>
+            <path d="M14 30 Q22 34 30 30"/>
+            <line x1="22" y1="8" x2="22" y2="22"/>
+          </svg>
+        </span>
+        <span class="rlabel"><span class="en">Architect</span><span class="ru">Архитектор</span></span>
+        <span class="rcta"><span class="en">Join the team of creators</span><span class="ru">Войдите в команду создателей</span></span>
+        <span class="arr" aria-hidden="true">→</span>
+      </a>
+    </div>
+    <p class="closing">
+      <span class="en">GRANAT is a reality <span class="em-peri">that is chosen to be created</span>.</span>
+      <span class="ru">GRANAT — это реальность, <span class="em-peri">которую выбирают творить</span>.</span>
+    </p>
+  </div>
+</section>
+
+<footer class="sig">
+  Granat Music Artistic Talent <span class="dot">·</span> 2026 <span class="dot">·</span> granat.world
+</footer>
+
+<script>
+/* === LANG TOGGLE (single shared) === */
+(function(){
+  var btns=document.querySelectorAll('.lang-btn');
+  function setLang(lang){
+    document.body.classList.toggle('lang-ru', lang==='ru');
+    document.documentElement.setAttribute('lang', lang);
+    btns.forEach(function(x){
+      var on=x.dataset.lang===lang;
+      x.classList.toggle('active',on);
+      x.setAttribute('aria-pressed',on?'true':'false');
+    });
+    // swap team avatar initials
+    var ru=lang==='ru';
+    document.querySelectorAll('.member .avatar').forEach(function(a,i){
+      a.textContent = ru ? (i===0?'Я':'О') : (i===0?'Y':'O');
+    });
+  }
+  btns.forEach(function(b){ b.addEventListener('click',function(){setLang(b.dataset.lang)}); });
+  setLang('en');
+})();
+
+/* === SCROLL PROGRESS === */
+(function(){
+  var bar=document.querySelector('.scroll-progress');
+  function update(){
+    var h=document.documentElement;
+    var max=(h.scrollHeight - h.clientHeight) || 1;
+    bar.style.width=Math.min(100,Math.max(0,(h.scrollTop/max)*100))+'%';
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+
+/* === HERO PARALLAX === */
+(function(){
+  var photo=document.getElementById('heroPhoto');
+  if(!photo) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var ticking=false;
+  function onScroll(){
+    if(!ticking){
+      requestAnimationFrame(function(){
+        var hero=document.getElementById('hero');
+        var h=hero.offsetHeight || window.innerHeight;
+        var pct=Math.min(1,(window.scrollY||0)/h);
+        photo.style.transform='translate3d(0,'+(pct*60)+'px,0) scale(1.02)';
+        ticking=false;
+      });
+      ticking=true;
+    }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+})();
+
+/* === SECTION INDEX OVERLAY === */
+(function(){
+  var overlay=document.getElementById('idxOverlay');
+  var openBtn=document.getElementById('openIdx');
+  var closeBtn=document.getElementById('closeIdx');
+  function open(){
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden','false');
+    openBtn.setAttribute('aria-expanded','true');
+    setTimeout(function(){closeBtn.focus()},80);
+  }
+  function close(){
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden','true');
+    openBtn.setAttribute('aria-expanded','false');
+  }
+  openBtn.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) close(); });
+  overlay.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape' && overlay.classList.contains('open')){ e.preventDefault(); close(); }
+  });
+})();
+
+/* === SHARED REVEAL OBSERVER (for s-label, etc) === */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced){
+    document.querySelectorAll('[data-reveal="self"]').forEach(function(el){el.classList.add('in')});
+    return;
+  }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:0.18});
+  document.querySelectorAll('[data-reveal="self"]').forEach(function(el){io.observe(el)});
+})();
+
+/* === CHALLENGE: count-up + reveal === */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function format(n){return Math.round(n).toLocaleString('en-US').replace(/,/g,'\u202F')}
+  function countUp(el){
+    var target=parseInt(el.getAttribute('data-target'),10);
+    var dur=parseInt(el.getAttribute('data-duration'),10)||1200;
+    if(reduced){el.textContent=format(target);return}
+    var start=performance.now();
+    function tick(now){
+      var t=Math.min(1,(now-start)/dur);
+      var e=1-Math.pow(1-t,3);
+      el.textContent=format(target*e);
+      if(t<1) requestAnimationFrame(tick); else el.textContent=format(target);
+    }
+    requestAnimationFrame(tick);
+  }
+  function reveal(){
+    var hook=document.querySelector('#challenge .hook');
+    var tail=document.querySelector('#challenge .tail');
+    var stats=document.getElementById('stats');
+    if(hook) hook.classList.add('in');
+    if(stats){
+      stats.classList.add('in');
+      stats.querySelectorAll('.num[data-target]').forEach(countUp);
+    }
+    setTimeout(function(){ if(tail) tail.classList.add('in') }, 1700);
+  }
+  var ch=document.getElementById('challenge');
+  if(!ch) return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ reveal(); io.disconnect(); }
+    });
+  },{threshold:0.2});
+  io.observe(ch);
+})();
+
+/* === ANSWER reveal === */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nodes=document.querySelectorAll('#answer .ans-headline, #answer .ans-rule, #answer .ans-body');
+  if(reduced){nodes.forEach(function(n){n.classList.add('in')});return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:0.2});
+  nodes.forEach(function(n){io.observe(n)});
+})();
+
+/* === TEAM reveal === */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nodes=document.querySelectorAll('#team .member, #team .org');
+  if(reduced){nodes.forEach(function(n){n.classList.add('in')});return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var i=parseInt(e.target.getAttribute('data-i'),10)||1;
+      setTimeout(function(){e.target.classList.add('in')},(i-1)*200);
+      io.unobserve(e.target);
+    });
+  },{threshold:0.2});
+  nodes.forEach(function(n){io.observe(n)});
+})();
+
+/* === PHILOSOPHY reveal + parallax === */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cards=document.querySelectorAll('#philosophy .tcard');
+  var closing=document.querySelector('#philosophy .closing');
+  if(reduced){cards.forEach(function(c){c.classList.add('in')});if(closing)closing.classList.add('in');return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      if(e.target.classList.contains('tcard')){
+        var i=parseInt(e.target.getAttribute('data-card'),10)||1;
+        setTimeout(function(){e.target.classList.add('in')},(i-1)*200);
+        io.unobserve(e.target);
+      } else if(e.target===closing){
+        setTimeout(function(){closing.classList.add('in')},300);
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.18});
+  cards.forEach(function(c){io.observe(c)});
+  if(closing) io.observe(closing);
+  // parallax
+  var imgs=document.querySelectorAll('#philosophy .tcard .img svg');
+  var ticking=false;
+  function update(){
+    imgs.forEach(function(svg){
+      var rect=svg.getBoundingClientRect();
+      var vh=window.innerHeight||1;
+      var pct=Math.max(-1,Math.min(1,(rect.top+rect.height/2-vh/2)/vh));
+      svg.style.transform='translate3d(0,'+(-pct*18)+'px,0) scale(1.04)';
+    });
+    ticking=false;
+  }
+  window.addEventListener('scroll',function(){
+    if(!ticking){requestAnimationFrame(update);ticking=true}
+  },{passive:true});
+  update();
+})();
+
+/* === ARCHITECTURE reveal === */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var pillars=document.querySelectorAll('#architecture .pillar');
+  var frame=document.getElementById('frame');
+  if(reduced){pillars.forEach(function(p){p.classList.add('in')});if(frame)frame.classList.add('in');return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      if(e.target.classList.contains('pillar')){
+        var i=parseInt(e.target.getAttribute('data-i'),10)||1;
+        setTimeout(function(){e.target.classList.add('in')},(i-1)*200);
+        io.unobserve(e.target);
+      } else if(e.target===frame){
+        setTimeout(function(){frame.classList.add('in')},400);
+        io.unobserve(frame);
+      }
+    });
+  },{threshold:0.18});
+  pillars.forEach(function(p){io.observe(p)});
+  if(frame) io.observe(frame);
+})();
+
+/* === HOW IT WORKS reveal + modal === */
+(function(){
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          var i=parseInt(e.target.getAttribute('data-step'),10)||1;
+          setTimeout(function(){e.target.classList.add('in')},(i-1)*200);
+          io.unobserve(e.target);
+        }
+      });
+    },{threshold:0.18});
+    document.querySelectorAll('#how-it-works .step').forEach(function(s){io.observe(s)});
+  } else {
+    document.querySelectorAll('#how-it-works .step').forEach(function(s){s.classList.add('in')});
+  }
+
+  // Build recording ring
+  var svg=document.getElementById('ringSvg');
+  if(svg){
+    var N=32, ns='http://www.w3.org/2000/svg';
+    for(var i=0;i<N;i++){
+      var rect=document.createElementNS(ns,'rect');
+      rect.setAttribute('x','99');rect.setAttribute('y','8');
+      rect.setAttribute('width','2');rect.setAttribute('height','14');
+      rect.setAttribute('rx','1');rect.setAttribute('class','seg');
+      rect.setAttribute('transform','rotate('+((360/N)*i)+' 100 100)');
+      rect.style.animationDelay=(i*0.04)+'s';
+      svg.appendChild(rect);
+    }
+  }
+
+  // Modal state machine
+  var backdrop=document.getElementById('modalBackdrop');
+  var modal=document.getElementById('demoModal');
+  var openBtn=document.getElementById('openDemo');
+  var consentBox=document.getElementById('consentBox');
+  var goRecord=document.getElementById('goRecord');
+  var cancelConsent=document.getElementById('cancelConsent');
+  var cancelRec=document.getElementById('cancelRec');
+  var stopBtn=document.getElementById('stopBtn');
+  var recordAgain=document.getElementById('recordAgain');
+  var doneBtn=document.getElementById('doneBtn');
+  var countdownEl=document.getElementById('countdown');
+  var procMeta=document.getElementById('procMeta');
+  var playBtn=document.getElementById('playBtn');
+  var scrubFill=document.getElementById('scrubFill');
+  var elapsedEl=document.getElementById('elapsed');
+  var passportId=document.getElementById('passportId');
+  var lastFocus=null, recTimer=null, procTimer=null, playTimer=null, isPlaying=false, playT=0;
+  var REC_LEN=27;
+
+  function setStage(s){
+    modal.setAttribute('data-stage', s);
+    setTimeout(function(){
+      var sel='.stage-'+s+' button:not(:disabled), .stage-'+s+' [tabindex="0"], .stage-'+s+' input';
+      var first=modal.querySelector(sel);
+      if(first) first.focus();
+    },50);
+  }
+  function openModal(){
+    lastFocus=document.activeElement;
+    backdrop.classList.add('open');
+    backdrop.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    setStage('consent');
+    syncConsent();
+    setTimeout(function(){ if(cancelConsent) cancelConsent.focus(); },80);
+  }
+  function closeModal(force){
+    if(modal.getAttribute('data-stage')==='recording' && !force){
+      if(!confirm(document.body.classList.contains('lang-ru')?'Остановить запись и закрыть?':'Stop recording and close?')) return;
+    }
+    backdrop.classList.remove('open');
+    backdrop.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+    clearTimers();
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function clearTimers(){
+    if(recTimer){clearInterval(recTimer);recTimer=null}
+    if(procTimer){clearTimeout(procTimer);procTimer=null}
+    if(playTimer){clearInterval(playTimer);playTimer=null}
+    isPlaying=false;
+    if(playBtn) playBtn.classList.remove('playing');
+  }
+  function syncConsent(){ goRecord.disabled=!consentBox.checked }
+  function fmt(s){var m=Math.floor(s/60),sec=s%60;return (m<10?'0':'')+m+':'+(sec<10?'0':'')+sec}
+
+  if(openBtn) openBtn.addEventListener('click', openModal);
+  if(backdrop) backdrop.addEventListener('click', function(e){
+    if(e.target===backdrop){
+      var stage=modal.getAttribute('data-stage');
+      if(stage!=='recording') closeModal();
+    }
+  });
+  document.addEventListener('keydown', function(e){
+    if(!backdrop || !backdrop.classList.contains('open')) return;
+    if(e.key==='Escape'){ e.preventDefault(); closeModal(); return; }
+    if(e.key==='Tab'){
+      var focusables=modal.querySelectorAll('button:not(:disabled), [href], input:not(:disabled), [tabindex]:not([tabindex="-1"])');
+      var visible=[].filter.call(focusables, function(el){
+        var s=el.closest('.stage');
+        return !s || getComputedStyle(s).display!=='none';
+      });
+      if(!visible.length) return;
+      var first=visible[0], last=visible[visible.length-1];
+      if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+    }
+  });
+  if(consentBox) consentBox.addEventListener('change', syncConsent);
+  if(cancelConsent) cancelConsent.addEventListener('click', function(){ closeModal() });
+  if(goRecord) goRecord.addEventListener('click', function(){
+    if(!consentBox.checked) return;
+    setStage('recording');
+    startRecording();
+  });
+  function startRecording(){
+    /* TODO: integrate granat-api.apps.cone.red — Web Audio API recorder @ 16-bit PCM WAV, 27s,
+       then POST blob → https://granat-api.apps.cone.red/api/v1/voice/process */
+    var t=REC_LEN;
+    countdownEl.textContent=fmt(t);
+    recTimer=setInterval(function(){
+      t--;
+      countdownEl.textContent=fmt(Math.max(0,t));
+      if(t<=0){clearInterval(recTimer);recTimer=null;startProcessing()}
+    },1000);
+  }
+  if(stopBtn) stopBtn.addEventListener('click', function(){
+    if(recTimer){clearInterval(recTimer);recTimer=null}
+    startProcessing();
+  });
+  if(cancelRec) cancelRec.addEventListener('click', function(){ closeModal(true) });
+  function startProcessing(){
+    setStage('processing');
+    var phases=[
+      {en:'aligning · 24-bit',ru:'выравнивание · 24-bit'},
+      {en:'matching choir · voice 25',ru:'подбор хора · голос 25'},
+      {en:'fingerprinting · 12 dims',ru:'отпечаток · 12 параметров'}
+    ];
+    var i=0;
+    function tick(){
+      var ru=document.body.classList.contains('lang-ru');
+      procMeta.textContent=phases[i][ru?'ru':'en'];
+      i++;
+      if(i<phases.length){procTimer=setTimeout(tick,1100)}
+      else{procTimer=setTimeout(showPlayback,900)}
+    }
+    tick();
+    /* TODO: replace with real polling of /voice/status/:id, then fetch /voice/result/:id/audio */
+  }
+  function showPlayback(){
+    var hex='0123456789ABCDEF',id='';
+    for(var k=0;k<8;k++){id+=hex.charAt(Math.floor(Math.random()*16));if(k===3)id+='·'}
+    passportId.textContent=id;
+    setStage('playback');
+    resetPlayer();
+  }
+  function resetPlayer(){
+    playT=0;isPlaying=false;
+    playBtn.classList.remove('playing');
+    scrubFill.style.width='0%';
+    elapsedEl.textContent='0:00';
+  }
+  if(playBtn) playBtn.addEventListener('click', function(){
+    isPlaying=!isPlaying;
+    playBtn.classList.toggle('playing', isPlaying);
+    playBtn.setAttribute('aria-label', isPlaying?'Pause':'Play');
+    if(isPlaying){
+      playTimer=setInterval(function(){
+        playT+=0.2;
+        if(playT>=REC_LEN){
+          playT=REC_LEN;
+          clearInterval(playTimer);playTimer=null;
+          isPlaying=false;
+          playBtn.classList.remove('playing');
+          playBtn.setAttribute('aria-label','Play');
+        }
+        scrubFill.style.width=((playT/REC_LEN)*100)+'%';
+        var s=Math.floor(playT);
+        elapsedEl.textContent=Math.floor(s/60)+':'+(s%60<10?'0':'')+(s%60);
+      },200);
+    } else {
+      if(playTimer){clearInterval(playTimer);playTimer=null}
+    }
+  });
+  if(recordAgain) recordAgain.addEventListener('click', function(){
+    clearTimers();setStage('recording');startRecording();
+  });
+  if(doneBtn) doneBtn.addEventListener('click', function(){ closeModal(true) });
+})();
+
+/* === ROADMAP reveal === */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var title=document.querySelector('#roadmap .s-title');
+  var miles=document.querySelectorAll('#roadmap .mile');
+  var closing=document.querySelector('#roadmap .closing');
+  if(reduced){
+    miles.forEach(function(m){m.classList.add('in')});
+    if(closing) closing.classList.add('in');
+    return;
+  }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      if(e.target.classList.contains('mile')){
+        var i=parseInt(e.target.getAttribute('data-i'),10)||1;
+        setTimeout(function(){e.target.classList.add('in')},(i-1)*250);
+        io.unobserve(e.target);
+      } else if(e.target===closing){
+        setTimeout(function(){closing.classList.add('in')},400);
+        io.unobserve(closing);
+      }
+    });
+  },{threshold:0.18});
+  miles.forEach(function(m){io.observe(m)});
+  if(closing) io.observe(closing);
+})();
+
+/* === SOCIAL reveal === */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var title=document.querySelector('#social .s-title');
+  var lead=document.querySelector('#social .lead');
+  var verdict=document.querySelector('#social .verdict');
+  var pairs=document.querySelectorAll('#social .pair');
+  if(reduced){
+    if(lead)lead.classList.add('in');if(verdict)verdict.classList.add('in');
+    pairs.forEach(function(p){p.classList.add('in')});
+    return;
+  }
+  var headerSeen=false;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      if(e.target===title && !headerSeen){
+        headerSeen=true;
+        if(lead) setTimeout(function(){lead.classList.add('in')},150);
+        if(verdict) setTimeout(function(){verdict.classList.add('in')},500);
+        io.unobserve(title);
+      } else if(e.target.classList.contains('pair')){
+        var i=parseInt(e.target.getAttribute('data-i'),10)||1;
+        setTimeout(function(){e.target.classList.add('in')},(i-1)*180);
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.2});
+  if(title) io.observe(title);
+  pairs.forEach(function(p){io.observe(p)});
+})();
+
+/* === ECONOMY reveal === */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mechs=document.querySelectorAll('#economy .mech');
+  var closing=document.querySelector('#economy .closing');
+  if(reduced){mechs.forEach(function(m){m.classList.add('in')});if(closing)closing.classList.add('in');return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      if(e.target.classList.contains('mech')){
+        var i=parseInt(e.target.getAttribute('data-i'),10)||1;
+        setTimeout(function(){e.target.classList.add('in')},(i-1)*120);
+        io.unobserve(e.target);
+      } else if(e.target===closing){
+        setTimeout(function(){closing.classList.add('in')},400);
+        io.unobserve(closing);
+      }
+    });
+  },{threshold:0.18});
+  mechs.forEach(function(m){io.observe(m)});
+  if(closing) io.observe(closing);
+})();
+
+/* === INVITATION reveal === */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.querySelectorAll('#invitation .reveal').forEach(function(el){el.classList.add('in')});
+    return;
+  }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:0.2});
+  document.querySelectorAll('#invitation .reveal').forEach(function(el){io.observe(el)});
+})();
+
+/* === CTA reveal === */
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var roles=document.querySelectorAll('#cta .role');
+  var closing=document.querySelector('#cta .closing');
+  if(reduced){roles.forEach(function(r){r.classList.add('in')});if(closing)closing.classList.add('in');return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      if(e.target.classList.contains('role')){
+        var i=parseInt(e.target.getAttribute('data-i'),10)||1;
+        setTimeout(function(){e.target.classList.add('in')},(i-1)*150);
+        io.unobserve(e.target);
+      } else if(e.target===closing){
+        setTimeout(function(){closing.classList.add('in')},400);
+        io.unobserve(closing);
+      }
+    });
+  },{threshold:0.18});
+  roles.forEach(function(r){io.observe(r)});
+  if(closing) io.observe(closing);
+})();
+</script>
+
+</body>
+</html>
